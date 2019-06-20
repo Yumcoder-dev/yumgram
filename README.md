@@ -1,5 +1,10 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+development enviroment:
+- [vscode](https://code.visualstudio.com/) is the primary development ide 
+- eslint (dbaeumer.vscode-eslint) plug-in is enabled
+- [entd](https://ant.design) for ui components
+
 ## Available Scripts
 
 In the project directory, you can run:

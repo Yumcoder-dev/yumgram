@@ -1,8 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
 import App from './App';
+import './index.css';
 import * as serviceWorker from './serviceWorker';
+import i18n from './locales/i18n';
+
+i18n.changeLanguage('fa');
 
 ReactDOM.render(<App />, document.getElementById('root'));
 
