@@ -11,23 +11,40 @@ import emitter from './emitter';
  * @param {Function|object} fn
  */
 const withEmitter = fn => (props = {}) => {
+  let tokens;
   const params = { ...props, emitter };
-  if (fn.componentDidMount) {
+  if (fn.addListener) {
     useEffect(() => {
-      fn.componentDidMount.call(props, params);
+      tokens = fn.addListener.call(props, params);
     }, []);
   }
 
   // When you return a function in the callback passed to useEffect,
   // the returned function will be called before the component is removed from the UI
-  if (fn.componentWillUnmount) {
-    useEffect(
-      () => () => {
-        fn.componentWillUnmount.call(props, params);
-      },
-      []
-    );
-  }
+  useEffect(
+    () => () => {
+      if (tokens !== undefined) {
+        // var token = emitter.addListener('change', (...args) => {
+        //   console.log(...args);
+        // });
+        //
+        // emitter.emit('change', 10); // 10 is logged
+        // token.remove();
+        // emitter.emit('change', 10); // nothing is logged
+        tokens.map(t => t.remove()); // remove all regisered tokens
+      }
+    },
+    []
+  );
+
+  // if (fn.removeListener) {
+  //   useEffect(
+  //     () => () => {
+  //       fn.removeListener.call(props, params);
+  //     },
+  //     [],
+  //   );
+  // }
 
   return { ...props, emitter };
 };

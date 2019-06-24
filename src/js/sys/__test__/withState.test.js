@@ -9,7 +9,7 @@ import testUtil from '../testUtils';
 import withState from '../withState';
 
 it('test with state primitive', () => {
-  const getProps = testUtil(withState('state', 'setState', 0));
+  const getProps = testUtil(withState(0, 'state', 'setState'));
 
   expect(getProps().state).toEqual(0);
   act(() => getProps().setState(1));
@@ -17,20 +17,24 @@ it('test with state primitive', () => {
 });
 
 it('test with state obj', () => {
-  const getProps = testUtil(withState('state', 'setState', { a: 1 }));
+  const getProps = testUtil(withState({ a: 1 }));
 
-  expect(getProps().state).toEqual({ a: 1 });
-  act(() => getProps().setState({ a: 2, c: 3 }));
-  expect(getProps().state).toEqual({ a: 2, c: 3 });
+  expect(getProps().data).toEqual({ a: 1 });
+  act(() => getProps().setData({ a: 2, c: 3 }));
+  expect(getProps().data).toEqual({ a: 2, c: 3 });
 });
 
 it('test with state func', () => {
   let called = 0;
   const getProps = testUtil(
-    withState('state', 'setState', () => {
-      called += 1;
-      return 0;
-    })
+    withState(
+      () => {
+        called += 1;
+        return 0;
+      },
+      'state',
+      'setState'
+    )
   );
 
   expect(getProps().state).toEqual(0);

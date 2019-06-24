@@ -23,6 +23,7 @@
  *      arr.reduce((sum, current) => sum + current);
  * so props should have default value to avoid error (Reduce of empty array with no initial value)
  */
+
 const pipe = (...fns) => (props = {}) =>
   fns.reduce((v, f) => f(v), props /* initial value */);
 

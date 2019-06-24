@@ -20,7 +20,7 @@ function usePrevious(value) {
  * @param {object} spec
  * @returns {object}
  */
-const lifecycle = spec => (props = {}) => {
+const withLifecycle = spec => (props = {}) => {
   const [state, setStateRaw] = useState({});
   const setState = update => {
     setStateRaw({
@@ -58,4 +58,4 @@ const lifecycle = spec => (props = {}) => {
   return { ...props, ...state };
 };
 
-export default lifecycle;
+export default withLifecycle;

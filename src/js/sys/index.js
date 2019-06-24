@@ -1,8 +1,14 @@
+/*
+ * Copyright (c) 2019-present, The Yumcoder Authors. All rights reserved.
+ *
+ * This source code is licensed under the license found in the LICENSE file in
+ * the root directory of this source tree.
+ */
+
 /* eslint-disable import/named */
 export { default as conditional } from './conditional';
-export { default as lifecycle } from './lifecycle';
+export { default as withLifecycle } from './withLifecycle';
 export { default as withStateHandlers } from './withStateHandlers';
-export { default as renderComponent } from './renderComponent';
 export { default as withHandlers } from './withHandlers';
 export { default as withState } from './withState';
 export { default as pipe } from './pipe';

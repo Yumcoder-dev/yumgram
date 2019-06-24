@@ -9,7 +9,10 @@ const IncV = props => {
 
   return (
     <div>
-      <h1>counter view {p1}</h1>
+      <h1>
+        counter view
+        {p1}
+      </h1>
       <p>{data.get('counter')}</p>
       <Button onClick={() => increment(2)}>syn</Button>
       <Button onClick={decrement}>asyn</Button>

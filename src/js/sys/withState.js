@@ -4,16 +4,19 @@
  * This source code is licensed under the license found in the LICENSE file in
  * the root directory of this source tree.
  */
+
 import { useState, useMemo } from 'react';
 
 /**
+ * @param {any} initialState
  * @param {string|symbol} stateName
  * @param {string|symbol} stateUpdaterName
- * @param {any} initialState
  */
-const withState = (stateName, stateUpdaterName, initialState) => (
-  props = {}
-) => {
+const withState = (
+  initialState,
+  stateName = 'data',
+  stateUpdaterName = 'setData'
+) => (props = {}) => {
   const [state, update] = useState(
     typeof initialState === 'function'
       ? useMemo(() => initialState(props), [props])

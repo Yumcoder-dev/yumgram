@@ -4,10 +4,10 @@
  * This source code is licensed under the license found in the LICENSE file in
  * the root directory of this source tree.
  */
+
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
-import './index.css';
 import * as serviceWorker from './serviceWorker';
 import i18n from './locales/i18n';
 
