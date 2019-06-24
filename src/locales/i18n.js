@@ -1,3 +1,9 @@
+/*
+ * Copyright (c) 2019-present, The Yumcoder Authors. All rights reserved.
+ *
+ * This source code is licensed under the license found in the LICENSE file in
+ * the root directory of this source tree.
+ */
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import en from './en-US/en_us';

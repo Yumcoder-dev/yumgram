@@ -49,4 +49,4 @@ function getToken() {
   return currentToken;
 }
 
-export default getToken;
+export default { getToken };

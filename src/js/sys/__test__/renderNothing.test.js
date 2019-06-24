@@ -4,14 +4,16 @@
  * This source code is licensed under the license found in the LICENSE file in
  * the root directory of this source tree.
  */
-import React from 'react';
+import renderNothing from '../renderNothing';
 
-function Page404() {
-  return (
-    <div>
-      <h1>Page404</h1>
-    </div>
-  );
-}
+test('render nothing', () => {
+  let e;
 
-export default Page404;
+  try {
+    renderNothing();
+  } catch (thrown) {
+    e = thrown;
+  }
+
+  expect(e).toBe(null);
+});
