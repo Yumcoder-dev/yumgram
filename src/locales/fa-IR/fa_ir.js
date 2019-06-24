@@ -5,7 +5,7 @@
  * the root directory of this source tree.
  */
 const tr = {
-  'app.welcome': 'خوش آمدید'
+  'app.welcome': 'خوش آمدید',
 };
 
 export default { translation: tr };

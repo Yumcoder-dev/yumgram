@@ -33,8 +33,8 @@ it('test with state func', () => {
         return 0;
       },
       'state',
-      'setState'
-    )
+      'setState',
+    ),
   );
 
   expect(getProps().state).toEqual(0);

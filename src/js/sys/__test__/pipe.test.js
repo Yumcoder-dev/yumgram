@@ -13,14 +13,14 @@ it('test pipe', () => {
   expect(
     pipe(
       inc,
-      inc
-    )(0)
+      inc,
+    )(0),
   ).toBe(2);
 
   expect(
     pipe(
       () => ({ num: 0 }),
-      x => ({ num: x.num + 1 })
-    )()
+      x => ({ num: x.num + 1 }),
+    )(),
   ).toEqual({ num: 1 });
 });

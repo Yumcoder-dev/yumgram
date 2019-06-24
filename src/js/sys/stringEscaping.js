@@ -10,7 +10,7 @@ const UNESCAPE_MAP = {
   '&gt;': '>',
   '&#x2F;': '/',
   '&#x27;': "'",
-  '&quot;': '"'
+  '&quot;': '"',
 };
 const ESCAPE_MAP = {};
 
@@ -22,7 +22,7 @@ for (const key in UNESCAPE_MAP) {
 const escapeMatcher = RegExp(`(?:${Object.keys(ESCAPE_MAP).join('|')})`, 'g');
 const unescapeMatcher = RegExp(
   `(?:${Object.keys(UNESCAPE_MAP).join('|')})`,
-  'g'
+  'g',
 );
 
 export function escape(str) {

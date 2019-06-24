@@ -14,19 +14,19 @@ const routes = [
     name: 'login',
     path: '/',
     icon: 'dashboard',
-    component: Inc
+    component: Inc,
   },
   {
     name: 'messager',
     path: '/im',
     icon: 'dashboard',
-    component: Messager
+    component: Messager,
   },
   {
     name: 'page404',
     icon: 'page404',
-    component: Page404
-  }
+    component: Page404,
+  },
 ];
 
 export default routes;

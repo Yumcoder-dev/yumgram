@@ -24,10 +24,10 @@ it('test with state handlers', () => {
         //      const Welcome = (props) => (
         //          <h1>Hello, {props.name}</h1>;
         //      )
-        addNewDataState: () => ({ c }) => ({ c })
-      }
+        addNewDataState: () => ({ c }) => ({ c }),
+      },
     ),
-    {} // props pass to withStateHandlers
+    {}, // props pass to withStateHandlers
   );
 
   act(() => getProps().handle({ b: true }));
@@ -42,10 +42,10 @@ it('test with state handlers unchanged state', () => {
     withStateHandlers(
       { b: true },
       {
-        handle: () => () => undefined
-      }
+        handle: () => () => undefined,
+      },
     ),
-    {}
+    {},
   );
 
   act(() => getProps().handle());
@@ -55,9 +55,9 @@ it('test with state handlers unchanged state', () => {
 it('test with state handlers props memo', () => {
   const getProps = testUtil(
     withStateHandlers(() => ({ b: false }) /* useMemo */, {
-      handle: () => ({ b }) => ({ b })
+      handle: () => ({ b }) => ({ b }),
     }),
-    { c: 10 } // props
+    { c: 10 }, // props
   );
 
   act(() => getProps().handle({ b: true }));

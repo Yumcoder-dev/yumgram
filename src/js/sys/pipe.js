@@ -24,7 +24,6 @@
  * so props should have default value to avoid error (Reduce of empty array with no initial value)
  */
 
-const pipe = (...fns) => (props = {}) =>
-  fns.reduce((v, f) => f(v), props /* initial value */);
+const pipe = (...fns) => (props = {}) => fns.reduce((v, f) => f(v), props /* initial value */);
 
 export default pipe;

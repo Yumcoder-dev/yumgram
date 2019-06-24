@@ -22,10 +22,10 @@ function usePrevious(value) {
  */
 const lifecycle = spec => (props = {}) => {
   const [state, setStateRaw] = useState({});
-  const setState = update => {
+  const setState = (update) => {
     setStateRaw({
       ...state,
-      ...(typeof update === 'function' ? update(state) : update)
+      ...(typeof update === 'function' ? update(state) : update),
     });
   };
 
@@ -44,7 +44,7 @@ const lifecycle = spec => (props = {}) => {
       () => () => {
         spec.componentWillUnmount.call(self);
       },
-      []
+      [],
     );
   }
 

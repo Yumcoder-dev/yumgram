@@ -11,14 +11,14 @@ it('test ajax request', async () => {
   const result = {
     comments: [
       { body: 'some comment', id: 1, postId: 1 },
-      { body: 'some comment', id: 2, postId: 1 }
+      { body: 'some comment', id: 2, postId: 1 },
     ],
     posts: [
       { id: 1, title: 'Post 1' },
       { id: 2, title: 'Post 2' },
-      { id: 3, title: 'Post 3' }
+      { id: 3, title: 'Post 3' },
     ],
-    profile: { name: 'typicode' }
+    profile: { name: 'typicode' },
   };
   const url = 'https://my-json-server.typicode.com/typicode/demo/db';
   await expect(request('Get', url)).resolves.toEqual(result);

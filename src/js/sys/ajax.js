@@ -24,14 +24,14 @@ export function request(
   body,
   abortable = false,
   withCredentials = true,
-  useRequestedWith = true
+  useRequestedWith = true,
 ) {
   let requestUrl = url;
   if (
-    !url.startsWith('http://') &&
-    !url.startsWith('https://') &&
-    basePath.length &&
-    !url.startsWith(`${basePath}/`)
+    !url.startsWith('http://')
+    && !url.startsWith('https://')
+    && basePath.length
+    && !url.startsWith(`${basePath}/`)
   ) {
     requestUrl = basePath + url;
   }
@@ -82,11 +82,11 @@ export function request(
       message: 'Network Error',
       error: 'Network Error',
       errors: ['Network Error'],
-      notice: 'Network Error'
+      notice: 'Network Error',
     });
   };
   // eslint-disable-next-line func-names
-  xhr.onload = function() {
+  xhr.onload = function () {
     if (this.status === 200) {
       let json = {};
       try {
@@ -107,7 +107,7 @@ export function request(
         message: 'Permission Denied',
         error: 'Permission Denied',
         errors: ['Permission Denied'],
-        notice: 'Permission Denied'
+        notice: 'Permission Denied',
       });
     } else if (this.status >= 400 && this.status < 500) {
       let json = {};
@@ -117,14 +117,13 @@ export function request(
         p.reject(this.responseText);
         return;
       }
-      const message =
-        json.message || json.error || json.notice || 'Request Error';
+      const message = json.message || json.error || json.notice || 'Request Error';
       p.reject({
         success: false,
         message,
         error: message,
         errors: json.errors || [message],
-        notice: message
+        notice: message,
       });
     } else if (this.status >= 500) {
       p.reject({
@@ -132,7 +131,7 @@ export function request(
         message: 'Server Error',
         error: 'Server Error',
         errors: ['Server Error'],
-        notice: 'Server Error'
+        notice: 'Server Error',
       });
     }
   };
@@ -166,7 +165,7 @@ export function request(
        * */
       xhr.setRequestHeader(
         'Content-Type',
-        'application/x-www-form-urlencoded; charset=UTF-8'
+        'application/x-www-form-urlencoded; charset=UTF-8',
       );
       // Encode it as a url parameter string
       const formData = [];
@@ -182,7 +181,7 @@ export function request(
   if (abortable) {
     return {
       xhr,
-      promise: p
+      promise: p,
     };
   }
   return p;

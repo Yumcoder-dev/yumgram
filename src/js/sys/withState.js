@@ -15,18 +15,18 @@ import { useState, useMemo } from 'react';
 const withState = (
   initialState,
   stateName = 'data',
-  stateUpdaterName = 'setData'
+  stateUpdaterName = 'setData',
 ) => (props = {}) => {
   const [state, update] = useState(
     typeof initialState === 'function'
       ? useMemo(() => initialState(props), [props])
-      : initialState
+      : initialState,
   );
 
   return {
     ...props,
     [stateName]: state,
-    [stateUpdaterName]: update
+    [stateUpdaterName]: update,
   };
 };
 

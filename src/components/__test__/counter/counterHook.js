@@ -5,7 +5,7 @@ import {
   withState,
   withHandlers,
   withLifecycle,
-  withEmitter
+  withEmitter,
 } from '../../../js/sys/index';
 
 const init = (/* porps */) => Map({ counter: 0 });
@@ -18,28 +18,25 @@ const componentWillUnmount = () => {
   console.log('componentWillUnmount');
 };
 
-const componentDidUpdate = props => {
+const componentDidUpdate = (props) => {
   console.log('componentDidUpdate', props);
 };
 
-const increment = ({ data, /*  p1, */ emitter }) => value => {
+const increment = ({ data, /*  p1, */ emitter }) => (value) => {
   setTimeout(() => {
     const upd = data.update('counter', v => v + (value || 1));
     emitter.emit('onEvent', upd);
   }, 1000);
 };
 
-const decrement = ({ setData }) => () =>
-  setData(s => s.update('counter', v => v - 1));
+const decrement = ({ setData }) => () => setData(s => s.update('counter', v => v - 1));
 
 const onDataEventChange = (data, setData) => {
   setData(data);
 };
 
 const addListener = ({ /* p1, */ setData, emitter }) => {
-  const subscription = emitter.addListener('onEvent', data =>
-    onDataEventChange(data, setData)
-  );
+  const subscription = emitter.addListener('onEvent', data => onDataEventChange(data, setData));
   //   (previousData) => {
   //   console.log('new ---data', p1, newData, previousData);
   //   // if (p1 === 'a') {
@@ -63,6 +60,6 @@ export default pipe(
   withLifecycle({
     componentDidMount,
     componentWillUnmount,
-    componentDidUpdate
-  })
+    componentDidUpdate,
+  }),
 );

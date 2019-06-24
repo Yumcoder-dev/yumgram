@@ -22,18 +22,17 @@ import { useMemo } from 'react';
 const withHandlers = handlers => (props = {}) => {
   const realHandlers = useMemo(
     () => (typeof handlers === 'function' ? handlers(props) : handlers),
-    [props]
+    [props],
   );
 
   const actionTypes = Object.keys(realHandlers);
 
   const boundHandlers = actionTypes.reduce(
-    (obj, type) =>
-      Object.assign(obj, {
-        // note: handler = (props) => (payload) => {}
-        [type]: (...payload) => realHandlers[type](props)(...payload)
-      }),
-    {}
+    (obj, type) => Object.assign(obj, {
+      // note: handler = (props) => (payload) => {}
+      [type]: (...payload) => realHandlers[type](props)(...payload),
+    }),
+    {},
   );
 
   return { ...props, ...boundHandlers };

@@ -13,9 +13,9 @@ it('test with handlers obj', () => {
     withHandlers({
       // handler = (props) => (payload) => {}
       // eslint-disable-next-line no-return-assign
-      handle: ({ a }) => ({ b }) => (result = { a, b })
+      handle: ({ a }) => ({ b }) => (result = { a, b }),
     }),
-    { a: true } // input props for mounted component
+    { a: true }, // input props for mounted component
   );
 
   getProps().handle({ b: true });
@@ -31,10 +31,10 @@ it('test with handlers func', () => {
       return {
         // handler = (props) => (payload) => {}
         // eslint-disable-next-line no-return-assign
-        handle: ({ a }) => ({ b }) => (result = { a, b })
+        handle: ({ a }) => ({ b }) => (result = { a, b }),
       };
     }),
-    { a: true } // input props for mounted component
+    { a: true }, // input props for mounted component
   );
 
   getProps().handle({ b: true });

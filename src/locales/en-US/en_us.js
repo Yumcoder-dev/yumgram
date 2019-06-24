@@ -5,7 +5,7 @@
  * the root directory of this source tree.
  */
 const tr = {
-  'app.welcome': 'Welcome to React and react-i18next'
+  'app.welcome': 'Welcome to React and react-i18next',
 };
 
 export default { translation: tr };

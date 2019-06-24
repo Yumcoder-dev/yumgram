@@ -14,13 +14,13 @@ export const languages = [
   {
     key: 'en',
     label: 'English',
-    icon: '🇬🇧'
+    icon: '🇬🇧',
   },
   {
     key: 'fa',
     label: 'فارسی',
-    icon: '🇮🇷'
-  }
+    icon: '🇮🇷',
+  },
 ];
 
 i18n.use(initReactI18next).init({
@@ -30,8 +30,8 @@ i18n.use(initReactI18next).init({
 
   keySeparator: true, // true if you use in messages.welcome format
   interpolation: {
-    escapeValue: false // react already safes from xss
-  }
+    escapeValue: false, // react already safes from xss
+  },
 });
 
 export default i18n;

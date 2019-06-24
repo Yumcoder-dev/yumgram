@@ -19,7 +19,7 @@ const withStateHandlers = (initialValue, handlers) => (props = {}) => {
   // handler = function [action.type](action.payload)
   const reducer = (state, action) => ({
     ...state,
-    ...handlers[action.type](state, props)(...action.payload)
+    ...handlers[action.type](state, props)(...action.payload),
   });
 
   // see https://reactjs.org/docs/hooks-reference.html#usereducer
@@ -27,17 +27,16 @@ const withStateHandlers = (initialValue, handlers) => (props = {}) => {
     reducer,
     typeof initialValue === 'function'
       ? useMemo(() => initialValue(props), [])
-      : initialValue
+      : initialValue,
   );
 
   const boundHandlers = actionTypes.reduce(
-    (obj, type) =>
-      Object.assign(obj, {
-        [type]: (...payload) => {
-          if (payload !== undefined) dispatch({ type, payload });
-        }
-      }),
-    {}
+    (obj, type) => Object.assign(obj, {
+      [type]: (...payload) => {
+        if (payload !== undefined) dispatch({ type, payload });
+      },
+    }),
+    {},
   );
 
   return { ...props, ...state, ...boundHandlers };
