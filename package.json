@@ -22,8 +22,8 @@
   },
   "scripts": {
     "format": "./node_modules/.bin/prettier --single-quote --write 'src/**/*.{js,jsx,ts,tsx,json,css,scss,less,md}'",
-    "lint": "eslint ./src/**/* --ext .js,.jsx",
-    "lint:fix": "eslint ./src/**/* --ext .js,.jsx --fix",
+    "lint": "eslint --ext .js,.jsx ./src/**/*",
+    "lint:fix": "eslint --ext .js,.jsx --fix ./src/**/*",
     "precommit": "lint-staged",
     "start": "react-app-rewired start",
     "build": "react-app-rewired build",
