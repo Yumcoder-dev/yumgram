@@ -17,7 +17,5 @@ it('test encodeFormData', () => {
       val2: 'data2',
     }),
   ).toEqual('key%5Bval1%5D=data1&key%5Bval2%5D=data2');
-  expect(encodeFormData('key', ['data1', 'data2'])).toEqual(
-    'key%5B%5D=data1&key%5B%5D=data2',
-  ); // key[]=data1&key[]=data2
+  expect(encodeFormData('key', ['data1', 'data2'])).toEqual('key%5B%5D=data1&key%5B%5D=data2'); // key[]=data1&key[]=data2
 });

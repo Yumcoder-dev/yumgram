@@ -10,7 +10,7 @@ import React from 'react';
 import { mount } from 'enzyme';
 // import ReactDOM from 'react-dom';
 
-export default function (enhancer, propsIn) {
+export default function(enhancer, propsIn) {
   let propsOut = null;
 
   function Component(props) {

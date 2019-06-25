@@ -9,9 +9,7 @@ import { escape, unescape } from '../stringEscaping';
 it('test stringEscaping escape func', () => {
   expect(escape('yumcoder')).toEqual('yumcoder');
   // eslint-disable-next-line no-useless-escape
-  expect(escape('<&yumcoder/js\'"1">')).toEqual(
-    '&lt;&amp;yumcoder&#x2F;js&#x27;&quot;1&quot;&gt;',
-  );
+  expect(escape('<&yumcoder/js\'"1">')).toEqual('&lt;&amp;yumcoder&#x2F;js&#x27;&quot;1&quot;&gt;');
 });
 
 it('test stringEscaping unescape func', () => {

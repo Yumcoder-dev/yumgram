@@ -16,7 +16,7 @@ import { useMemo } from 'react';
  * @returns {Function}
  */
 const conditional = (condition, left, right = x => x) => (props = {}) => {
-  const conditionResult = useMemo(() => condition(props), []);
+  const conditionResult = useMemo(() => condition(props), [props]);
 
   return conditionResult ? left(props) : right(props);
 };

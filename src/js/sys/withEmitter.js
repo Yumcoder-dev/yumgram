@@ -34,7 +34,7 @@ const withEmitter = fn => (props = {}) => {
         tokens.map(t => t.remove()); // remove all regisered tokens
       }
     },
-    [],
+    [tokens],
   );
 
   // if (fn.removeListener) {

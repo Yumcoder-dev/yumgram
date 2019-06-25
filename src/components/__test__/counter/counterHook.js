@@ -1,12 +1,6 @@
 /* eslint-disable no-console */
 import { Map } from 'immutable';
-import {
-  pipe,
-  withState,
-  withHandlers,
-  withLifecycle,
-  withEmitter,
-} from '../../../js/sys/index';
+import { pipe, withState, withHandlers, withLifecycle, withEmitter } from '../../../js/sys/index';
 
 const init = (/* porps */) => Map({ counter: 0 });
 
@@ -18,11 +12,11 @@ const componentWillUnmount = () => {
   console.log('componentWillUnmount');
 };
 
-const componentDidUpdate = (props) => {
+const componentDidUpdate = props => {
   console.log('componentDidUpdate', props);
 };
 
-const increment = ({ data, /*  p1, */ emitter }) => (value) => {
+const increment = ({ data, /*  p1, */ emitter }) => value => {
   setTimeout(() => {
     const upd = data.update('counter', v => v + (value || 1));
     emitter.emit('onEvent', upd);

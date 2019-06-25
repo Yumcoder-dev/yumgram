@@ -13,8 +13,7 @@ function Messager() {
       <h1>messager</h1>
       <p>
         <Link to="/">GOTO HOME PAGE</Link>
-        {' '}
-other data.
+        other data.
       </p>
     </div>
   );

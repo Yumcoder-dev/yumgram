@@ -3,7 +3,7 @@ import { Button } from 'antd';
 import PropTypes from 'prop-types';
 import useCounter from './counterHook';
 
-const IncV = (props) => {
+const IncV = props => {
   const { data, increment, decrement } = useCounter(props);
   const { p1 } = props;
 

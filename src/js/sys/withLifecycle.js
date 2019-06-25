@@ -22,7 +22,7 @@ function usePrevious(value) {
  */
 const withLifecycle = spec => (props = {}) => {
   const [state, setStateRaw] = useState({});
-  const setState = (update) => {
+  const setState = update => {
     setStateRaw({
       ...state,
       ...(typeof update === 'function' ? update(state) : update),
@@ -34,7 +34,7 @@ const withLifecycle = spec => (props = {}) => {
   if (spec.componentDidMount) {
     useEffect(() => {
       spec.componentDidMount.call(self);
-    }, []);
+    }, [self]);
   }
 
   // When you return a function in the callback passed to useEffect,
@@ -44,7 +44,7 @@ const withLifecycle = spec => (props = {}) => {
       () => () => {
         spec.componentWillUnmount.call(self);
       },
-      [],
+      [self],
     );
   }
 

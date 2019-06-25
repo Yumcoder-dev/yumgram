@@ -1,32 +1,21 @@
-/*
- * Copyright (c) 2019-present, The Yumcoder Authors. All rights reserved.
- *
- * This source code is licensed under the license found in the LICENSE file in
- * the root directory of this source tree.
- */
 module.exports = {
   env: {
     browser: true,
     es6: true,
-    jest: true,
+    jest: true
   },
-  extends: 'airbnb',
+  extends: ['react-app', 'airbnb', 'plugin:prettier/recommended'],
   globals: {
     Atomics: 'readonly',
-    SharedArrayBuffer: 'readonly',
+    SharedArrayBuffer: 'readonly'
   },
   parserOptions: {
     ecmaFeatures: {
-      jsx: true,
+      jsx: true
     },
     ecmaVersion: 2018,
-    sourceType: 'module',
+    sourceType: 'module'
   },
   plugins: ['react'],
-  rules: {
-    'import/no-extraneous-dependencies': [
-      'error',
-      {devDependencies: ['./config-overrides.js']},
-    ],
-  },
+  rules: {}
 };

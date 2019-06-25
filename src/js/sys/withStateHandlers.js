@@ -25,17 +25,16 @@ const withStateHandlers = (initialValue, handlers) => (props = {}) => {
   // see https://reactjs.org/docs/hooks-reference.html#usereducer
   const [state, dispatch] = useReducer(
     reducer,
-    typeof initialValue === 'function'
-      ? useMemo(() => initialValue(props), [])
-      : initialValue,
+    typeof initialValue === 'function' ? useMemo(() => initialValue(props), [props]) : initialValue,
   );
 
   const boundHandlers = actionTypes.reduce(
-    (obj, type) => Object.assign(obj, {
-      [type]: (...payload) => {
-        if (payload !== undefined) dispatch({ type, payload });
-      },
-    }),
+    (obj, type) =>
+      Object.assign(obj, {
+        [type]: (...payload) => {
+          if (payload !== undefined) dispatch({ type, payload });
+        },
+      }),
     {},
   );
 

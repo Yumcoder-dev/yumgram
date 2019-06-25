@@ -28,10 +28,10 @@ export function request(
 ) {
   let requestUrl = url;
   if (
-    !url.startsWith('http://')
-    && !url.startsWith('https://')
-    && basePath.length
-    && !url.startsWith(`${basePath}/`)
+    !url.startsWith('http://') &&
+    !url.startsWith('https://') &&
+    basePath.length &&
+    !url.startsWith(`${basePath}/`)
   ) {
     requestUrl = basePath + url;
   }
@@ -86,7 +86,7 @@ export function request(
     });
   };
   // eslint-disable-next-line func-names
-  xhr.onload = function () {
+  xhr.onload = function() {
     if (this.status === 200) {
       let json = {};
       try {
@@ -163,10 +163,7 @@ export function request(
       /*
        * Content-Type: application/x-www-form-urlencoded, multipart/form-data or text/plain, etc.
        * */
-      xhr.setRequestHeader(
-        'Content-Type',
-        'application/x-www-form-urlencoded; charset=UTF-8',
-      );
+      xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
       // Encode it as a url parameter string
       const formData = [];
       // eslint-disable-next-line guard-for-in, no-restricted-syntax

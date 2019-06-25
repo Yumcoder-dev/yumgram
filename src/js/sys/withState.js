@@ -12,15 +12,11 @@ import { useState, useMemo } from 'react';
  * @param {string|symbol} stateName
  * @param {string|symbol} stateUpdaterName
  */
-const withState = (
-  initialState,
-  stateName = 'data',
-  stateUpdaterName = 'setData',
-) => (props = {}) => {
+const withState = (initialState, stateName = 'data', stateUpdaterName = 'setData') => (
+  props = {},
+) => {
   const [state, update] = useState(
-    typeof initialState === 'function'
-      ? useMemo(() => initialState(props), [props])
-      : initialState,
+    typeof initialState === 'function' ? useMemo(() => initialState(props), [props]) : initialState,
   );
 
   return {
