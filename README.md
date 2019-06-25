@@ -1,7 +1,7 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ```javascript
-console.log(a);let a = 2;
+console.log(a);let a = 2;let b= 4;
 ```
 
 vscode config:
