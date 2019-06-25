@@ -21,7 +21,6 @@
     }
   },
   "scripts": {
-    "format": "./node_modules/.bin/prettier --single-quote --write 'src/**/*.{js,jsx,ts,tsx,json,css,scss,less,md}'",
     "lint": "eslint --ext .js,.jsx ./src/**/*",
     "lint:fix": "eslint ./src/**/* --fix --ext .js,.jsx  ",
     "precommit": "lint-staged",
@@ -36,8 +35,8 @@
     ]
   },
   "lint-staged": {
-    "src/**/*.{js,jsx,ts,tsx,json,css,md}": [
-      "eslint --ext .js,.jsx --fix ./src/**/*",
+    "src/**/*.{js,jsx}": [
+      "eslint ",
       "git add"
     ]
   },
@@ -75,6 +74,7 @@
     "prettier": "^1.18.2",
     "react-app-rewired": "^2.1.3",
     "react-scripts": "3.0.1",
+    "stylelint": "^10.1.0",
     "stylelint-config-prettier": "^5.2.0",
     "stylelint-prettier": "^1.1.1"
   }
