@@ -10,6 +10,7 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import './App.module.less';
 import routes from './router';
 
+console.log('test');
 function App() {
   return (
     <BrowserRouter>
