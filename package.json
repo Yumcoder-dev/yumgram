@@ -35,8 +35,10 @@
     ]
   },
   "lint-staged": {
-    "src/**/*.{js,jsx}": [
-      "eslint ",
+    "src/**/*.{js,jsx,ts,tsx,json,css,scss,md}": [
+      "eslint --fix",
+      "prettier --single-quote --write",
+      "jest --findRelatedTests",
       "git add"
     ]
   },
