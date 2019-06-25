@@ -21,8 +21,6 @@
     }
   },
   "scripts": {
-    "lint": "eslint --ext .js,.jsx ./src/**/*",
-    "lint:fix": "eslint ./src/**/* --fix --ext .js,.jsx  ",
     "precommit": "lint-staged",
     "start": "react-app-rewired start",
     "build": "react-app-rewired build",
@@ -38,7 +36,7 @@
     "src/**/*.{js,jsx,ts,tsx,json,css,scss,less,md}": [
       "eslint --fix",
       "prettier --single-quote --write",
-      "jest --findRelatedTests",
+      
       "git add"
     ]
   },
