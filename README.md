@@ -1,7 +1,76 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+```javascript
+console.log(a);let a = 2;
+```
+
+vscode config:
+
+```json
+{
+  "workbench.colorTheme": "Visual Studio Dark",
+  "window.zoomLevel": 0,
+  "editor.formatOnPaste": true,
+  "editor.formatOnSave": true,
+  "eslint.autoFixOnSave": true,
+  "eslint.packageManager": "yarn",
+  "editor.fontLigatures": true,
+  "workbench.editor.highlightModifiedTabs": true,
+  "files.autoSave": "afterDelay",
+  "javascript.format.enable": false,
+  "prettier.eslintIntegration": true,
+  "editor.fontWeight": "500",
+  "explorer.sortOrder": "type",
+  "editor.cursorStyle": "block",
+  "editor.cursorBlinking": "smooth",
+  "files.trimFinalNewlines": true,
+  "editor.acceptSuggestionOnEnter": "smart",
+  "emmet.triggerExpansionOnTab": false,
+  "javascript.updateImportsOnFileMove.enabled": "always",
+  "editor.fontSize": 16,
+  "terminal.integrated.fontSize": 16,
+  "markdown.preview.fontSize": 16,
+  "editor.rulers": [100],
+  "eslint.alwaysShowStatus": true,
+  "files.exclude": {
+    "/node_modules": true
+  },
+  "search.exclude": {
+    "/build": true,
+    "/jquery*": true,
+    "/node_modules": true,
+    "**/bower_components": true
+  },
+  "javascript.suggest.autoImports": true,
+  "prettier.stylelintIntegration": true,
+  "stylelint.enable": true,
+  "css.validate": false,
+  "less.validate": false,
+  "scss.validate": false,
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "psi-header.config": {
+    "forceToTop": true,
+    "blankLinesAfter": 1
+  },
+  "psi-header.templates": [
+    {
+      "language": "*",
+      "template": [
+        "Copyright (c) 2019-present, The Yumcoder Authors. All rights reserved.",
+        "",
+        "This source code is licensed under the license found in the LICENSE file in",
+        "the root directory of this source tree."
+      ]
+    }
+  ]
+}
+```
+
 development enviroment:
-- [vscode](https://code.visualstudio.com/) is the primary development ide 
+
+- [vscode](https://code.visualstudio.com/) is the primary development ide
 - eslint (dbaeumer.vscode-eslint) plug-in is enabled
 - [entd](https://ant.design) for ui components
 
