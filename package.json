@@ -33,13 +33,12 @@
     ]
   },
   "lint-staged": {
-    "src/**/*.{js,jsx,ts,tsx,md}": [
+    "src/**/*.{js,jsx,ts,tsx}": [
       "eslint --fix",
       "prettier --config .prettierrc --write",
-      "react-app-rewired test",
       "git add"
     ],
-    "src/**/*.{json,css,scss,less}": [
+    "src/**/*.{json,css,scss,less,md}": [
       "prettier --config ./.prettierrc --write",
       "git add"
     ]

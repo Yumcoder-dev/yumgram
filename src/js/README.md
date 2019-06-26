@@ -1,6 +1,6 @@
 # Counter example
 
-counter component:
+counter component (Counter.jsx):
 
 ```javascript
 import React from 'react';
@@ -43,7 +43,7 @@ const CounterContainer = () => (
 export default CounterContainer;
 ```
 
-controller:
+controller (Counter.Controller.jsx):
 
 ```javascript
 /* eslint-disable no-console */
