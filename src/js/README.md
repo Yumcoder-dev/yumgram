@@ -71,7 +71,7 @@ const componentDidUpdate = props => {
 // simulate async func
 // ({ data, /*  prop1, */ emitter }) = { ...state, ...props, emitter }
 // note about emitter: increment at withHandlers in pip is after withEmitter
-// vlaue is func parameters (increment)
+// vlaue is func parameter (increment)
 const increment = ({ data, /*  prop1, */ emitter }) => value => {
   setTimeout(() => {
     const upd = data.update('counter', v => v + (value || 1));
@@ -91,7 +91,7 @@ const addListener = ({ /* prop1, */ setData, emitter }) => {
   const subscription = emitter.addListener('onEvent', data => onDataEventChange(data, setData));
   //   (previousData) => {
   //   console.log('new ---data', prop1, newData, previousData);
-  //   // if (p1 === 'a') {
+  //   // if (prop1 === 'a') {
   //   //   return newData;
   //   // }
   //   // return previousData;
