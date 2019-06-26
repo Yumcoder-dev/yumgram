@@ -5,7 +5,7 @@
  * the root directory of this source tree.
  */
 
-import Inc from './components/__test__/counter/counter';
+import Login from './components/Login';
 import Messager from './components/Messager';
 import Page404 from './components/Page404';
 
@@ -14,7 +14,7 @@ const routes = [
     name: 'login',
     path: '/',
     icon: 'dashboard',
-    component: Inc,
+    component: Login,
   },
   {
     name: 'messager',

@@ -1,17 +1,17 @@
 import React from 'react';
 import { Button } from 'antd';
 import PropTypes from 'prop-types';
-import useCounter from './counterHook';
+import useCounter from './Counter.Controller';
 
-const IncV = props => {
+const CounterComponent = props => {
   const { data, increment, decrement } = useCounter(props);
-  const { p1 } = props;
+  const { prop1 } = props;
 
   return (
     <div>
       <h1>
         counter view
-        {p1}
+        {prop1}
       </h1>
       <p>{data.get('counter')}</p>
       <Button onClick={() => increment(2)}>syn</Button>
@@ -20,15 +20,15 @@ const IncV = props => {
   );
 };
 
-IncV.propTypes = {
-  p1: PropTypes.string.isRequired,
+CounterComponent.propTypes = {
+  prop1: PropTypes.string.isRequired,
 };
 
-const Inc = () => (
+const CounterContainer = () => (
   <div>
-    <IncV p1="a" />
-    <IncV p1="b" />
+    <CounterComponent prop1="a" />
+    <CounterComponent prop1="b" />
   </div>
 );
 
-export default Inc;
+export default CounterContainer;
