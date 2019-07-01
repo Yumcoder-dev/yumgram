@@ -9,7 +9,7 @@ development enviroment:
 - [entd](https://ant.design) for ui components
 
 Design framework:
-view controller based on [pip hook](./src/js/README.md)
+view controller based on [pipe hook](./src/js/README.md)
 
 ## Available Scripts
 

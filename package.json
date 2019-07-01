@@ -11,9 +11,13 @@
     "immutable": "^4.0.0-rc.12",
     "prop-types": "^15.7.2",
     "react": "^16.8.6",
+    "react-custom-scrollbars": "^4.2.1",
     "react-dom": "^16.8.6",
     "react-i18next": "^10.11.1",
-    "react-router-dom": "^5.0.1"
+    "react-router-dom": "^5.0.1",
+    "react-virtualized-auto-sizer": "^1.0.2",
+    "react-window": "^1.8.3",
+    "react-window-infinite-loader": "^1.0.3"
   },
   "husky": {
     "hooks": {
@@ -22,6 +26,7 @@
   },
   "scripts": {
     "precommit": "lint-staged",
+    "flow": "flow",
     "start": "react-app-rewired start",
     "build": "react-app-rewired build",
     "test": "react-app-rewired test",
@@ -36,7 +41,6 @@
     "src/**/*.{js,jsx,ts,tsx}": [
       "eslint --fix",
       "prettier --config .prettierrc --write",
-      "react-app-rewired test",
       "git add"
     ],
     "src/**/*.{json,css,scss,less,md}": [
@@ -67,10 +71,12 @@
     "eslint": "^5.16.0",
     "eslint-config-airbnb": "^17.1.0",
     "eslint-config-prettier": "^5.0.0",
+    "eslint-plugin-flowtype": "^3.11.1",
     "eslint-plugin-import": "^2.17.3",
     "eslint-plugin-jsx-a11y": "^6.2.1",
     "eslint-plugin-prettier": "^3.1.0",
     "eslint-plugin-react": "^7.14.1",
+    "flow-bin": "^0.102.0",
     "husky": "^2.4.1",
     "less": "^3.9.0",
     "less-loader": "^5.0.0",

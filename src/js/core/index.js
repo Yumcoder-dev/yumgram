@@ -6,7 +6,6 @@
  */
 
 /* eslint-disable import/named */
-export { default as conditional } from './conditional';
 export { default as withLifecycle } from './withLifecycle';
 export { default as withStateHandlers } from './withStateHandlers';
 export { default as withHandlers } from './withHandlers';

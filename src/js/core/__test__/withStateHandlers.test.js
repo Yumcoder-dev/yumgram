@@ -4,6 +4,7 @@
  * This source code is licensed under the license found in the LICENSE file in
  * the root directory of this source tree.
  */
+
 import { act } from 'react-dom/test-utils';
 import testUtil from '../testUtils';
 import withStateHandlers from '../withStateHandlers';

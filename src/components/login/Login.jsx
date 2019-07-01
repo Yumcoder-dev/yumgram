@@ -9,13 +9,14 @@ import React from 'react';
 import { Button, Row, Col, Icon, Card, Input, Modal } from 'antd';
 import styles from './Login.module.less';
 import loginController from './Login.controller';
+import CountryList from '../country/Country';
 
 const { Search } = Input;
 const InputGroup = Input.Group;
 
 function Login() {
   // eslint-disable-next-line no-unused-vars
-  const { data, openSearchContry, closeSearchCountry } = loginController();
+  const { data, openSearchContry, closeSearchCountry, onChooseCountry } = loginController();
   return (
     <Row>
       <Row className={styles.login_head_bg} />
@@ -35,40 +36,42 @@ function Login() {
           </Col>
         </Row>
         <Row type="flex" justify="center" className={styles.login_form_wrap}>
-          <Card block>
-            <h3 style={{ 'font-weight': 'bold' }}>Sign in</h3>
+          <Card>
+            <h3 style={{ fontWeight: 'bold' }}>Sign in</h3>
             <p>Please choose your country and enter your full phone number.</p>
             <p style={{ marginTop: '22px' }}>Country</p>
             <Search
-              readonly="readonly"
-              placeholder="input search text"
+              className={styles.input_slect}
+              onClick={openSearchContry}
+              readOnly="readonly"
+              placeholder="select a country"
               onSearch={openSearchContry}
               enterButton
+              value={data.get('selectedCountry').name}
             />
             <Modal
-              title="Modal"
+              width={392}
+              title="Country"
               visible={data.get('showSearchCountry')}
-              onOk={closeSearchCountry}
+              bodyStyle={{ padding: '0px' }}
+              footer={null}
               onCancel={closeSearchCountry}
+              keyboard
             >
-              <p>Bla bla ...</p>
-              <p>Bla bla ...</p>
-              <p>Bla bla ...</p>
+              <CountryList onItemSelected={onChooseCountry} />
             </Modal>
 
             <p style={{ marginTop: '22px' }}>Phone number</p>
             <InputGroup compact>
-              <Input style={{ width: '30%' }} defaultValue="+98" />
-              <Input style={{ width: '70%' }} defaultValue="9125621200" />
+              <Input style={{ width: '30%' }} value={data.get('selectedCountry').code} />
+              <Input style={{ width: '70%' }} />
             </InputGroup>
           </Card>
         </Row>
         <Row type="flex" justify="center" style={{ marginTop: '22px' }}>
           <Col>
             <p>Welcome to the official Dadrah web-client.</p>
-            <Button type="link" block>
-              Learn more
-            </Button>
+            <Button type="link">Learn more</Button>
           </Col>
         </Row>
       </Row>
