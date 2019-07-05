@@ -4,11 +4,15 @@
   "private": true,
   "dependencies": {
     "antd": "^3.19.6",
+    "crypto-js": "^3.1.9-1",
     "fbemitter": "^2.1.1",
     "i18next": "^17.0.4",
     "i18next-browser-languagedetector": "^3.0.1",
     "i18next-xhr-backend": "^3.0.0",
     "immutable": "^4.0.0-rc.12",
+    "jsbn": "^1.1.0",
+    "leemon": "^6.2.0",
+    "ogv": "^1.6.1",
     "prop-types": "^15.7.2",
     "react": "^16.8.6",
     "react-custom-scrollbars": "^4.2.1",
@@ -17,7 +21,9 @@
     "react-router-dom": "^5.0.1",
     "react-virtualized-auto-sizer": "^1.0.2",
     "react-window": "^1.8.3",
-    "react-window-infinite-loader": "^1.0.3"
+    "react-window-infinite-loader": "^1.0.3",
+    "rusha": "^0.8.13",
+    "zlibjs": "^0.3.1"
   },
   "husky": {
     "hooks": {

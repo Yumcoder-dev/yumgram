@@ -16,16 +16,13 @@ const searchIndex = new SearchIndexManager();
 const init = (/* porps */) => {
   const countries = [];
   let count = 0;
-  const pageSize = 2100;
   // loop on countries and add to full text search
   CountryCodes.forEach((country, index) => {
     const name = i18n.t(country[1]); // get locate country name
     // calc records count and load first data page
     for (let j = 2; j < country.length; j += 1) {
       count += 1;
-      if (count <= pageSize) {
-        countries.push({ name, code: country[j] }); // load first page
-      }
+      countries.push({ name, code: country[j] });
     }
     let searchString = country[0]; // country short code
     searchString += ` ${name}`; // add country name (considering locate)
@@ -34,7 +31,6 @@ const init = (/* porps */) => {
   });
 
   return new Map({
-    filter: '',
     countries: List(countries),
     count,
     loading: false,
@@ -49,23 +45,25 @@ const componentWillUnmount = () => {
   document.body.style = 'background: ;';
 };
 
-const onSearch = ({ setData }) => newValue => {
+const onSearch = ({ setData }) => e => {
+  const { value } = e.target;
   setData(s => s.set('loading', true));
 
   let filtered = false;
   let results = {};
 
-  if (typeof newValue === 'string' && newValue.length) {
+  if (typeof value === 'string' && value.length) {
     filtered = true;
-    results = SearchIndexManager.search(newValue);
+    results = searchIndex.search(value);
   }
 
   const countries = [];
-
+  let count = 0;
   let j;
   for (let i = 0; i < CountryCodes.length; i += 1) {
     if (!filtered || results[i]) {
       for (j = 2; j < CountryCodes[i].length; j += 1) {
+        count += 1;
         countries.push({
           name: i18n.t(`${CountryCodes[i][1]}`),
           code: CountryCodes[i][j],
@@ -81,23 +79,15 @@ const onSearch = ({ setData }) => newValue => {
 
   setData(d =>
     d
-      .set('filter', newValue)
-      .set('countries', countries)
+      .set('countries', List(countries))
+      .set('count', count)
       .set('loading', false),
   );
-};
-// const closeSearchCountry = ({ setData }) => () => setData(s => s.set('showSearchCountry', false));
-
-const isItemLoaded = ({ data }) => index => data.get('countries')[index] !== undefined;
-
-const onLoadMoreItems = ({ data }) => (startIndex, stopIndex) => {
-  console.log('loadMoreItems', startIndex, stopIndex);
-  onSearch(data.get('filter'), startIndex, stopIndex);
 };
 
 export default pipe(
   withState(init),
-  withHandlers({ onSearch, isItemLoaded, onLoadMoreItems }),
+  withHandlers({ onSearch }),
   withLifecycle({
     componentDidMount,
     componentWillUnmount,
