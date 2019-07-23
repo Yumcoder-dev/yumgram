@@ -4,6 +4,8 @@
  * This source code is licensed under the license found in the LICENSE file in
  * the root directory of this source tree.
  */
+
+// #todo depricated see es5 unescape
 const UNESCAPE_MAP = {
   '&amp;': '&',
   '&lt;': '<',

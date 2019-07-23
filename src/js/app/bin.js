@@ -7,7 +7,6 @@
  */
 
 import { BigInteger, SecureRandom } from 'jsbn';
-import CryptoJS from 'crypto-js';
 import {
   one,
   bigInt2str,
@@ -27,7 +26,8 @@ import {
 } from 'leemon';
 import Rusha from 'rusha';
 import { Zlib } from 'zlibjs/bin/gunzip.min';
-import Long from './binary/long';
+import CryptoJS from './vendor/crypto';
+import Long from './long';
 
 export function bigint(num) {
   return new BigInteger(num.toString(16), 16);
@@ -123,7 +123,7 @@ export function bytesToBase64(bytes) {
   return result.replace(/A(?=A$|$)/g, '=');
 }
 
-function blobSafeMimeType(mimeType) {
+export function blobSafeMimeType(mimeType) {
   if (
     [
       'image/jpeg',
@@ -150,10 +150,8 @@ export function blobConstruct(blobParts, mimeType) {
   try {
     blob = new Blob(blobParts, { type: safeMimeType });
   } catch (e) {
-    const bb = new (window.MozBlobBuilder ||
-      window.WebKitBlobBuilder ||
-      window.BlobBuilder ||
-      window.MSBlobBuilder)();
+    // eslint-disable-next-line no-undef
+    const bb = new BlobBuilder();
     for (let i = 0; i < blobParts.length; i += 1) {
       bb.append(blobParts[i]);
     }
@@ -287,7 +285,7 @@ export function bytesToArrayBuffer(b) {
   return new Uint8Array(b).buffer;
 }
 
-function convertToArrayBuffer(bytes) {
+export function convertToArrayBuffer(bytes) {
   // Be careful with converting subarrays!!
   if (bytes instanceof ArrayBuffer) {
     return bytes;
@@ -308,8 +306,8 @@ export function convertToUint8Array(bytes) {
   return new Uint8Array(bytes);
 }
 
-function convertToByteArray(bytes) {
-  if (Array.isArray(bytes)) {
+export function convertToByteArray(bytes) {
+  if (Array.isArray(bytes) || bytes instanceof Array) {
     return bytes;
   }
   const byteArray = convertToUint8Array(bytes);
@@ -364,11 +362,12 @@ export function uintToInt(val) {
   return val;
 }
 
+let rushaInstance;
 export function sha1HashSync(bytes) {
-  this.rushaInstance = this.rushaInstance || new Rusha(1024 * 1024);
+  rushaInstance = rushaInstance || new Rusha(1024 * 1024);
 
   // console.log(dT(), 'SHA-1 hash start', bytes.byteLength || bytes.length)
-  const hashBytes = this.rushaInstance.rawDigest(bytes).buffer;
+  const hashBytes = rushaInstance.rawDigest(bytes).buffer;
   // console.log(dT(), 'SHA-1 hash finish')
 
   return hashBytes;
@@ -378,7 +377,7 @@ export function sha1BytesSync(bytes) {
   return bytesFromArrayBuffer(sha1HashSync(bytes));
 }
 
-function sha256HashSync(bytes) {
+export function sha256HashSync(bytes) {
   // console.log(dT(), 'SHA-2 hash start', bytes.byteLength || bytes.length)
   const hashWords = CryptoJS.SHA256(bytesToWords(bytes));
   // console.log(dT(), 'SHA-2 hash finish')

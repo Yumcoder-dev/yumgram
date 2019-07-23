@@ -8,11 +8,16 @@ const {
   override,
   fixBabelImports,
   addLessLoader,
+  addWebpackPlugin,
   // addWebpackAlias,
+  // eslint-disable-next-line import/no-extraneous-dependencies
 } = require('customize-cra');
 // const path = require('path');
+// eslint-disable-next-line import/no-extraneous-dependencies
+const WorkerPlugin = require('worker-plugin');
 
 module.exports = override(
+  addWebpackPlugin(WorkerPlugin),
   fixBabelImports('import', {
     libraryName: 'antd',
     libraryDirectory: 'es',

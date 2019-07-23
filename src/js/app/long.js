@@ -1,4 +1,3 @@
-/* eslint-disable no-bitwise */
 /*
  * Copyright (c) 2019-present, The Yumcoder Authors. All rights reserved.
  *
@@ -6,6 +5,7 @@
  * the root directory of this source tree.
  */
 
+/* eslint-disable no-bitwise */
 // see` https://github.com/google/closure-library/blob/master/closure/goog/math/long.js
 class Long {
   // A cache of the Long representations of small integer values.

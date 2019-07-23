@@ -4,7 +4,6 @@
   "private": true,
   "dependencies": {
     "antd": "^3.19.6",
-    "crypto-js": "^3.1.9-1",
     "fbemitter": "^2.1.1",
     "i18next": "^17.0.4",
     "i18next-browser-languagedetector": "^3.0.1",
@@ -35,7 +34,7 @@
     "flow": "flow",
     "start": "react-app-rewired start",
     "build": "react-app-rewired build",
-    "test": "react-app-rewired test",
+    "test": "react-app-rewired test --env=jsdom",
     "eject": "react-app-rewired eject"
   },
   "jest": {
@@ -45,7 +44,7 @@
   },
   "lint-staged": {
     "src/**/*.{js,jsx,ts,tsx}": [
-      "eslint --fix",
+     
       "prettier --config .prettierrc --write",
       "git add"
     ],
@@ -92,6 +91,7 @@
     "react-scripts": "3.0.1",
     "stylelint": "^10.1.0",
     "stylelint-config-prettier": "^5.2.0",
-    "stylelint-prettier": "^1.1.1"
+    "stylelint-prettier": "^1.1.1",
+    "worker-plugin": "^3.1.0"
   }
 }

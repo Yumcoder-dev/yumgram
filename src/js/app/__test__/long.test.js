@@ -1,13 +1,14 @@
-/* eslint-disable no-param-reassign */
-/* eslint-disable operator-assignment */
-/* eslint-disable no-plusplus */
-/* eslint-disable no-bitwise */
 /*
  * Copyright (c) 2019-present, The Yumcoder Authors. All rights reserved.
  *
  * This source code is licensed under the license found in the LICENSE file in
  * the root directory of this source tree.
  */
+
+/* eslint-disable no-param-reassign */
+/* eslint-disable operator-assignment */
+/* eslint-disable no-plusplus */
+/* eslint-disable no-bitwise */
 import Long from '../long';
 
 it('long - long', () => {
