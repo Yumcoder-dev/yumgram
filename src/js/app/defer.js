@@ -30,24 +30,18 @@ class Defer {
     this.promise.then(onFulfilled, onRejected);
   }
 
+  notify(progress) {
+    if (this.promise.progress) {
+      this.promise.progress(progress);
+    }
+  }
+
   cancel() {
     this.canceled = true;
+    if (this.promise.cancel) {
+      this.promise.cancel();
+    }
   }
 }
 
 export default Defer;
-
-// export const blueDefer = () => {
-//   let resolve, reject
-//   const promise = new Promise((rs, rj) => {
-//     resolve = rs
-//     reject = rj
-//   })
-//   return {
-//     resolve,
-//     reject,
-//     promise
-//   }
-// }
-
-// export default blueDefer

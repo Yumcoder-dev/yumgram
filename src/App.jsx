@@ -8,28 +8,44 @@
 import React from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import './App.module.less';
+// eslint-disable-next-line
+// import TestWorker from './test.worker';
+// import Worker from './js/app/worker';
 import routes from './router';
-// import CryptoWorker from './js/app/crypto';
-import IdleManager from './js/app/idle';
-import emitter from './js/core/emitter';
-import MtpApiManager from './js/app/mtpApiManager';
-import Config from './js/app/config';
-import MtpService from './js/app/mtpService';
 
-class A {
-  constructor() {
-    this.a = 100;
-    this.ecb = emitter.addListener('aaaa', () => this.f());
-  }
+// const piWorker = new Worker(TestWorker);
+// piWorker.onmessage = event => {
+//   console.log(`pi: ${event.data}`);
+// };
+// piWorker.postMessage(42);
 
-  f() {
-    console.log('aaaa', this.a);
-  }
+// import('./test.worker.js').then(m => {
+//   console.log(m.default.toString());
+//   const workerInstance = new Worker(m.default);
+//   workerInstance.addEventListener(
+//     'message',
+//     e => {
+//       console.log('Received response:');
+//       console.log(e.data);
+//     },
+//     false,
+//   );
+//   workerInstance.postMessage('bar');
+// });
 
-  r() {
-    this.ecb.remove();
-  }
-}
+// console.log('start...');
+// const workerInstance = new Worker(TestWorker);
+// workerInstance.addEventListener(
+//   'message',
+//   e => {
+//     console.log('Received response:');
+//     console.log(e.data);
+//   },
+//   false,
+// );
+// workerInstance.postMessage('bar');
+// console.log('end...');
+
 function App() {
   // CryptoWorker.modPow([2, 2, 2], [1, 2, 3], [1, 2, 3]); // .then(r => console.log('worker2----', r));
   // new IdleManager().start();
@@ -38,7 +54,9 @@ function App() {
   // emitter.emit('aaaa');
   // a.r();
   // emitter.emit('aaaa');
-  MtpService.start();
+
+  // MtpService.start();
+
   // const dcID = 4;
   // const options = { dcID, createNetworker: true };
   // MtpApiManager.invokeApi(

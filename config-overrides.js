@@ -17,7 +17,7 @@ const {
 const WorkerPlugin = require('worker-plugin');
 
 module.exports = override(
-  addWebpackPlugin(WorkerPlugin),
+  addWebpackPlugin(new WorkerPlugin()),
   fixBabelImports('import', {
     libraryName: 'antd',
     libraryDirectory: 'es',

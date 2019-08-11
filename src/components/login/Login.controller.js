@@ -1,14 +1,12 @@
 import { Map } from 'immutable';
 import { pipe, withLifecycle, withState, withHandlers } from '../../js/core/index';
-import MtpApiManager from '../../js/app/mtpApiManager';
-import Config from '../../js/app/config';
 
 const init = (/* porps */) => Map({ showSearchCountry: false, selectedCountry: {} });
 
 const componentDidMount = () => {
   document.body.style = 'background: #e7ebf0;';
-  const dcID = 2;
-  const options = { dcID, createNetworker: true };
+  // const dcID = 2;
+  // const options = { dcID, createNetworker: true };
   // MtpApiManager.invokeApi('help.getNearestDc', {}, options)
   //   .then(sentCode => {
   //     console.log('help.getNearestDc:------', sentCode);
@@ -29,6 +27,9 @@ const componentDidMount = () => {
   //     console.log('auth.sendCode:', sentCode);
   //   })
   //   .catch(e => console.log('auth.sendCode, err:', e));
+  // Crypto.modPow([2, 2, 2], [1, 2, 3], [1, 2, 3]).then(sentCode => {
+  //   console.log('----modPow----:', sentCode);
+  // });
 };
 
 const componentWillUnmount = () => {

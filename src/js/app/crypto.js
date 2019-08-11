@@ -1,4 +1,3 @@
-/* eslint-disable no-param-reassign */
 /*
  * Copyright (c) 2019-present, The Yumcoder Authors. All rights reserved.
  *
@@ -6,6 +5,7 @@
  * the root directory of this source tree.
  */
 
+/* eslint-disable no-param-reassign */
 import {
   convertToUint8Array,
   sha256HashSync,
@@ -34,21 +34,23 @@ class CryptoManger {
     // #todo wsam/nacl
     this.naClEmbed = false; // todo
     if (window.Worker) {
-      // console.error('CW start...');
-      // const tmpWorker = new Worker('./crypto.worker.js');
-      // this.webWorker = tmpWorker;
-      // tmpWorker.onmessage = e => {
-      //   console.error('CW onmessage...');
-      //   if (!this.webWorker) {
-      //     this.webWorker = tmpWorker;
-      //   } else {
-      //     this.finalizeTask(e.data.taskID, e.data.result);
-      //   }
-      // };
-      // tmpWorker.onerror = error => {
-      //   console.error('CW error', error, error.stack);
-      //   this.webWorker = false;
-      // };
+      // eslint-disable-next-line
+      Config.Modes.debug && console.log('CW start...');
+      const tmpWorker = new Worker('./crypto.worker.js');
+      tmpWorker.onmessage = e => {
+        // eslint-disable-next-line
+        Config.Modes.debug && console.log('CW onmessage...');
+        if (!this.webWorker) {
+          this.webWorker = tmpWorker;
+        } else {
+          this.finalizeTask(e.data.taskID, e.data.result);
+        }
+      };
+      tmpWorker.onerror = error => {
+        // eslint-disable-next-line
+        Config.Modes.debug && console.error('CW error', error, error.stack);
+        this.webWorker = false;
+      };
     }
   }
 
@@ -63,9 +65,9 @@ class CryptoManger {
 
   performTaskWorker(task, params, embed) {
     // console.log(dT(), 'CW start', task)
-    // const deferred = new Promise();
+    const deferred = new Defer();
 
-    // this.awaiting[this.taskID] = deferred;
+    this.awaiting[this.taskID] = deferred;
 
     params.task = task;
     params.taskID = this.taskID;
@@ -73,7 +75,7 @@ class CryptoManger {
 
     this.taskID += 1;
 
-    // return deferred;
+    return deferred.promise;
   }
 
   sha256Hash(bytes) {
@@ -87,7 +89,8 @@ class CryptoManger {
           deferred.resolve(digest);
         },
         e => {
-          console.error('Crypto digest error', e);
+          // eslint-disable-next-line
+          Config.Modes.debug && console.error('Crypto digest error', e);
           this.useSha256Crypto = false;
           deferred.resolve(sha256HashSync(bytes));
         },

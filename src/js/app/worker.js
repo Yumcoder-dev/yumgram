@@ -5,10 +5,19 @@
  * the root directory of this source tree.
  */
 
-const createWorker = func => {
-  const code = func.toString();
-  const blob = new Blob([`(${code})()`]);
-  return new Worker(URL.createObjectURL(blob), { type: 'module' });
-};
+// const createWorker = func => {
+//   const code = func.toString();
+//   const blob = new Blob([`(${code})()`]);
+//   return new Worker(URL.createObjectURL(blob), { type: 'module' });
+// };
 
-export default createWorker;
+// export default createWorker;
+export default class createWorker {
+  constructor(worker) {
+    let code = worker.toString();
+    code = code.substring(code.indexOf('{') + 1, code.lastIndexOf('}'));
+
+    const blob = new Blob([code], { type: 'application/javascript' });
+    return new Worker(URL.createObjectURL(blob));
+  }
+}

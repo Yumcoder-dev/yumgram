@@ -1,3 +1,6 @@
+/* eslint-disable no-plusplus */
+/* eslint-disable prefer-promise-reject-errors */
+/* eslint-disable no-param-reassign */
 /* eslint-disable no-return-assign */
 /*
  * Copyright (c) 2019-present, The Yumcoder Authors. All rights reserved.
@@ -8,11 +11,19 @@
 import Defer from './defer';
 import setZeroTimeout from './polyfill';
 import Config from './config';
+import WebpManager from './webpManager';
+import FileManager from './fileManager';
+import MtpApiManager from './mtpApiManager';
+import { nextRandomInt } from './bin';
+import { dT } from './helper';
+import TmpfsFileStorage from './tmpfsFileStorage';
+import IdbFileStorage from './idbFileStorage';
+import MemoryFileStorage from './memoryFileStorage';
 
 class MtpApiFileManager {
   constructor() {
-    this.cachedFs = false;
-    this.cachedFsPromise = false;
+    // this.cachedFs = false;
+    // this.cachedFsPromise = false;
     this.cachedSavePromises = {};
     this.cachedDownloadPromises = {};
     this.cachedDownloads = {};
@@ -24,8 +35,8 @@ class MtpApiFileManager {
 
   downloadRequest(dcID, cb, activeDelta) {
     if (this.downloadPulls[dcID] === undefined) {
-      downloadPulls[dcID] = [];
-      downloadActives[dcID] = 0;
+      this.downloadPulls[dcID] = [];
+      this.downloadActives[dcID] = 0;
     }
     const downloadPull = this.downloadPulls[dcID];
     const deferred = new Defer();
@@ -63,26 +74,29 @@ class MtpApiFileManager {
     );
   }
 
-  static getFileName(location) {
+  // eslint-disable-next-line class-methods-use-this
+  getFileName(location) {
     switch (location._) {
-      case 'inputDocumentFileLocation':
-        var fileName = (location.file_name || '').split('.', 2);
-        var ext = fileName[1] || '';
+      case 'inputDocumentFileLocation': {
+        const fileName = (location.file_name || '').split('.', 2);
+        let ext = fileName[1] || '';
         if (location.sticker && !WebpManager.isWebpSupported()) {
           ext += '.png';
         }
-        var versionPart = location.version ? `v${location.version}` : '';
+        const versionPart = location.version ? `v${location.version}` : '';
         return `${fileName[0]}_${location.id}${versionPart}.${ext}`;
+      }
 
-      default:
+      default: {
         if (!location.volume_id) {
           console.trace('Empty location', location);
         }
-        var ext = 'jpg';
+        let ext = 'jpg';
         if (location.sticker) {
           ext = WebpManager.isWebpSupported() ? 'webp' : 'png';
         }
         return `${location.volume_id}_${location.local_id}_${location.secret}.${ext}`;
+      }
     }
   }
 
@@ -135,9 +149,10 @@ class MtpApiFileManager {
 
   downloadSmallFile(location) {
     if (!FileManager.isAvailable()) {
+      // eslint-disable-next-line prefer-promise-reject-errors
       return Promise.reject({ type: 'BROWSER_BLOB_NOT_SUPPORTED' });
     }
-    const fileName = MtpApiFileManager.getFileName(location);
+    const fileName = this.getFileName(location);
     const mimeType = location.sticker ? 'image/webp' : 'image/jpeg';
     const cachedPromise =
       this.cachedSavePromises[fileName] || this.cachedDownloadPromises[fileName];
@@ -146,7 +161,7 @@ class MtpApiFileManager {
       return cachedPromise;
     }
 
-    const fileStorage = MtpApiFileManager.getFileStorage();
+    const fileStorage = this.getFileStorage();
 
     return (this.cachedDownloadPromises[fileName] = fileStorage.getFile(fileName).then(
       blob => {
@@ -155,7 +170,7 @@ class MtpApiFileManager {
       () => {
         const downloadPromise = this.downloadRequest(location.dc_id, () => {
           let inputLocation = location;
-          if (!inputLocation._ || inputLocation._ == 'fileLocation') {
+          if (!inputLocation._ || inputLocation._ === 'fileLocation') {
             inputLocation = Object.assign({}, location, { _: 'inputFileLocation' });
           }
           // console.log('next small promise')
@@ -177,7 +192,7 @@ class MtpApiFileManager {
 
         const processDownloaded = bytes => {
           if (!location.sticker || WebpManager.isWebpSupported()) {
-            return qSync.when(bytes);
+            return Promise.resolve(bytes);
           }
           return WebpManager.getPngBlobFromWebp(bytes);
         };
@@ -195,15 +210,17 @@ class MtpApiFileManager {
     ));
   }
 
-  static getDownloadedFile(location, size) {
-    const fileStorage = MtpApiFileManager.getFileStorage();
-    const fileName = MtpApiFileManager.getFileName(location);
+  // eslint-disable-next-line class-methods-use-this
+  getDownloadedFile(location, size) {
+    const fileStorage = this.getFileStorage();
+    const fileName = this.getFileName(location);
 
     return fileStorage.getFile(fileName, size);
   }
 
   downloadFile(dcID, location, size, options) {
     if (!FileManager.isAvailable()) {
+      // eslint-disable-next-line prefer-promise-reject-errors
       return Promise.reject({ type: 'BROWSER_BLOB_NOT_SUPPORTED' });
     }
 
@@ -225,10 +242,6 @@ class MtpApiFileManager {
     const cachedPromise =
       this.cachedSavePromises[fileName] || this.cachedDownloadPromises[fileName];
 
-    const fileStorage = MtpApiFileManager.getFileStorage();
-
-    // console.log(dT(), 'fs', fileStorage.name, fileName, cachedPromise)
-
     if (cachedPromise) {
       if (toFileEntry) {
         return cachedPromise.then(blob => {
@@ -238,15 +251,19 @@ class MtpApiFileManager {
       return cachedPromise;
     }
 
+    const fileStorage = MtpApiFileManager.getFileStorage();
+
+    // console.log(dT(), 'fs', fileStorage.name, fileName, cachedPromise)
+
     const deferred = new Defer();
     let canceled = false;
     let resolved = false;
     const mimeType = options.mime || 'image/jpeg';
     let cacheFileWriter;
-    var errorHandler = error => {
+    let errorHandler = error => {
       deferred.reject(error);
-      errorHandler = angular.noop;
-      if (cacheFileWriter && (!error || error.type != 'DOWNLOAD_CANCELED')) {
+      errorHandler = () => {};
+      if (cacheFileWriter && (!error || error.type !== 'DOWNLOAD_CANCELED')) {
         cacheFileWriter.truncate(0);
       }
     };
@@ -254,7 +271,7 @@ class MtpApiFileManager {
     fileStorage.getFile(fileName, size).then(
       blob => {
         if (toFileEntry) {
-          FileManager.copy(blob, toFileEntry).then(() => {
+          FileManager.fileCopyTo(blob, toFileEntry).then(() => {
             deferred.resolve();
           }, errorHandler);
         } else {
@@ -268,18 +285,15 @@ class MtpApiFileManager {
 
         const processDownloaded = bytes => {
           if (!processSticker) {
-            return qSync.when(bytes);
+            return Promise.resolve(bytes);
           }
           return WebpManager.getPngBlobFromWebp(bytes);
         };
 
         fileWriterPromise.then(fileWriter => {
           cacheFileWriter = fileWriter;
-          const limit = 524288;
-          let offset;
+          const limit = 524288; // 512k
           let startOffset = 0;
-          let writeFilePromise = $q.when();
-          let writeFileDeferred;
           if (fileWriter.length) {
             startOffset = fileWriter.length;
             if (startOffset >= size) {
@@ -298,7 +312,7 @@ class MtpApiFileManager {
               dcID,
               () => {
                 if (canceled) {
-                  return $q.when();
+                  return Promise.resolve();
                 }
                 return MtpApiManager.invokeApi(
                   'upload.getFile',
@@ -319,7 +333,7 @@ class MtpApiFileManager {
             ).then(result => {
               writeFilePromise.then(() => {
                 if (canceled) {
-                  return $q.when();
+                  return Promise.resolve();
                 }
                 return processDownloaded(result.bytes).then(processedResult => {
                   return FileManager.write(fileWriter, processedResult)
@@ -344,8 +358,9 @@ class MtpApiFileManager {
               });
             });
           };
-          for (offset = startOffset; offset < size; offset += limit) {
-            writeFileDeferred = new Defer();
+          let writeFilePromise = Promise.resolve();
+          for (let offset = startOffset; offset < size; offset += limit) {
+            const writeFileDeferred = new Defer();
             writerFunc(offset + limit >= size, offset, writeFileDeferred, writeFilePromise);
             writeFilePromise = writeFileDeferred.promise;
           }
@@ -370,18 +385,18 @@ class MtpApiFileManager {
 
   uploadFile(file) {
     const fileSize = file.size;
-    const isBigFile = fileSize >= 10485760;
+    const isBigFile = fileSize >= 10485760; // 10 M
     let canceled = false;
     let resolved = false;
     let doneParts = 0;
     let partSize = 262144; // 256 Kb
     let activeDelta = 2;
 
-    if (fileSize > 67108864) {
-      partSize = 524288;
+    if (fileSize > 67108864 /* 64 M */) {
+      partSize = 524288; // 512 K * 4
       activeDelta = 4;
     } else if (fileSize < 102400) {
-      partSize = 32768;
+      partSize = 32768; // 32 K
       activeDelta = 1;
     }
     const totalParts = Math.ceil(fileSize / partSize);
@@ -392,14 +407,13 @@ class MtpApiFileManager {
 
     const fileID = [nextRandomInt(0xffffffff), nextRandomInt(0xffffffff)];
     const deferred = new Defer();
-    var errorHandler = error => {
+    let errorHandler = error => {
       // console.error('Up Error', error)
       deferred.reject(error);
       canceled = true;
-      errorHandler = angular.noop;
+      errorHandler = () => {};
     };
-    let part = 0;
-    let offset;
+
     const resultInputFile = {
       _: isBigFile ? 'inputFileBig' : 'inputFile',
       id: fileID,
@@ -422,7 +436,7 @@ class MtpApiFileManager {
               uploadDeferred.reject();
               return;
             }
-            if (e.target.readyState != FileReader.DONE) {
+            if (e.target.readyState !== FileReader.DONE) {
               return;
             }
             MtpApiManager.invokeApi(
@@ -438,17 +452,20 @@ class MtpApiFileManager {
                 fileUpload: true,
                 singleInRequest: true,
               },
-            ).then(function(result) {
-              doneParts++;
-              uploadDeferred.resolve();
-              if (doneParts >= totalParts) {
-                deferred.resolve(resultInputFile);
-                resolved = true;
-              } else {
-                console.log(dT(), 'Progress', (doneParts * partSize) / fileSize);
-                deferred.notify({ done: doneParts * partSize, total: fileSize });
-              }
-            }, errorHandler);
+            ).then(
+              (/* result */) => {
+                doneParts++;
+                uploadDeferred.resolve();
+                if (doneParts >= totalParts) {
+                  deferred.resolve(resultInputFile);
+                  resolved = true;
+                } else {
+                  console.log(dT(), 'Progress', (doneParts * partSize) / fileSize);
+                  deferred.notify({ done: doneParts * partSize, total: fileSize });
+                }
+              },
+              errorHandler,
+            );
           };
 
           reader.readAsArrayBuffer(blob);
@@ -458,12 +475,12 @@ class MtpApiFileManager {
         activeDelta,
       );
     };
-    for (offset = 0; offset < fileSize; offset += partSize) {
+    for (let part = 0, offset = 0; offset < fileSize; offset += partSize) {
       downloadFunc(offset, part++);
     }
 
     deferred.promise.cancel = () => {
-      console.log('cancel upload', canceled, resolved);
+      // console.log('cancel upload', canceled, resolved);
       if (!canceled && !resolved) {
         canceled = true;
         errorHandler({ type: 'UPLOAD_CANCELED' });
@@ -473,3 +490,5 @@ class MtpApiFileManager {
     return deferred.promise;
   }
 }
+
+export default MtpApiFileManager;

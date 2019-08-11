@@ -18,7 +18,7 @@ class MemoryFileStorage {
     return true;
   }
 
-  getFile(fileName, size) {
+  getFile(fileName) {
     if (this.storage[fileName]) {
       return Promise.resolve(this.storage[fileName]);
     }

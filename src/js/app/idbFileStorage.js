@@ -18,6 +18,7 @@ class IdbFileStorage {
       window.mozIndexedDB ||
       window.OIndexedDB ||
       window.msIndexedDB;
+
     window.IDBTransaction =
       window.IDBTransaction ||
       window.webkitIDBTransaction ||

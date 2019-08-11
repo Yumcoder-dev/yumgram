@@ -14,7 +14,7 @@ class WebpManager {
 
     const image = new Image();
     image.onload = () => {
-      this.nativeWebpSupport = this.width === 2 && this.height === 1;
+      this.nativeWebpSupport = image.width === 2 && image.height === 1;
     };
     image.onerror = () => {
       this.nativeWebpSupport = false;
@@ -113,6 +113,10 @@ class WebpManager {
       deferred.resolve(blob);
     }, 'image/png');
     return deferred.promise;
+  }
+
+  isWebpSupported() {
+    return this.nativeWebpSupport;
   }
 }
 

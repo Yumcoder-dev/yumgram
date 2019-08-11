@@ -44,7 +44,7 @@
   },
   "lint-staged": {
     "src/**/*.{js,jsx,ts,tsx}": [
-     
+      "eslint --fix",
       "prettier --config .prettierrc --write",
       "git add"
     ],
@@ -92,6 +92,7 @@
     "stylelint": "^10.1.0",
     "stylelint-config-prettier": "^5.2.0",
     "stylelint-prettier": "^1.1.1",
+    "worker-loader": "^2.0.0",
     "worker-plugin": "^3.1.0"
   }
 }

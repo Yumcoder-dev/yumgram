@@ -14,8 +14,7 @@ import {
   pqPrimeFactorization,
 } from './bin';
 
-onmessage = e => {
-  // eslint-disable-line no-restricted-globals
+addEventListener('message', e => {
   if (!e) return;
 
   const { taskID } = e.data;
@@ -28,7 +27,7 @@ onmessage = e => {
 
     case 'mod-pow':
       result = bytesModPow(e.data.x, e.data.y, e.data.m);
-      result = 1;
+      console.log('for test..................');
       break;
 
     // case 'sha1-hash':
@@ -48,4 +47,6 @@ onmessage = e => {
   }
 
   postMessage({ taskID, result });
-};
+});
+
+postMessage('ready');

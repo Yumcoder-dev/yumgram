@@ -91,7 +91,7 @@ class TmpfsFileStorage {
 
   saveFile(fileName, blob) {
     return this.getFileWriter(fileName).then(fileWriter => {
-      return FileManager.write(fileWriter, blob).then(() => {
+      return FileManager.fileWriteData(fileWriter, blob).then(() => {
         return fileWriter.finalize();
       });
     });

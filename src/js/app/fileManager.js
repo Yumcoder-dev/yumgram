@@ -1,3 +1,4 @@
+/* eslint-disable class-methods-use-this */
 /* eslint-disable no-undef */
 /* eslint-disable no-empty */
 /* eslint-disable no-param-reassign */
@@ -11,18 +12,19 @@
 import { blobConstruct, bytesToArrayBuffer, blobSafeMimeType, bytesToBase64 } from './bin';
 import Defer from './defer';
 import Timeout from './timeout';
-import setZeroTimeout from './polyfill';
+import { setZeroTimeout } from './polyfill';
 
 class FileManager {
   constructor() {
     window.URL = window.URL || window.webkitURL;
     window.BlobBuilder = window.BlobBuilder || window.WebKitBlobBuilder || window.MozBlobBuilder;
-    this.isSafari = 'safari' in window;
-    this.safariVersion = parseFloat(
-      this.isSafari && (navigator.userAgent.match(/Version\/(\d+\.\d+).* Safari/) || [])[1],
+
+    const isSafari = 'safari' in window;
+    const safariVersion = parseFloat(
+      isSafari && (navigator.userAgent.match(/Version\/(\d+\.\d+).* Safari/) || [])[1],
     );
-    this.safariWithDownload = this.isSafari && this.safariVersion >= 11.0;
-    this.buggyUnknownBlob = this.isSafari && !this.safariWithDownload;
+    this.safariWithDownload = isSafari && safariVersion >= 11.0;
+    this.buggyUnknownBlob = isSafari && !this.safariWithDownload;
     this.blobSupported = true;
     try {
       blobConstruct([], '');
@@ -51,25 +53,14 @@ class FileManager {
     });
   }
 
-  static fileWriteData(fileWriter, bytes) {
+  fileWriteData(fileWriter, bytes) {
     const deferred = new Defer();
 
-    fileWriter.onwriteend = () => {
-      deferred.resolve();
-    };
-    fileWriter.onerror = e => {
-      deferred.reject(e);
-    };
+    fileWriter.onwriteend = () => deferred.resolve();
+    fileWriter.onerror = e => deferred.reject(e);
 
     if (bytes.file) {
-      bytes.file(
-        file => {
-          fileWriter.write(file);
-        },
-        error => {
-          deferred.reject(error);
-        },
-      );
+      bytes.file(file => fileWriter.write(file), error => deferred.reject(error));
     } else if (bytes instanceof Blob) {
       // is file bytes
       fileWriter.write(bytes);
@@ -85,9 +76,9 @@ class FileManager {
     return deferred.promise;
   }
 
-  static chooseSaveFile(fileName, ext, mimeType) {
+  chooseSaveFile(fileName, ext, mimeType) {
     if (!window.chrome || !chrome.fileSystem || !chrome.fileSystem.chooseEntry) {
-      return Promise.reject();
+      return Promise.reject(new Error('unsupported file system'));
     }
     const deferred = new Defer();
 
@@ -110,16 +101,12 @@ class FileManager {
     return deferred.promise;
   }
 
-  static getFileWriter(fileEntry) {
+  getFileWriter(fileEntry) {
     const deferred = new Defer();
 
     fileEntry.createWriter(
-      fileWriter => {
-        deferred.resolve(fileWriter);
-      },
-      error => {
-        deferred.reject(error);
-      },
+      fileWriter => deferred.resolve(fileWriter),
+      error => deferred.reject(error),
     );
 
     return deferred.promise;
@@ -127,10 +114,9 @@ class FileManager {
 
   getFakeFileWriter(mimeType, saveFileCallback) {
     let blobParts = [];
-    const { blobSupported } = this;
     const fakeFileWriter = {
       write(blob) {
-        if (!blobSupported) {
+        if (!this.blobSupported) {
           if (fakeFileWriter.onerror) {
             fakeFileWriter.onerror(new Error('Blob not supported by browser'));
           }
@@ -158,7 +144,7 @@ class FileManager {
     return fakeFileWriter;
   }
 
-  static getUrl(fileData, mimeType) {
+  getUrl(fileData, mimeType) {
     const safeMimeType = blobSafeMimeType(mimeType);
     // console.log(dT(), 'get url', fileData, mimeType, fileData.toURL !== undefined, fileData instanceof Blob)
     if (fileData.toURL !== undefined) {
@@ -170,7 +156,7 @@ class FileManager {
     return `data:${safeMimeType};base64,${bytesToBase64(fileData)}`;
   }
 
-  static getByteArray(fileData) {
+  getByteArray(fileData) {
     if (fileData instanceof Blob) {
       const deferred = new Defer();
       try {
@@ -190,32 +176,23 @@ class FileManager {
     } else if (fileData.file) {
       const deferred = new Defer();
       fileData.file(
-        blob => {
-          FileManager.getByteArray(blob).then(
-            result => {
-              deferred.resolve(result);
-            },
-            error => {
-              deferred.reject(error);
-            },
-          );
-        },
-        error => {
-          deferred.reject(error);
-        },
+        blob =>
+          this.getByteArray(blob).then(
+            result => deferred.resolve(result),
+            error => deferred.reject(error),
+          ),
+        error => deferred.reject(error),
       );
       return deferred.promise;
     }
     return Promise.resolve(fileData);
   }
 
-  static getDataUrl(blob) {
+  getDataUrl(blob) {
     const deferred = new Defer();
     try {
       const reader = new FileReader();
-      reader.onloadend = () => {
-        deferred.resolve(reader.result);
-      };
+      reader.onloadend = () => deferred.resolve(reader.result);
       reader.readAsDataURL(blob);
     } catch (e) {
       return deferred.reject(e);
@@ -228,10 +205,10 @@ class FileManager {
     if (this.buggyUnknownBlob && blob instanceof Blob) {
       const blobMimeType = blob.type || blob.mimeType || mimeType || '';
       if (!blobMimeType.match(/image\/(jpeg|gif|png|bmp)|video\/quicktime/)) {
-        return FileManager.getDataUrl(blob);
+        return this.getDataUrl(blob);
       }
     }
-    return Promise.reject(FileManager.getUrl(blob, mimeType));
+    return Promise.resolve(this.getUrl(blob, mimeType));
   }
 
   downloadFile(blob, mimeType, fileName) {
@@ -239,7 +216,6 @@ class FileManager {
       window.navigator.msSaveBlob(blob, fileName);
       return;
     }
-
     if (window.navigator && navigator.getDeviceStorage) {
       let storageName = 'sdcard';
       const subdir = 'yumgram/';
@@ -259,15 +235,15 @@ class FileManager {
 
       const request = deviceStorage.addNamed(blob, subdir + fileName);
 
-      request.onsuccess = () => {
-        console.log('Device storage save result', this.result);
+      request.onsuccess = (/* result */) => {
+        // console.log(`Device storage save result${result}`);
       };
       request.onerror = () => {};
       return;
     }
 
     let popup = false;
-    if (this.isSafari && !this.safariWithDownload) {
+    if (this.buggyUnknownBlob) {
       popup = window.open();
     }
 
@@ -317,7 +293,8 @@ class FileManager {
           window.open(url, '_blank');
         }
       }
-      Timeout(() => anchor.parentElement.removeChild(anchor), 100);
+      // eslint-disable-next-line no-new
+      new Timeout(() => anchor.parentElement.removeChild(anchor), 100);
     });
   }
 }
