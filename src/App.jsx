@@ -8,73 +8,16 @@
 import React from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import './App.module.less';
-// eslint-disable-next-line
-// import TestWorker from './test.worker';
-// import Worker from './js/app/worker';
+import Worker from './js/app/crypto.worker';
 import routes from './router';
 
-// const piWorker = new Worker(TestWorker);
-// piWorker.onmessage = event => {
-//   console.log(`pi: ${event.data}`);
-// };
-// piWorker.postMessage(42);
-
-// import('./test.worker.js').then(m => {
-//   console.log(m.default.toString());
-//   const workerInstance = new Worker(m.default);
-//   workerInstance.addEventListener(
-//     'message',
-//     e => {
-//       console.log('Received response:');
-//       console.log(e.data);
-//     },
-//     false,
-//   );
-//   workerInstance.postMessage('bar');
-// });
-
-// console.log('start...');
-// const workerInstance = new Worker(TestWorker);
-// workerInstance.addEventListener(
-//   'message',
-//   e => {
-//     console.log('Received response:');
-//     console.log(e.data);
-//   },
-//   false,
-// );
-// workerInstance.postMessage('bar');
-// console.log('end...');
+const w = new Worker();
+w.onmessage = event => {
+  console.log('onmessage', event);
+};
+w.postMessage({ task: 'mod-pow', x: [2, 2, 2], y: [1, 2, 3], m: [1, 2, 3] });
 
 function App() {
-  // CryptoWorker.modPow([2, 2, 2], [1, 2, 3], [1, 2, 3]); // .then(r => console.log('worker2----', r));
-  // new IdleManager().start();
-  // emitter.addListener('idle.isIDLE', data => console.log('*****', data));
-  // const a = new A();
-  // emitter.emit('aaaa');
-  // a.r();
-  // emitter.emit('aaaa');
-
-  // MtpService.start();
-
-  // const dcID = 4;
-  // const options = { dcID, createNetworker: true };
-  // MtpApiManager.invokeApi(
-  //   'auth.sendCode',
-  //   {
-  //     flags: 0,
-  //     phone_number: '989125621200',
-  //     api_id: Config.App.id,
-  //     api_hash: Config.App.hash,
-  //     lang_code: navigator.language || 'en',
-  //   },
-  //   options,
-  // )
-  //   .then(sentCode => {
-  //     console.log('auth.sendCode:', sentCode);
-  //   })
-  //   .catch(e => console.log('auth.sendCode, err:', e));
-
   return (
     <BrowserRouter>
       <Switch>

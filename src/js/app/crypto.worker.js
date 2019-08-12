@@ -27,7 +27,6 @@ addEventListener('message', e => {
 
     case 'mod-pow':
       result = bytesModPow(e.data.x, e.data.y, e.data.m);
-      console.log('for test..................');
       break;
 
     // case 'sha1-hash':
