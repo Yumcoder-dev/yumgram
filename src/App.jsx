@@ -8,14 +8,20 @@
 import React from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import './App.module.less';
-import Worker from './js/app/crypto.worker';
+// import Worker from './js/app/crypto.worker';
 import routes from './router';
+// import HelloWorld from './wsam/hello_world';
 
-const w = new Worker();
-w.onmessage = event => {
-  console.log('onmessage', event);
-};
-w.postMessage({ task: 'mod-pow', x: [2, 2, 2], y: [1, 2, 3], m: [1, 2, 3] });
+// const w = new Worker();
+// w.onmessage = event => {
+//   console.log('onmessage', event);
+// };
+// w.postMessage({ task: 'mod-pow', x: [2, 2, 2], y: [1, 2, 3], m: [1, 2, 3] });
+
+// const hw = new HelloWorld();
+// hw.memFunc().then(res => {
+//   console.log('ressss', res);
+// });
 
 function App() {
   return (

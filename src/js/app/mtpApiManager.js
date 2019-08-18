@@ -228,7 +228,6 @@ class ApiManager {
     // let cachedNetworker;
     this.stack = new Error().stack || 'empty stack';
     const performRequest = networker => {
-      console.log('dddddd', method, params, options);
       return networker.wrapApiCall(method, params, options).then(
         result => {
           deferred.resolve(result);

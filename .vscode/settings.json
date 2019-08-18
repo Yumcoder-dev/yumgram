@@ -1,0 +1,11 @@
+{
+    "files.associations": {
+        ".eslintrc": "jsonc",
+        "chrono": "cpp",
+        "algorithm": "cpp",
+        "crypt.h": "c",
+        "cinttypes": "cpp",
+        "string_view": "c",
+        "iostream": "cpp"
+    }
+}

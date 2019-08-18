@@ -236,7 +236,7 @@ class MtpNetworker {
   sendLongPoll() {
     const maxWait = 25000;
     this.longPollPending = tsNow() + maxWait;
-    console.log('Set lp', this.longPollPending, tsNow());
+    // console.log('Set lp', this.longPollPending, tsNow());
     this.wrapMtpCall(
       'http_wait',
       {
@@ -364,17 +364,11 @@ class MtpNetworker {
   }
 
   toggleOffline(enabled) {
-    console.log('toggle ', enabled, this.dcID, this.iii);
     if (this.offline !== undefined && this.offline === enabled) {
       return;
     }
     this.offline = enabled;
     this.offlineConnecting = false;
-    console.log(
-      '////***************************///////////',
-      this.checkConnectionPeriod,
-      this.offline,
-    );
     if (this.offline) {
       // $timeout.cancel(this.nextReqPromise);
       if (this.nextReqPromise) {
@@ -611,6 +605,7 @@ class MtpNetworker {
     });
   }
 
+  // eslint-disable-next-line no-unused-vars
   sendEncryptedRequest(message, options) {
     options = options || {};
     // console.log(dT(), 'Send encrypted'/*, message*/)
@@ -632,8 +627,6 @@ class MtpNetworker {
     MtpSecureRandom.nextBytes(padding);
 
     const dataWithPadding = bufferConcat(dataBuffer, padding);
-    console.log(dT(), 'Adding padding', dataBuffer, padding, dataWithPadding);
-    console.log(dT(), 'auth_key_id', bytesToHex(this.authKeyID));
     return this.getEncryptedMessage(dataWithPadding).then(encryptedResult => {
       console.log(dT(), 'Got encrypted out message***', encryptedResult);
       const request = new TLSerialization({
@@ -764,16 +757,6 @@ class MtpNetworker {
                 // console.warn(dT(), 'Result for unknown message', result)
                 return;
               }
-              console.log(
-                'ssssssss',
-                result,
-                '///////////////',
-                sentMessage,
-                '+++++',
-                type,
-                this.mtproto,
-              );
-
               result.result = this.fetchObject(type, `${field}[result]`);
               // console.log(dT(), 'override rpc_result', sentMessage, type, result)
             },

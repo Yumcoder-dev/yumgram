@@ -26,6 +26,10 @@ module.exports = override(
     test: /\.worker\.js$/,
     use: { loader: 'worker-loader' },
   }),
+  // addWebpackModuleRule({
+  //   test: /\.wasm$/,
+  //   use: { loader: 'wasm-loader' },
+  // }),
   fixBabelImports('import', {
     libraryName: 'antd',
     libraryDirectory: 'es',

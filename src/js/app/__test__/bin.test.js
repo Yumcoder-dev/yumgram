@@ -241,3 +241,10 @@ it('binary utils - aesEncryptSync', () => {
   const aes = binUtils.aesEncryptSync(binUtils.bytesFromHex(got), k1, k2);
   expect(binUtils.bytesToHex(aes)).toEqual(wanted);
 });
+
+it('binary utils - pqPrimeFactorization', () => {
+  console.log(
+    '*****************',
+    binUtils.pqPrimeFactorization([0x17, 0xed, 0x48, 0x94, 0x1a, 0x08, 0xf9, 0x81]),
+  );
+});

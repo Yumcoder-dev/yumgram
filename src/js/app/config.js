@@ -7051,6 +7051,24 @@ const Config = {
     allow_tmpfs: window.location.search.indexOf('tmpfs=yeahImSureIknowWhatImDoing') > 0 || false,
     push_api: window.location.search.indexOf('push=1') === -1,
   },
+  Navigator: {
+    osX:
+      (navigator.platform || '').toLowerCase().indexOf('mac') !== -1 ||
+      (navigator.userAgent || '').toLowerCase().indexOf('mac') !== -1,
+    msie: (navigator.userAgent || '').search(/MSIE | Trident\/|Edge\//) !== -1,
+    retina: window.devicePixelRatio > 1,
+    ffos: navigator.userAgent.search(/mobi.+Gecko/i) !== -1,
+    ffos2p: navigator.userAgent.search(/mobi.+Gecko\/[34567]/i) !== -1,
+    touch:
+      (Window.screen && Window.screen.width <= 768) ||
+      'ontouchstart' in window ||
+      (window.DocumentTouch && document instanceof Window.DocumentTouch),
+    mobile:
+      (Window.screen && Window.screen.width && Window.screen.width < 480) ||
+      navigator.userAgent.search(
+        /iOS|iPhone OS|Android|BlackBerry|BB10|Series ?[64]0|J2ME|MIDP|opera mini|opera mobi|mobi.+Gecko|Windows Phone/i,
+      ) !== -1,
+  },
   Mobile: false,
   App: {
     id: 2496,
