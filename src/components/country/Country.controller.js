@@ -7,7 +7,7 @@
 
 import { Map, List } from 'immutable';
 import i18n from '../../locales/i18n';
-import { pipe, withLifecycle, withState, withHandlers } from '../../js/core/index';
+import { pipe, withState, withHandlers } from '../../js/core/index';
 import { CountryCodes } from './country.data';
 import SearchIndexManager from '../../js/core/searchIndexManager';
 
@@ -35,14 +35,6 @@ const init = (/* porps */) => {
     count,
     loading: false,
   });
-};
-
-const componentDidMount = () => {
-  document.body.style = 'background: #e7ebf0;';
-};
-
-const componentWillUnmount = () => {
-  document.body.style = 'background: ;';
 };
 
 const onSearch = ({ setData }) => e => {
@@ -88,8 +80,4 @@ const onSearch = ({ setData }) => e => {
 export default pipe(
   withState(init),
   withHandlers({ onSearch }),
-  withLifecycle({
-    componentDidMount,
-    componentWillUnmount,
-  }),
 );

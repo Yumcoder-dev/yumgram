@@ -6,24 +6,27 @@
  */
 
 @import '../../App.module.less';
+
 .cell {
   &:hover {
     background-color: color(~`colorPalette('@{primary-color}', 1) `);
   }
+
   cursor: pointer;
+  padding-left: 26px;
+  padding-right: 26px;
+  padding-top: 8px;
+  padding-bottom: 8px;
 }
 
-// .ListItemEven,
-// .ListItemOdd {
-//   display: flex;
-//   align-items: center;
-//   justify-content: center;
-// }
+.country_page {
+  padding-bottom: @padding-xs;
+}
 
-// .ListItemEven {
-//   background-color: #c0c038;
-// }
+.search_country {
+  padding: @padding-sm;
+}
 
-// .demo-loading {
-//   left: 50%;
-// }
+.search_country_list {
+  height: 50vh; // vh: hundredths of the viewport height.
+}

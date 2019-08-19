@@ -5,7 +5,6 @@
  * the root directory of this source tree.
  */
 
-/* eslint-disable import/named */
 export { default as withLifecycle } from './withLifecycle';
 export { default as withStateHandlers } from './withStateHandlers';
 export { default as withHandlers } from './withHandlers';

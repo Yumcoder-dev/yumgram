@@ -4,11 +4,13 @@
  * This source code is licensed under the license found in the LICENSE file in
  * the root directory of this source tree.
  */
+
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FixedSizeList } from 'react-window';
 import AutoSizer from 'react-virtualized-auto-sizer';
 import { Row, List, Input } from 'antd';
+import i18n from 'i18next';
 import countryController from './Country.controller';
 import CustomScrollbars from '../scrollbars/Scrollbars';
 import styles from './Country.module.less';
@@ -17,23 +19,22 @@ const { Search } = Input;
 
 const CountryList = ({ onItemSelected }) => {
   const { data, onSearch } = countryController();
-
   return (
-    <Row style={{ paddingBottom: '8px' }}>
-      <div style={{ padding: '12px' }}>
+    <Row className={styles.country_page}>
+      <div className={styles.search_country}>
         <Search
-          placeholder="search"
+          placeholder={i18n.t('search')}
           onChange={onSearch}
           allowClear
           ref={input => input && input.focus()}
         />
       </div>
-      <Row style={{ height: '50vh' }}>
+      <Row className={styles.search_country_list}>
         <AutoSizer>
           {({ width, height }) => (
             <FixedSizeList
               height={height}
-              itemCount={data.get('count')} // 1
+              itemCount={data.get('count')}
               itemSize={32}
               width={width}
               outerElementType={CustomScrollbars}
@@ -45,21 +46,15 @@ const CountryList = ({ onItemSelected }) => {
                     <List.Item
                       onClick={() => onItemSelected(item)}
                       key={index}
-                      style={{
-                        ...style,
-                        paddingLeft: '26px',
-                        paddingRight: '26px',
-                        paddingTop: '8px',
-                        paddingBottom: '8px',
-                      }}
+                      style={style}
                       className={styles.cell}
                     >
                       <List.Item.Meta title={item.name} />
-                      <div>{item.code}</div>
+                      <span>{item.code}</span>
                     </List.Item>
                   );
                 }
-                return <div key={index}> loading... </div>;
+                return <div key={index}>{i18n.t('loading')}</div>;
               }}
             </FixedSizeList>
           )}

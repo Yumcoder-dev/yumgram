@@ -4,9 +4,12 @@
  * This source code is licensed under the license found in the LICENSE file in
  * the root directory of this source tree.
  */
+
 const tr = {
   'app.welcome': 'Welcome to React and react-i18next',
-
+  search: 'search',
+  country: 'Country',
+  loading: 'loading...',
   country_select_modal_country_ab: 'Abkhazia',
   country_select_modal_country_af: 'Afghanistan',
   country_select_modal_country_ax: 'Åland Islands',

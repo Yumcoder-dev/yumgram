@@ -5,7 +5,8 @@
  * the root directory of this source tree.
  */
 
-import { useEffect, useRef, useState } from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+import { useEffect, useRef } from 'react';
 
 function usePrevious(value) {
   const ref = useRef(null);
@@ -21,40 +22,30 @@ function usePrevious(value) {
  * @returns {object}
  */
 const withLifecycle = spec => (props = {}) => {
-  const [state, setStateRaw] = useState({});
-  const setState = update => {
-    setStateRaw({
-      ...state,
-      ...(typeof update === 'function' ? update(state) : update),
-    });
-  };
-
-  const self = { props, state, setState };
-
   if (spec.componentDidMount) {
     useEffect(() => {
-      spec.componentDidMount.call(self, props);
-    }, [props, self]);
+      spec.componentDidMount.call(props, props);
+    }, []);
   }
   // When you return a function in the callback passed to useEffect,
   // the returned function will be called before the component is removed from the UI
   if (spec.componentWillUnmount) {
     useEffect(
       () => () => {
-        spec.componentWillUnmount.call(self);
+        spec.componentWillUnmount.call(props);
       },
-      [self],
+      [],
     );
   }
 
   if (spec.componentDidUpdate) {
     const previousProps = usePrevious(props);
     useEffect(() => {
-      spec.componentDidUpdate.call(self, previousProps);
+      spec.componentDidUpdate.call(props, previousProps);
     });
   }
 
-  return { ...props, ...state };
+  return { ...props };
 };
 
 export default withLifecycle;

@@ -1,3 +1,11 @@
+/* eslint-disable no-unused-vars */
+/*
+ * Copyright (c) 2019-present, The Yumcoder Authors. All rights reserved.
+ *
+ * This source code is licensed under the license found in the LICENSE file in
+ * the root directory of this source tree.
+ */
+
 import { Map } from 'immutable';
 import { pipe, withLifecycle, withState, withHandlers } from '../../js/core/index';
 import Config from '../../js/app/config';
@@ -72,7 +80,7 @@ const initPhoneCountry = setData => {
 
 const componentDidMount = ({ setData }) => {
   document.body.style = 'background: #e7ebf0;';
-  initPhoneCountry(setData);
+  // initPhoneCountry(setData);
 };
 
 const componentWillUnmount = () => {
@@ -82,7 +90,6 @@ const componentWillUnmount = () => {
 const openSearchContry = ({ setData }) => () => setData(s => s.set('showSearchCountry', true));
 const closeSearchCountry = ({ setData }) => () => setData(s => s.set('showSearchCountry', false));
 const onChooseCountry = ({ setData }) => selectedItem => {
-  // console.log('select --->', selectedItem);
   setData(s => s.set('selectedCountry', selectedItem).set('showSearchCountry', false));
 };
 
