@@ -7,9 +7,15 @@
 
 import Storage from '../storage';
 
-it('storage - set and get', () => {
+it('storage - set', () => {
   return Storage.set({ a: 1, b: 2 }).then(() => {
     expect(Storage.get(['a', 'b'])).resolves.toEqual([1, 2]);
     expect(Storage.get(['a', 'b', 'c'])).resolves.toEqual([1, 2, false]);
+  });
+});
+
+it('storage - get', () => {
+  return Storage.get(['g1', 'g2']).then(res => {
+    expect(res).toEqual([false, false]);
   });
 });

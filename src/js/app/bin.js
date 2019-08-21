@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 /*
  * Copyright (c) 2019-present, The Yumcoder Authors. All rights reserved.
  *
@@ -697,6 +696,7 @@ export function pqPrimeFactorization(pqBytes) {
   try {
     result = pqPrimeLeemon(str2bigInt(what.toString(16), 16, Math.ceil(64 / bpe) + 1));
   } catch (e) {
+    // eslint-disable-next-line no-console
     console.error('Pq leemon Exception', e);
   }
 
@@ -705,6 +705,7 @@ export function pqPrimeFactorization(pqBytes) {
     try {
       result = pqPrimeLong(Long.fromString(what.toString(16), 16));
     } catch (e) {
+      // eslint-disable-next-line no-console
       console.error('Pq long Exception', e);
     }
     // console.timeEnd('PQ long')

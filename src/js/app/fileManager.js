@@ -1,7 +1,3 @@
-/* eslint-disable class-methods-use-this */
-/* eslint-disable no-undef */
-/* eslint-disable no-empty */
-/* eslint-disable no-param-reassign */
 /*
  * Copyright (c) 2019-present, The Yumcoder Authors. All rights reserved.
  *
@@ -9,12 +5,16 @@
  * the root directory of this source tree.
  */
 
+/* eslint-disable class-methods-use-this */
+/* eslint-disable no-undef */
+/* eslint-disable no-empty */
+/* eslint-disable no-param-reassign */
 import { blobConstruct, bytesToArrayBuffer, blobSafeMimeType, bytesToBase64 } from './bin';
 import Defer from './defer';
 import Timeout from './timeout';
 import { setZeroTimeout } from './polyfill';
 
-class FileManager {
+export default class FileManager {
   constructor() {
     window.URL = window.URL || window.webkitURL;
     window.BlobBuilder = window.BlobBuilder || window.WebKitBlobBuilder || window.MozBlobBuilder;
@@ -298,5 +298,3 @@ class FileManager {
     });
   }
 }
-
-export default FileManager;

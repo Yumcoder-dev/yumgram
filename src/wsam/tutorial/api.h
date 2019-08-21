@@ -15,9 +15,14 @@ extern "C"
         uint32_t c;
     } replyMemFunc;
 
+    extern int js_add(int, int);
+    int callJsFuncFromC(int a, int b);
+
+    unsigned int put(unsigned int offset, unsigned int value);
+    unsigned int get(unsigned int offset);
     int fib(int x);
-    uint8_t *arrFunc(uint8_t *input, int count);
-    uint8_t *memFunc();
+
+    unsigned int arrFunc(uint8_t *input, int count);
 
 #ifdef __cplusplus
 }

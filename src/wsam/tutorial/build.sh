@@ -9,7 +9,7 @@
 folder='./build'
 cmake -B $folder
 make -C $folder 
-cp $folder/bin/hello_world.wasm ../../../public/assets/wasm
+cp $folder/bin/tutorial.wasm ../../../public/assets/wasm
 
 
 # echo "<html>

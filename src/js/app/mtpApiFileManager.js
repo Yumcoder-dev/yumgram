@@ -20,7 +20,7 @@ import TmpfsFileStorage from './tmpfsFileStorage';
 import IdbFileStorage from './idbFileStorage';
 import MemoryFileStorage from './memoryFileStorage';
 
-class MtpApiFileManager {
+export default class MtpApiFileManager {
   constructor() {
     // this.cachedFs = false;
     // this.cachedFsPromise = false;
@@ -171,7 +171,7 @@ class MtpApiFileManager {
         const downloadPromise = this.downloadRequest(location.dc_id, () => {
           let inputLocation = location;
           if (!inputLocation._ || inputLocation._ === 'fileLocation') {
-            inputLocation = Object.assign({}, location, { _: 'inputFileLocation' });
+            inputLocation = { ...location, _: 'inputFileLocation' };
           }
           // console.log('next small promise')
           return MtpApiManager.invokeApi(
@@ -490,5 +490,3 @@ class MtpApiFileManager {
     return deferred.promise;
   }
 }
-
-export default MtpApiFileManager;

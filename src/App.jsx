@@ -5,12 +5,30 @@
  * the root directory of this source tree.
  */
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import './App.module.less';
-// import Worker from './js/app/crypto.worker';
-import routes from './router';
-// import HelloWorld from './wsam/hello_world';
+import Router from './router';
+import WindowResizeEmitter from './js/app/windowResizeEmitter';
+import Application from './js/app/application';
+
+function App() {
+  useEffect(() => {
+    Application.start();
+  }, []);
+  useEffect(WindowResizeEmitter, []);
+  return (
+    <BrowserRouter>
+      <Switch>
+        {Router.map(r => (
+          <Route key={r.name} exact path={r.path} component={r.component} />
+        ))}
+      </Switch>
+    </BrowserRouter>
+  );
+}
+
+export default App;
 
 // const w = new Worker();
 // w.onmessage = event => {
@@ -22,17 +40,3 @@ import routes from './router';
 // hw.memFunc().then(res => {
 //   console.log('ressss', res);
 // });
-
-function App() {
-  return (
-    <BrowserRouter>
-      <Switch>
-        {routes.map(r => (
-          <Route key={r.name} exact path={r.path} component={r.component} />
-        ))}
-      </Switch>
-    </BrowserRouter>
-  );
-}
-
-export default App;

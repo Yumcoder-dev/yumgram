@@ -17,7 +17,6 @@ const init = (/* porps */) =>
   Map({
     showSearchCountry: false,
     selectedCountry: {},
-    phone_number: '',
   });
 
 const selectPhoneCountryByIso2 = (setData, countryIso2) => {

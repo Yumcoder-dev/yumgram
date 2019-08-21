@@ -6,10 +6,21 @@
  */
 
 const tr = {
-  'app.welcome': 'Welcome to React and react-i18next',
+  appName: 'Telegram',
   search: 'search',
   country: 'Country',
   loading: 'loading...',
+  next: 'Next',
+  singin: 'Sign in',
+  singinMsg: 'Please choose your country and enter your full phone number.',
+  selectCountry: 'select a country',
+  welcomeMsg: 'Welcome to the unofficial Telegram web-client.',
+  learnMore: 'Learn more',
+  phone: 'phon',
+  phoneNumber: 'Phone number',
+  code: 'code',
+  confirm_modal_resize_desktop: 'Would you like to switch to desktop version?',
+  confirm_modal_resize_mobile: 'Would you like to switch to mobile version?',
   country_select_modal_country_ab: 'Abkhazia',
   country_select_modal_country_af: 'Afghanistan',
   country_select_modal_country_ax: 'Åland Islands',

@@ -6,6 +6,9 @@
         "crypt.h": "c",
         "cinttypes": "cpp",
         "string_view": "c",
-        "iostream": "cpp"
+        "iostream": "cpp",
+        "stdio.h": "c",
+        "stdlib.h": "c",
+        "cstdio": "c"
     }
 }

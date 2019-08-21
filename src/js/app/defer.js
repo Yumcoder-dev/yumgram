@@ -5,7 +5,7 @@
  * the root directory of this source tree.
  */
 
-class Defer {
+export default class Defer {
   constructor() {
     this.canceled = false;
     this.promise = new Promise((resolve, reject) => {
@@ -43,5 +43,3 @@ class Defer {
     }
   }
 }
-
-export default Defer;

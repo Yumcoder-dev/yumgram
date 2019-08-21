@@ -1,4 +1,3 @@
-/* eslint-disable no-param-reassign */
 /*
  * Copyright (c) 2019-present, The Yumcoder Authors. All rights reserved.
  *
@@ -6,6 +5,7 @@
  * the root directory of this source tree.
  */
 
+/* eslint-disable no-param-reassign */
 class Storage {
   constructor() {
     // #todo check creation lifecycle
@@ -20,7 +20,7 @@ class Storage {
     this.keyPrefix = newPrefix;
   }
 
-  noPrefix() {
+  setNoPrefix() {
     this.noPrefix = true;
   }
 
@@ -49,8 +49,7 @@ class Storage {
       let key;
 
       for (i = 0; i < keys.length; i += 1) {
-        // eslint-disable-next-line no-param-reassign
-        // eslint-disable-next-line no-multi-assign
+        // eslint-disable-next-line
         key = keys[i] = prefix + keys[i];
         if (key.substr(0, 3) !== 'xt_' && this.cache[key] !== undefined) {
           result.push(this.cache[key]);

@@ -6,7 +6,8 @@
  */
 
 export const createWebAssembly = async (path, importObject) => {
-  if (process.env.NODE_ENV === 'production') {
+  if (WebAssembly.instantiateStreaming !== undefined) {
+    // if (process.env.NODE_ENV === 'production') {
     const module = await WebAssembly.compileStreaming(fetch(`/assets/wasm/${path}`));
     const res = await WebAssembly.instantiate(module, importObject);
     return Promise.resolve(res.exports);

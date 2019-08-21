@@ -5,7 +5,7 @@
  * the root directory of this source tree.
  */
 import Timeout from './timeout';
-import emitter from '../core/emitter';
+import Emitter from '../core/emitter';
 import Config from './config';
 
 class Idle {
@@ -56,7 +56,7 @@ class Idle {
   }
 
   onEvent(e) {
-    console.log('event', e.type);
+    // console.log('event', e.type);
     if (e.type === 'mousemove') {
       const originalEvent = e.originalEvent || e;
       if (originalEvent && originalEvent.movementX === 0 && originalEvent.movementY === 0) {
@@ -74,7 +74,7 @@ class Idle {
       this.timeout.cancel();
     }
     if (!isIDLE) {
-      console.log('update timeout');
+      // console.log('update timeout');
       this.timeout = new Timeout(() => this.onEvent({ type: 'timeout' }), 30000);
     }
 
@@ -101,7 +101,7 @@ class Idle {
     this.debouncePromise = new Timeout(() => {
       // console.log(dT(), 'IDLE changed', isIDLE)
       this.isIDLE = isIDLE;
-      emitter.emit('idle.isIDLE', isIDLE);
+      Emitter.emit('idle.isIDLE', isIDLE);
       if (isIDLE && e.type === 'timeout') {
         window.addEventListener('mousemove', this.onEvent);
       }
@@ -109,4 +109,4 @@ class Idle {
   }
 }
 
-export default Idle;
+export default new Idle();

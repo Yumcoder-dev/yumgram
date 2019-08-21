@@ -8,7 +8,7 @@
 /* eslint-disable no-return-assign */
 import FileManager from './fileManager';
 
-class MemoryFileStorage {
+export default class MemoryFileStorage {
   constructor() {
     this.storage = {};
   }
@@ -36,5 +36,3 @@ class MemoryFileStorage {
     return Promise.resolve(fakeWriter);
   }
 }
-
-export default MemoryFileStorage;

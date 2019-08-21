@@ -6,24 +6,103 @@
  */
 
 @import '../../App.module.less';
-.borderless {
+
+.borderless_button {
   font-weight: bold;
-  color: white;
+  color: @white;
 }
 
-.input_slect {
+.cursor_pointer {
+  cursor: pointer;
+}
+
+.head_bg {
+  background: @primary-color;
+  height: 226px;
+}
+
+.m_yum_toolbar {
+  background: @primary-color;
+  height: 46px;
+}
+
+.yum_toolbar {
+  margin-bottom: 22px;
+  margin-top: 22px;
+}
+
+.yum_content {
+  margin: -136px auto 90px;
+  max-width: 404px;
+}
+.m_yum_content {
+  margin: 0px auto 30px;
+  max-width: 404px;
+}
+
+.yum_fragment {
+  background: @white;
+  padding: 44px 65px 44px;
+
+  box-shadow: 0px 1px 1px rgba(97, 127, 152, 0.2), 1px 0px 0 rgba(97, 127, 152, 0.1),
+    -1px 0px 0 rgba(97, 127, 152, 0.1);
+
+  border-radius: 2px;
+  border: 0;
+  margin: 0;
+  max-width: none;
+}
+
+.input_select_country {
   input,
   :focus {
     cursor: pointer;
   }
+
   cursor: pointer;
 }
 
-.login_head_bg {
-  background: @primary-color;
-  height: 226px;
+.sigin_row {
+  margin-bottom: 20px;
+  font-weight: bold;
 }
-.login_page {
-  margin: -131px auto 90px;
-  max-width: 404px;
+
+.sigin_msg_row {
+  margin-bottom: 30px;
+}
+
+.country_row {
+  margin-bottom: 4px;
+}
+
+.phone_number_row {
+  margin-top: 22px;
+  margin-bottom: 4px;
+}
+
+.welcome_row {
+  color: color(~`colorPalette('@{primary-color}', 5) `);
+  margin-top: 24px;
+  margin-bottom: 4px;
+}
+
+.learn_more_row {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.app_icon {
+  margin-left: 22px;
+  margin-right: 12px;
+  width: 30px;
+  height: 30px;
+  color: @white;
+}
+
+.next_icon {
+  margin-top: 4px;
+  margin-left: 12px;
+  margin-right: 22px;
+  color: @white;
 }

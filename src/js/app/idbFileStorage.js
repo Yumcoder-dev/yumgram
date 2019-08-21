@@ -1,4 +1,3 @@
-/* eslint-disable no-return-assign */
 /*
  * Copyright (c) 2019-present, The Yumcoder Authors. All rights reserved.
  *
@@ -6,11 +5,12 @@
  * the root directory of this source tree.
  */
 
+/* eslint-disable no-return-assign */
 import Defer from './defer';
 import { blobConstruct, dataUrlToBlob, blobSafeMimeType, bytesToBase64 } from './bin';
 import FileManager from './fileManager';
 
-class IdbFileStorage {
+export default class IdbFileStorage {
   constructor() {
     window.indexedDB =
       window.indexedDB ||
@@ -261,5 +261,3 @@ class IdbFileStorage {
     return Promise.resolve(fakeWriter);
   }
 }
-
-export default IdbFileStorage;

@@ -6,6 +6,7 @@
  */
 
 /* eslint-disable no-param-reassign */
+/* eslint-disable no-console */
 import {
   convertToUint8Array,
   sha256HashSync,
@@ -20,8 +21,9 @@ import {
 import Config from './config';
 import Timeout from './timeout';
 import Defer from './defer';
+import Worker from './crypto.worker';
 
-class CryptoManger {
+class Crypto {
   constructor() {
     this.webWorker = false;
     this.awaiting = {};
@@ -31,15 +33,10 @@ class CryptoManger {
       window.crypto &&
       (window.crypto.subtle || window.crypto.webkitSubtle);
     this.useSha256Crypto = this.webCrypto && this.webCrypto.digest !== undefined;
-    // #todo wsam/nacl
     this.naClEmbed = false; // todo
     if (window.Worker) {
-      // eslint-disable-next-line
-      Config.Modes.debug && console.log('CW start...');
-      const tmpWorker = new Worker('./crypto.worker.js');
+      const tmpWorker = new Worker();
       tmpWorker.onmessage = e => {
-        // eslint-disable-next-line
-        Config.Modes.debug && console.log('CW onmessage...');
         if (!this.webWorker) {
           this.webWorker = tmpWorker;
         } else {
@@ -47,8 +44,7 @@ class CryptoManger {
         }
       };
       tmpWorker.onerror = error => {
-        // eslint-disable-next-line
-        Config.Modes.debug && console.error('CW error', error, error.stack);
+        console.error('CW error', error, error.stack);
         this.webWorker = false;
       };
     }
@@ -89,8 +85,7 @@ class CryptoManger {
           deferred.resolve(digest);
         },
         e => {
-          // eslint-disable-next-line
-          Config.Modes.debug && console.error('Crypto digest error', e);
+          console.error('Crypto digest error', e);
           this.useSha256Crypto = false;
           deferred.resolve(sha256HashSync(bytes));
         },
@@ -147,18 +142,11 @@ class CryptoManger {
   }
 
   modPow(x, y, m) {
-    console.error('CW modPow...', window.Worker, this.webWorker);
-
     if (this.webWorker) {
-      return this.performTaskWorker('mod-pow', {
-        x,
-        y,
-        m,
-      });
+      return this.performTaskWorker('mod-pow', { x, y, m });
     }
     return new Timeout(() => bytesModPow(x, y, m)).promise;
   }
 }
 
-const Crypto = new CryptoManger();
-export default Crypto;
+export default new Crypto();
