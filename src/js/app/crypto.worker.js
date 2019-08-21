@@ -48,4 +48,4 @@ addEventListener('message', e => {
   postMessage({ taskID, result });
 });
 
-postMessage('ready');
+// postMessage('ready');

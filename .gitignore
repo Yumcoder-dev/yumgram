@@ -28,5 +28,5 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-./src/wsam/tutorial/build/*
-./src/wsam/crypto/build/*
+/src/wsam/tutorial/build/*
+/src/wsam/crypto/build/*

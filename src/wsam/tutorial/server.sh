@@ -1,4 +1,3 @@
-#!/bin/sh
 # 
 #  Copyright (c) 2019-present, The Yumcoder Authors. All rights reserved.
 #  
