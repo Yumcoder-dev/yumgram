@@ -5,14 +5,10 @@ That said, I'm using this app myself and I'd like to share its sources, so anyon
 
 ## Technical details
 
----
-
-The app is based on the [**React**](https://reactjs.org) framework, and it was bootstrapped with [Create React App](https://github.com/facebook/create-react-app). UI components are developed based on [antd](https://ant.design). The [vscode](https://code.visualstudio.com/) is the primary development IDE with [airbnb eslint](https://github.com/airbnb/javascript) config.
-
+The app is based on the [**react**](https://reactjs.org) framework, and it was bootstrapped with [create react app](https://github.com/facebook/create-react-app). UI components are developed based on [antd](https://ant.design). The [vscode](https://code.visualstudio.com/) is the primary development IDE with [airbnb eslint](https://github.com/airbnb/javascript) config.
 
 ### `Design framework`
 
----
 Simplicity and minimalism are the core design principle . Every react component manage by a controller based on [pipe hook](./src/js/README.md)
 In the project directory, you can run the app:
 
