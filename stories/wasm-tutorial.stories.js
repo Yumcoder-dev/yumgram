@@ -33,6 +33,11 @@ const callArrayFunc = () => {
     console.log('([1,2,3,4,5]).call(i=>2*i)', res);
   });
 };
+const longFunc = () => {
+  Tutorial.getLong().then(res => {
+    console.log('res =', res);
+  });
+};
 
 tutorialStories.add(
   'callJsFuncFromC',
@@ -51,5 +56,12 @@ tutorialStories.add(
   () => <Button onClick={callArrayFunc}>pass array to c function and get array response</Button>,
   {
     notes: 'using shared linear heap memory',
+  },
+);
+tutorialStories.add(
+  'getLong',
+  () => <Button onClick={longFunc}>long data type</Button>,
+  {
+    notes: 'long data type',
   },
 );

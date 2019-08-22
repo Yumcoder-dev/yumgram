@@ -6,6 +6,25 @@
  */
 #include "./crypto.h"
 
+unsigned short __seed48[7] = {0, 0, 0, 0xe66d, 0xdeec, 0x5, 0xb};
+
+unsigned long int __rand48_step(unsigned short *xi, unsigned short *lc)
+{
+  unsigned long int a, x;
+  x = xi[0] | xi[1] + 0U << 16 | xi[2] + 0ULL << 32;
+  a = lc[0] | lc[1] + 0U << 16 | lc[2] + 0ULL << 32;
+  x = a * x + lc[3];
+  xi[0] = x;
+  xi[1] = x >> 16;
+  xi[2] = x >> 32;
+  return x & 0xffffffffffffull;
+}
+
+unsigned long int lrand48(void)
+{
+  return __rand48_step(__seed48, __seed48 + 3) >> 17;
+}
+
 uint64_t gcd(uint64_t a, uint64_t b)
 {
   while (a != 0 && b != 0)
@@ -51,8 +70,8 @@ int32_t factorize(uint8_t *aBytes, uint32_t length)
   uint64_t g = 0;
   for (i = 0; i < 3 || it < 1000; i++)
   {
-    int q = ((getRand() & 15) + 17) % what;
-    uint64_t x = getRand() % (what - 1) + 1, y = x;
+    int q = ((lrand48() & 15) + 17) % what;
+    uint64_t x = (long long)lrand48() % (what - 1) + 1, y = x;
 
     int lim = 1 << (i + 18), j;
     for (j = 1; j < lim; j++)
@@ -99,8 +118,7 @@ int32_t factorize(uint8_t *aBytes, uint32_t length)
   // heap: aBytes | result
   // -------------------------
   uint8_t *result = aBytes + length + 1;
-  // respose data:
-  // 1byte_len_p | p | 1byte_len_q | q
+  // respose data: 1byte_len_p | p | 1byte_len_q | q
   if (p > g)
   {
     uint64_t t = p;
@@ -118,11 +136,10 @@ int32_t factorize(uint8_t *aBytes, uint32_t length)
       index++;
     }
   }
-  // len p
-  result[0] = index;
+  result[-1] = index; // len p
 
+  result = result + index + 1; // 1 for len g
   index = 0;
-  result = result + index + 1; // 4 for len g
   for (i = 0; i < 8; i++)
   {
     unsigned char byte = g >> ((8 - i - 1) * 8) & 0xFF;
@@ -132,8 +149,7 @@ int32_t factorize(uint8_t *aBytes, uint32_t length)
       index++;
     }
   }
-  // len g
-  result[-1] = index;
+  result[-1] = index; // len g
 
   return length; // response memory offset
 }

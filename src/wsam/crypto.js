@@ -14,7 +14,6 @@ class Crypto {
       return this.cachePromise;
     }
     const importObject = getImportObject();
-    importObject.env.a = () => {}; // _lrand48
     this.memory = importObject.env.memory;
     this.cachePromise = createWebAssembly('crypto.wasm', importObject);
     return this.cachePromise;
@@ -35,20 +34,26 @@ class Crypto {
       for (let i = 0; i < bytes.length; i += 1) {
         memH8[i] = bytes[i];
       }
-      let resOffset = instance.b(0, bytes.length); // _factorize
+      // let resOffset = instance._factorize(0, bytes.length); // _factorize
+      instance._factorize(0, bytes.length); // _factorize
       // get respose from heap
       const p = [];
-      const pLen = memH8[resOffset];
-      for (let i = 1; i <= pLen; i += 1) {
-        p.push(memH8[resOffset + i]);
-      }
+      // const pLen = memH8[resOffset];
+      // for (let i = 1; i <= pLen; i += 1) {
+      //   p.push(memH8[resOffset + i]);
+      // }
       const g = [];
-      resOffset += pLen + 1;
-      const gLen = memH8[resOffset];
-      for (let i = 1; i <= gLen; i += 1) {
-        g.push(memH8[resOffset + i]);
+      // resOffset += pLen + 1;
+      // const gLen = memH8[resOffset];
+      // for (let i = 1; i <= gLen; i += 1) {
+      //   g.push(memH8[resOffset + i]);
+      // }
+
+      const c = [];
+      for (let i = 0; i <= 20; i += 1) {
+        c.push(memH8[i]);
       }
-      return [p, g];
+      return [p, g, c];
     });
   }
 }

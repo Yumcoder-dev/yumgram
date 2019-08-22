@@ -30,63 +30,30 @@ unsigned int arrFunc(uint8_t *input, int count)
 {
     for (int8_t i = 0; i < count; i++)
     {
-        *(memoryH8 + count + i) = input[i] * 2;
+        *(memoryH8 + count + i) = input[i] << 3;
     }
 
     return count;
 }
 
+uint64_t llui()
+{
+    uint64_t what = 0;
+    for (int i = 0; i < 8; i++)
+    {
+        what += 255 << (i * 8);
+    }
+    return what;
+}
 
-// malloc
-// typedef struct Block
-// {
-//     unsigned int size;
-//     unsigned int usize;
-//     struct Block *next;
-//     struct Block *prev;
-// } Block;
+unsigned int getLong(uint8_t *res)
+{
+    unsigned long int data = llui();
+    for (int i = 0; i < 8; i++)
+    {
+        unsigned char byte = data >> ((8 - i - 1) * 8) & 0xFF;
+        res[i] = byte;
+    }
 
-// Block *usedBlocks = 0;
-// Block *freeBlocks = 0;
-// Block *nextBlock = (Block *)1024; // todo: first block case
-
-// void *malloc(unsigned int size)
-// {
-//     Block *b = freeBlocks;
-//     while (b && b->size < size)
-//         b = b->next;
-
-//     if (!b)
-//     {
-//         b = nextBlock;
-//         b->size = size;
-//         nextBlock += size + sizeof(Block); // Header + data
-//     }
-
-//     b->usize = size;
-//     b->next = usedBlocks;
-//     if (b->next)
-//         b->next->prev = b;
-//     b->prev = 0;
-//     usedBlocks = b;
-
-//     return (void *)b + sizeof(Block);
-// }
-
-// void mfree(void *data)
-// {
-//     Block *b = data - sizeof(Block);
-//     if (b->prev)
-//         b->prev->next = b->next;
-//     b->next = freeBlocks;
-//     if (b->next)
-//         b->next->prev = b;
-//     b->prev = 0;
-//     freeBlocks = b;
-// }
-
-// unsigned int msize(void *data)
-// {
-//     Block *b = data - sizeof(Block);
-//     return b->usize;
-// }
+    return 0;
+}

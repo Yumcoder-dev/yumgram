@@ -25,6 +25,7 @@ set(exports
   _callJsFuncFromC
   _put
   _get
+  _getLong
 )
 
 set(SOME_LIST a b c d)

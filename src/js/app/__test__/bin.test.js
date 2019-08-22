@@ -243,8 +243,7 @@ it('binary utils - aesEncryptSync', () => {
 });
 
 it('binary utils - pqPrimeFactorization', () => {
-  console.log(
-    '*****************',
-    binUtils.pqPrimeFactorization([0x17, 0xed, 0x48, 0x94, 0x1a, 0x08, 0xf9, 0x81]),
-  );
+  const res = binUtils.pqPrimeFactorization([0x17, 0xed, 0x48, 0x94, 0x1a, 0x08, 0xf9, 0x81]);
+  expect(binUtils.bytesToHex(res[0])).toEqual('494c553b'); // byte: [73, 76, 85, 59] - dec: 1229739323
+  expect(binUtils.bytesToHex(res[1])).toEqual('53911073'); // byte: [83, 145, 16, 115] - dec: 1402015859
 });

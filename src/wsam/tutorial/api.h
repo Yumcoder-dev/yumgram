@@ -23,7 +23,7 @@ extern "C"
     int fib(int x);
 
     unsigned int arrFunc(uint8_t *input, int count);
-
+    unsigned int getLong(uint8_t *res);
 #ifdef __cplusplus
 }
 #endif

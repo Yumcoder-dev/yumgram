@@ -15,6 +15,16 @@ class Tutorial {
     }
     const importObject = getImportObject();
     importObject.env._js_add = (a, b) => a + b;
+    importObject.env._memset = (a, b, c) => {
+      const i8 = new Uint8Array(this.memory.buffer);
+      console.log('memset', a, b, c);
+      i8[1000] = 0;
+      i8[1001] = 0;
+      i8[1002] = 0;
+      i8[1003] = 0;
+      return i8;
+    };
+
     this.memory = importObject.env.memory;
     this.cachePromise = createWebAssembly('tutorial.wasm', importObject);
     return this.cachePromise;
@@ -49,9 +59,22 @@ class Tutorial {
     });
   }
 
+  getLong() {
+    // see https://ariya.io/2019/05/basics-of-memory-access-in-webassembly
+    return this.getInstance().then(instance => {
+      const dataView = new DataView(this.memory.buffer);
+      instance._getLong(0);
+      // get respose from heap
+      const res = [];
+      for (let i = 0; i < 8; i += 1) {
+        res.push(dataView.getUint8(i));
+      }
+      return res;
+    });
+  }
   // memFunc() {
   //   return this.getInstance().then(instance => {
-  //     const view1 = new DataView(this.mem.buffer);
+  //     const view1 = new DataView(this.memory.buffer);
   //     view1.setUint8(0, 10);
   //     view1.setUint8(1, 30);
   //     view1.setUint8(2, 40);
