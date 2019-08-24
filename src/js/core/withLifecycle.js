@@ -25,23 +25,20 @@ const withLifecycle = spec => (props = {}) => {
   if (spec.componentDidMount) {
     useEffect(() => {
       spec.componentDidMount.call(props, props);
-    }, []);
+    });
   }
   // When you return a function in the callback passed to useEffect,
   // the returned function will be called before the component is removed from the UI
   if (spec.componentWillUnmount) {
-    useEffect(
-      () => () => {
-        spec.componentWillUnmount.call(props);
-      },
-      [],
-    );
+    useEffect(() => () => {
+      spec.componentWillUnmount.call(props);
+    });
   }
 
-  if (spec.componentDidUpdate) {
+  if (spec.componentWillUpdate) {
     const previousProps = usePrevious(props);
     useEffect(() => {
-      spec.componentDidUpdate.call(props, previousProps);
+      spec.componentWillUpdate.call(props, previousProps);
     });
   }
 

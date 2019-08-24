@@ -1,4 +1,3 @@
-/* eslint-disable no-restricted-globals */
 /*
  * Copyright (c) 2019-present, The Yumcoder Authors. All rights reserved.
  *
@@ -6,6 +5,8 @@
  * the root directory of this source tree.
  */
 
+/* eslint-disable no-console */
+/* eslint-disable no-restricted-globals */
 import i18n from '../../locales/i18n';
 import { dT } from './helper';
 import emitter from '../core/emitter';
@@ -178,7 +179,7 @@ class WebPushApiManager {
   }
 
   setSettings(newSettings) {
-    this.settings = Object.assign({}, newSettings);
+    this.settings = { ...newSettings };
     clearTimeout(this.isAliveTO);
     this.isAliveNotify();
   }

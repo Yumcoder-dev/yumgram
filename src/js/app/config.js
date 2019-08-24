@@ -7069,7 +7069,7 @@ const Config = {
         /iOS|iPhone OS|Android|BlackBerry|BB10|Series ?[64]0|J2ME|MIDP|opera mini|opera mobi|mobi.+Gecko|Windows Phone/i,
       ) !== -1,
   },
-  Mobile: false,
+  Mobile: true,
   App: {
     id: 2496,
     hash: '8da85b0d5bfe62527e5b244c209159c3',

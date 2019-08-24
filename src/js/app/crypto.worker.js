@@ -14,6 +14,7 @@ import {
   pqPrimeFactorization,
 } from './bin';
 
+// export default () => {};
 addEventListener('message', e => {
   if (!e) return;
 
@@ -21,6 +22,10 @@ addEventListener('message', e => {
   let result;
 
   switch (e.data.task) {
+    case 'ready':
+      result = 'ready';
+      break;
+
     case 'factorize':
       result = pqPrimeFactorization(e.data.bytes);
       break;

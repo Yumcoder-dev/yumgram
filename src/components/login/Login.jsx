@@ -9,15 +9,19 @@ import React from 'react';
 import { Button, Row, Col, Icon, Input, Modal } from 'antd';
 import i18n from 'i18next';
 import styles from './Login.module.less';
+import loginFragmentController from './LoginFragment.controller';
+import toolbarController from './Toolbar.controller';
 import loginController from './Login.controller';
 import CountryList from '../country/Country';
 import AppIcon from '../../assets/img/icons/icon.svg';
 import Config from '../../js/app/config';
+import VerticalPositionController from '../verticalPosition/VerticalPosition.controller';
 
 const { Search } = Input;
 const InputGroup = Input.Group;
 
 const ToolBar = props => {
+  const { onNextClick } = toolbarController();
   // eslint-disable-next-line
   const { className } = props;
   return (
@@ -26,7 +30,7 @@ const ToolBar = props => {
         <img src={AppIcon} alt={i18n.t('appName')} className={styles.app_icon} />
         <span className={styles.borderless_button}>{i18n.t('appName')}</span>
       </Col>
-      <Col offset={1} className={styles.cursor_pointer}>
+      <Col offset={1} className={styles.cursor_pointer} onClick={onNextClick}>
         <span className={styles.borderless_button}>{i18n.t('next')}</span>
         <Icon type="right" className={styles.next_icon} />
       </Col>
@@ -35,9 +39,15 @@ const ToolBar = props => {
 };
 
 const LoginFragment = () => {
-  const { data, openSearchContry, closeSearchCountry, onChooseCountry } = loginController();
+  const { data, openSearchContry, closeSearchCountry, onChooseCountry } = loginFragmentController();
+  const { data: verticalData } = VerticalPositionController({ percentage: 0.2, padding: 'true' });
+
   return (
-    <div className={styles.yum_fragment}>
+    <div
+      className={styles.yum_fragment}
+      ref={verticalData.get('elm')}
+      style={{ ...verticalData.get('styles') }}
+    >
       <h3 className={styles.sigin_row}>{i18n.t('singin')}</h3>
       <p className={styles.sigin_msg_row}>{i18n.t('singinMsg')}</p>
       <p className={styles.country_row}>{i18n.t('country')}</p>
@@ -113,7 +123,13 @@ const MobileView = () => {
 };
 
 const Login = () => {
-  const View = Config.Mobile ? MobileView : DesktopView;
+  const { data } = loginController();
+  let View;
+  if (data.get('contentFragment') === 'loginFragment') {
+    View = Config.Mobile ? MobileView : DesktopView;
+  } else {
+    View = () => <div>next</div>;
+  }
 
   return <View />;
 };

@@ -12,7 +12,9 @@ import { storiesOf } from '@storybook/react';
 import markdownDoc from './docs/markdown.md';
 import { action } from '@storybook/addon-actions';
 
-storiesOf('html/tutorial', module).add(
+const htmlStories = storiesOf('html/tutorial', module);
+////////////////////////////////////////////////////////////////////////////////////////////////////
+htmlStories.add(
   'span with markdown notes',
   () => (
     <span onClick={action('clicked on span')}>see Notes panel, for test action click here</span>

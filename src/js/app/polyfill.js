@@ -5,6 +5,7 @@
  * the root directory of this source tree.
  */
 
+/* eslint-disable no-console */
 const messageName = 'zero-timeout-message';
 const originalSetTimeout = window.setTimeout;
 const originalClearTimeout = window.clearTimeout;
@@ -13,25 +14,25 @@ const originalMinId = originalSetTimeout(() => {}, 0);
 const zeroTimeouts = [];
 let zeroMinId = originalMinId + 100000000;
 
-export function setZeroTimeout(fn) {
+export const setZeroTimeout = fn => {
   // eslint-disable-next-line no-plusplus
   const timeoutId = ++zeroMinId;
   zeroTimeouts.push([timeoutId, fn]);
   window.postMessage(messageName, '*');
   return timeoutId;
-}
+};
 
-export function clearZeroTimeout(timeoutId) {
+export const clearZeroTimeout = timeoutId => {
   if (timeoutId && timeoutId >= zeroMinId) {
     for (let i = 0, len = zeroTimeouts.length; i < len; i += 1) {
       if (zeroTimeouts[i][0] === timeoutId) {
         console.warn('spliced timeout', timeoutId, i);
-        zeroTimeouts.splice(i, 1);
+        zeroTimeouts.splice(i, 1); // clear an item in index i.
         break;
       }
     }
   }
-}
+};
 
 function handleMessage(event) {
   if (event.source === window && event.data === messageName) {
@@ -57,4 +58,8 @@ window.clearTimeout = timeoutId => {
     clearZeroTimeout(timeoutId);
   }
   return originalClearTimeout(timeoutId);
+};
+
+export const polyfills = () => {
+  console.log('polyfills...');
 };

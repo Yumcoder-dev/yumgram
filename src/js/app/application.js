@@ -1,10 +1,12 @@
 import SwitchLayout from './layoutSwitch';
-import Idle from './idle';
+// import Idle from './idle';
+import { polyfills } from './polyfill';
 
 export default class Application {
   static start() {
+    polyfills();
     SwitchLayout.start();
-    Idle.start();
+    // Idle.start();
 
     // if (Config.Modes.force_mobile) {
     //   layout = 'mobile';

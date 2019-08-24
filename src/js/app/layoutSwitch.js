@@ -58,7 +58,7 @@ class SwitchLayout {
         this.confirmShown = true;
         const self = this;
         confirm({
-          content: newMobile ? self.resizeMobileMsg : self.resizeDesktopMsg,
+          title: newMobile ? self.resizeMobileMsg : self.resizeDesktopMsg,
           onOk() {
             setMobileLayout(newMobile);
           },

@@ -34,7 +34,7 @@ See the section about [running tests](https://facebook.github.io/create-react-ap
 > npm run test
 ```
 
-[**Storybook**](https://storybook.js.org/) is a user interface development environment and playground for UI components. The tool enables developers to create components independently and showcase components interactively in an isolated development environment. Start Storybook with:
+[Storybook](https://storybook.js.org/) is a user interface development environment and playground for UI components. The tool enables developers to create components independently and showcase components interactively in an isolated development environment. Start Storybook with:
 
 ```(shell)
 > cd yumgram

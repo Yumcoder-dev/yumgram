@@ -11,7 +11,6 @@ export default class Timeout {
       this.resolve = resolve;
       this.reject = reject;
     });
-    // performance tuning: enable polyfill for zero-timeout-message
     this.timeoutId = setTimeout(() => {
       try {
         const result = fn();
@@ -22,13 +21,13 @@ export default class Timeout {
     }, delay || 0);
   }
 
-  then(resolve, reject) {
-    this.promise.then(resolve, reject);
-  }
+  // then(resolve, reject) {
+  //   this.promise.then(resolve, reject);
+  // }
 
-  catch(reject) {
-    this.promise.catch(reject);
-  }
+  // catch(reject) {
+  //   this.promise.catch(reject);
+  // }
 
   cancel() {
     if (!this.promise || !this.timeoutId) return;

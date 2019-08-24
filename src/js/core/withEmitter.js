@@ -5,46 +5,28 @@
  * the root directory of this source tree.
  */
 
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable no-underscore-dangle */
 import { useEffect } from 'react';
 import emitter from './emitter';
 /**
  * @param {Function|object} fn
  */
 const withEmitter = fn => (props = {}) => {
-  // let tokens;
   const params = { ...props, emitter };
-  if (fn.addListener) {
+  if (fn) {
     useEffect(() => {
-      /* tokens = */ fn.addListener.call(props, params);
-    }, [params, props]);
+      params.__tokens__ = fn.call(props, params);
+    });
   }
 
   // When you return a function in the callback passed to useEffect,
   // the returned function will be called before the component is removed from the UI
-  // useEffect(
-  //   () => () => {
-  //     if (tokens !== undefined) {
-  //       // var token = emitter.addListener('change', (...args) => {
-  //       //   console.log(...args);
-  //       // });
-  //       //
-  //       // emitter.emit('change', 10); // 10 is logged
-  //       // token.remove();
-  //       // emitter.emit('change', 10); // nothing is logged
-  //       tokens.map(t => t.remove()); // remove all regisered tokens
-  //     }
-  //   },
-  //   [tokens],
-  // );
-
-  // if (fn.removeListener) {
-  //   useEffect(
-  //     () => () => {
-  //       fn.removeListener.call(props, params);
-  //     },
-  //     [],
-  //   );
-  // }
+  useEffect(() => () => {
+    if (params.__tokens__ !== undefined) {
+      params.__tokens__.map(t => t.remove()); // remove all regisered tokens
+    }
+  });
 
   return { ...props, emitter };
 };

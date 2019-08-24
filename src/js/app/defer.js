@@ -9,26 +9,26 @@ export default class Defer {
   constructor() {
     this.canceled = false;
     this.promise = new Promise((resolve, reject) => {
-      this.resolver = value => {
+      this.resolve = value => {
         if (!this.canceled) resolve(value);
       };
-      this.rejecter = value => {
+      this.reject = value => {
         if (!this.canceled) reject(value);
       };
     });
   }
 
-  resolve(value) {
-    this.resolver(value);
-  }
+  // resolve(value) {
+  //   this.resolver(value);
+  // }
 
-  reject(value) {
-    this.rejecter(value);
-  }
+  // reject(value) {
+  //   this.rejecter(value);
+  // }
 
-  then(onFulfilled, onRejected) {
-    this.promise.then(onFulfilled, onRejected);
-  }
+  // then(onFulfilled, onRejected) {
+  //   this.promise.then(onFulfilled, onRejected);
+  // }
 
   notify(progress) {
     if (this.promise.progress) {

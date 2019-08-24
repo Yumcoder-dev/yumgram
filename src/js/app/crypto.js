@@ -33,9 +33,11 @@ class Crypto {
       window.crypto &&
       (window.crypto.subtle || window.crypto.webkitSubtle);
     this.useSha256Crypto = this.webCrypto && this.webCrypto.digest !== undefined;
-    this.naClEmbed = false; // todo
+    // this.naClEmbed = false; // todo add wasm
     if (window.Worker) {
       const tmpWorker = new Worker();
+      tmpWorker.postMessage({ taskID: this.taskID, task: 'ready' });
+      this.taskID += 1;
       tmpWorker.onmessage = e => {
         if (!this.webWorker) {
           this.webWorker = tmpWorker;
@@ -54,6 +56,8 @@ class Crypto {
     const deferred = this.awaiting[taskID];
     if (deferred !== undefined) {
       // console.log(dT(), 'CW done')
+      console.log('CW done', deferred);
+
       deferred.resolve(result);
       delete this.awaiting[taskID];
     }

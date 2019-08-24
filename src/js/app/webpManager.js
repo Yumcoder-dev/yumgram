@@ -4,6 +4,8 @@
  * This source code is licensed under the license found in the LICENSE file in
  * the root directory of this source tree.
  */
+
+/* eslint-disable no-console */
 import { dataUrlToBlob } from './bin';
 import Defer from './defer';
 import WebPDecoder from './vendor/libwebp-0.2.0';
