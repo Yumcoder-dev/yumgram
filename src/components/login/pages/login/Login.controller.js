@@ -7,11 +7,11 @@
  */
 
 import { Map } from 'immutable';
-import { pipe, withLifecycle, withState, withHandlers } from '../../js/core/index';
-import Config from '../../js/app/config';
-import MtpApiManager from '../../js/app/mtpApiManager';
+import { pipe, withLifecycle, withState, withHandlers } from '../../../../js/core/index';
+import Config from '../../../../js/app/config';
+import MtpApiManager from '../../../../js/app/mtpApiManager';
 import { LangCountries, CountryCodes } from '../country/country.data';
-import i18n from '../../locales/i18n';
+import i18n from '../../../../locales/i18n';
 
 const init = (/* porps */) =>
   Map({

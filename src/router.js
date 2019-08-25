@@ -5,16 +5,16 @@
  * the root directory of this source tree.
  */
 
-import Country from './components/login/Login';
+import Login from './components/login/index';
 import Messager from './components/messenger/Messenger';
-import Page404 from './components/Page404';
+import Page404 from './components/page404/Page404';
 
 const routes = [
   {
     name: 'login',
     path: '/',
     icon: 'dashboard',
-    component: Country,
+    component: Login,
   },
   {
     name: 'messager',

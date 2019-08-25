@@ -12,7 +12,7 @@ import AutoSizer from 'react-virtualized-auto-sizer';
 import { Row, List, Input } from 'antd';
 import i18n from 'i18next';
 import countryController from './Country.controller';
-import CustomScrollbars from '../scrollbars/Scrollbars';
+import CustomScrollbars from '../../../scrollbars/Scrollbars';
 import styles from './Country.module.less';
 
 const { Search } = Input;
@@ -23,7 +23,7 @@ const CountryList = ({ onItemSelected }) => {
     <Row className={styles.country_page}>
       <div className={styles.search_country}>
         <Search
-          placeholder={i18n.t('search')}
+          placeholder={i18n.t('modal_search')}
           onChange={onSearch}
           allowClear
           ref={input => input && input.focus()}
@@ -54,7 +54,7 @@ const CountryList = ({ onItemSelected }) => {
                     </List.Item>
                   );
                 }
-                return <div key={index}>{i18n.t('loading')}</div>;
+                return <div key={index}>{i18n.t('modal_more')}</div>;
               }}
             </FixedSizeList>
           )}

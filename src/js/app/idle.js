@@ -104,7 +104,7 @@ class Idle {
       this.isIDLE = isIDLE;
       Emitter.emit('idle.isIDLE', isIDLE);
       if (isIDLE && e.type === 'timeout') {
-        window.addEventListener('mousemove', this.onEvent);
+        window.addEventListener('mousemove', this.onEvent); // () -=
       }
     }, 1000);
   }

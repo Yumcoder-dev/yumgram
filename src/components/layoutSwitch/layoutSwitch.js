@@ -6,9 +6,9 @@
  */
 
 import { Modal } from 'antd';
-import Storage from './storage';
-import Config from './config';
-import Emitter from '../core/emitter';
+import Storage from '../../js/app/storage';
+import Config from '../../js/app/config';
+import Emitter from '../../js/core/emitter';
 import i18n from '../../locales/i18n';
 
 const { confirm } = Modal;
@@ -59,6 +59,8 @@ class SwitchLayout {
         const self = this;
         confirm({
           title: newMobile ? self.resizeMobileMsg : self.resizeDesktopMsg,
+          okText: i18n.t('modal_ok'),
+          cancelText: i18n.t('modal_cancel'),
           onOk() {
             setMobileLayout(newMobile);
           },

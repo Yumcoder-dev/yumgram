@@ -6,10 +6,10 @@
  */
 
 import { Map, List } from 'immutable';
-import i18n from '../../locales/i18n';
-import { pipe, withState, withHandlers } from '../../js/core/index';
+import i18n from '../../../../locales/i18n';
+import { pipe, withState, withHandlers } from '../../../../js/core/index';
 import { CountryCodes } from './country.data';
-import SearchIndexManager from '../../js/core/searchIndexManager';
+import SearchIndexManager from '../../../../js/core/searchIndexManager';
 
 const searchIndex = new SearchIndexManager();
 

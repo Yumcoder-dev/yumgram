@@ -1,7 +1,9 @@
-import SwitchLayout from './layoutSwitch';
+import SwitchLayout from './layoutSwitch/layoutSwitch';
 // import Idle from './idle';
-import { polyfills } from './polyfill';
+import { polyfills } from '../js/app/polyfill';
 
+// see https://github.com/zloirock/core-js
+// https://reactjs.org/docs/javascript-environment-requirements.html
 export default class Application {
   static start() {
     polyfills();

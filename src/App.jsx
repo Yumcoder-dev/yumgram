@@ -10,7 +10,7 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import './App.module.less';
 import Router from './router';
 import WindowResizeEmitter from './js/app/windowResizeEmitter';
-import Application from './js/app/application';
+import Application from './components/application';
 
 function App() {
   useEffect(() => {

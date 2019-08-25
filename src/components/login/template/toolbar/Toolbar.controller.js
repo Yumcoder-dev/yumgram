@@ -5,10 +5,10 @@
  * the root directory of this source tree.
  */
 
-import { pipe, withHandlers, withEmitter } from '../../js/core/index';
+import { pipe, withHandlers, withEmitter } from '../../../../js/core/index';
 
 const onNextClick = ({ emitter }) => () => {
-  emitter.emit('toolbar.onNextClick');
+  emitter.emit('login.toolbar.onNextClick');
 };
 
 export default pipe(

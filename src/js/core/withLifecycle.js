@@ -31,7 +31,7 @@ const withLifecycle = spec => (props = {}) => {
   // the returned function will be called before the component is removed from the UI
   if (spec.componentWillUnmount) {
     useEffect(() => () => {
-      spec.componentWillUnmount.call(props);
+      spec.componentWillUnmount.call(props, props);
     });
   }
 

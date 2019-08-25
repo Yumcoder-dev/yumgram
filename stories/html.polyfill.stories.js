@@ -11,6 +11,7 @@ import React from 'react';
 import {storiesOf} from '@storybook/react';
 import {action} from '@storybook/addon-actions';
 import {polyfills} from '../src/js/app/polyfill';
+import RequestAnimationFrame from '../src/js/app/animate';
 
 const htmlStories = storiesOf ('html/polyfil', module);
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -30,5 +31,20 @@ htmlStories.add (
   ),
   {
     notes: "A simple utility allowing you to use near-instantaneous(in most cases asynchronous) setTimeout analogue. This is performed using the browser's messaging system.",
+  }
+);
+////////////////////////////////////////////////////////////////////////////////////////////////////
+const callAnimate = () => {
+  (new RequestAnimationFrame()).animate((progress)=>{
+    console.log ('Animate progress=', progress);
+  }, 1000)
+};
+htmlStories.add (
+  'animate',
+  () => (
+    <button type="button" onClick={callAnimate}>animate</button>
+  ),
+  {
+    notes: "requestAnimationFrame",
   }
 );

@@ -6,16 +6,17 @@
  */
 
 import { Map } from 'immutable';
-import { pipe, withState, withEmitter } from '../../js/core/index';
+import { pipe, withState, withEmitter } from '../../../../js/core/index';
 
 const init = () =>
   Map({
-    contentFragment: 'loginFragment',
+    view: 'login', // state for current active view
   });
 
 const addListener = ({ setData, emitter }) => {
-  const subscription = emitter.addListener('toolbar.onNextClick', () => {
-    setData(d => d.set('contentFragment', 'passwordFragment'));
+  // for login.toolbar.onNextClick see login toolbar controller
+  const subscription = emitter.addListener('login.toolbar.onNextClick', () => {
+    setData(d => d.set('view', 'password'));
   });
 
   return [subscription];

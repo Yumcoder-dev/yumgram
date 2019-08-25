@@ -1,13 +1,8 @@
 /*
  * Copyright (c) 2019-present, The Yumcoder Authors. All rights reserved.
- * 
+ *
  * This source code is licensed under the license found in the LICENSE file in
  * the root directory of this source tree.
  */
 
-@import '~antd/lib/style/themes/default.less';
-
-.login_head_bg {
-  background: #5682a3;
-  height: 226px;
-}
+export { default } from './template/master/Layout.main';
