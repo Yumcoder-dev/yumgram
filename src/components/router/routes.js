@@ -10,6 +10,7 @@ import Welcome from '../welcome/Welcome';
 import Im from '../im/Im';
 import Page404 from '../page404/Page404';
 import Pages from './pages';
+import Form from '../__test__/Form.test';
 
 export default [
   {
@@ -28,6 +29,11 @@ export default [
     path: Pages.IM,
     component: Im,
   },
+  {
+    path: '/form',
+    component: Form,
+  },
+  // add new routing here
   {
     // name: 'p404',
     path: Pages.FOF, // four-o-four
