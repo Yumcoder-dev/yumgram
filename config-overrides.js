@@ -48,16 +48,19 @@ module.exports = override(
   // -- jest --> package.json
   // -- eslint --> .eslintrc.js
   addWebpackAlias({
-    '@': path.resolve(__dirname, 'src/'),
-    '@components': path.resolve(__dirname, 'src/components/index/index.public'),
-    '@components-shared': path.resolve(__dirname, 'src/components/index/index.shared'),
-    '@login': path.resolve(__dirname, 'src/components/login/index/public'),
-    '@login-shared': path.resolve(__dirname, 'src/components/login/index/internal/shared'),
-    '@login-components': path.resolve(__dirname, 'src/components/login/index/internal/components'),
-    '@login-widgets': path.resolve(__dirname, 'src/components/login/index/internal/widgets'),
-    '@im': path.resolve(__dirname, 'src/components/im/index'),
-    '@yumjs': path.resolve(__dirname, 'src/scripts/yumjs/index'),
-    '@appjs': path.resolve(__dirname, 'src/scripts/appjs/index'),
-    '@locale': path.resolve(__dirname, 'src/locales/i18n'),
+    '@': path.resolve(__dirname, './src/'),
+    '@components': path.resolve(__dirname, './src/components/index/index.public'),
+    '@components-shared': path.resolve(__dirname, './src/components/index/index.shared'),
+    '@login': path.resolve(__dirname, './src/components/login/index/public'),
+    '@login-shared': path.resolve(__dirname, './src/components/login/index/internal/shared'),
+    '@login-components': path.resolve(
+      __dirname,
+      './src/components/login/index/internal/components',
+    ),
+    '@login-widgets': path.resolve(__dirname, './src/components/login/index/internal/widgets'),
+    '@im': path.resolve(__dirname, './src/components/im/index'),
+    '@yumjs': path.resolve(__dirname, './src/scripts/yumjs/index'),
+    '@appjs': path.resolve(__dirname, './src/scripts/appjs/index'),
+    '@locale': path.resolve(__dirname, './src/locales/i18n'),
   }),
 );

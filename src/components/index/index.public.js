@@ -5,7 +5,7 @@
  * the root directory of this source tree.
  */
 
-export Rotues from '../route/Routes';
+export { default as Rotues } from '../route/Routes';
 export { default as AppIcon } from '../svg/AppIcon';
 export { default as ThreeDots } from '../svg/ThreeDots';
 export { default as verticalPosition } from '../behaviors/verticalPosition';

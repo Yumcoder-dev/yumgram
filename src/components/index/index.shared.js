@@ -5,4 +5,5 @@
  * the root directory of this source tree.
  */
 
-export PAGES from '../route/master.pages';
+// eslint-disable-next-line import/prefer-default-export
+export { default as PAGES } from '../route/master.pages';
