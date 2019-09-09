@@ -8,14 +8,13 @@
 import { Map } from 'immutable';
 import { pipe, withHandlers, withState } from '../../../../js/core/index';
 
-export const VIEW = {
-  welcome: 0,
-  learMore: 1,
-};
+// #todo convert to object
+export const INTRO = 0;
+export const LEAR_MORE = 1;
 
 const init = () =>
   Map({
-    view: VIEW.welcome,
+    view: INTRO,
   });
 
 const onClick = ({ setData }) => () => {

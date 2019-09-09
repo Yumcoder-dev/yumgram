@@ -8,24 +8,41 @@
 import React, { useEffect } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import './App.module.less';
-import Router from './router';
+import routes from './components/router/routes';
 import WindowResizeEmitter from './js/app/windowResizeEmitter';
-import Application from './components/application';
+
+// import Login from './components/login/index';
+// import Welcome from './components/welcome/Welcome';
+// import Im from './components/im/Im';
+// import Page404 from './components/page404/Page404';
 
 function App() {
-  useEffect(() => {
-    Application.start();
-  }, []);
   useEffect(WindowResizeEmitter, []);
+  const routeComponents = routes.map(({ path, component }, index) => {
+    if (path !== '' || path !== undefined) {
+      return <Route exact path={path} component={component} key={index} />; // eslint-disable-line
+    }
+    return <Route component={component} key={index} />; // eslint-disable-line
+  });
+
   return (
     <BrowserRouter>
-      <Switch>
-        {Router.map(r => (
-          <Route key={r.name} exact path={r.path} component={r.component} />
-        ))}
-      </Switch>
+      <Switch>{routeComponents}</Switch>
     </BrowserRouter>
   );
+  // return (
+  //   <BrowserRouter>
+  //     <Switch>
+  //       {/* {Router.map(r => (
+  //         <Route exact={r.path !== ''} path={r.path} component={r.component} />
+  //       ))} */}
+  //       <Route exact path="/" component={Welcome} />
+  //       <Route exact path="/login" component={Login} />
+  //       <Route exact path="/im" component={Im} />
+  //       <Route exact={false} path="" component={Page404} />
+  //     </Switch>
+  //   </BrowserRouter>
+  // );
 }
 
 export default App;

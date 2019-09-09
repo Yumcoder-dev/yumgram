@@ -5,44 +5,25 @@
  * the root directory of this source tree.
  */
 
-@import '../../../../App.module.less';
+@import '../../login.var.less';
 
-.login_page_wrap {
-  background: @white;
-  padding: 44px 65px 44px;
-
-  box-shadow: 0px 1px 1px rgba(97, 127, 152, 0.2), 1px 0px 0 rgba(97, 127, 152, 0.1),
-    -1px 0px 0 rgba(97, 127, 152, 0.1);
-
-  border-radius: 2px;
-  border: 0;
-  margin: 0;
-  max-width: none;
+.login_center {
+  .mixin-center();
+  text-align: center;
 }
 
-.login_country_input {
-  input,
-  :focus {
-    cursor: pointer;
-  }
-
-  cursor: pointer;
-}
-
-.login_sign_in {
-  margin-bottom: 20px;
-  font-weight: bold;
-}
-
-.login_enter_number_description {
+.login_row {
+  margin-top: 15px;
   margin-bottom: 30px;
 }
 
-.login_country_input_label {
-  margin-bottom: 4px;
+.loging_input_code {
+  text-align: center;
+  margin-top: @small-size;
 }
 
-.login_tel_input_label {
-  margin-top: 22px;
-  margin-bottom: 4px;
+.login_dots {
+  vertical-align: middle;
+  margin-left: @small-size;
+  fill: @text-color-secondary;
 }

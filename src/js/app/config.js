@@ -7069,10 +7069,10 @@ const Config = {
         /iOS|iPhone OS|Android|BlackBerry|BB10|Series ?[64]0|J2ME|MIDP|opera mini|opera mobi|mobi.+Gecko|Windows Phone/i,
       ) !== -1,
   },
-  Mobile: true,
+  Mobile: false,
   App: {
-    id: 2496,
-    hash: '8da85b0d5bfe62527e5b244c209159c3',
+    id: 153105,
+    hash: '1e87062e3bd6dd831d414cbbf86b21e1',
     version: '0.7.0',
     domains: ['web.telegram.org', 'zhukov.github.io'],
   },

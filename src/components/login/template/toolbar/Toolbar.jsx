@@ -6,28 +6,60 @@
  */
 
 import React from 'react';
-import { Row, Col, Icon } from 'antd';
+import { Row, Icon, Button, Typography } from 'antd';
 import i18n from 'i18next';
 import toolbarController from './Toolbar.controller';
-import AppIcon from '../../../../assets/img/icons/icon.svg';
+// import AppIcon from '../../../../assets/img/icons/icon.svg';
+import AppIcon from '../../../svg/AppIcon';
 import styles from './Toolbar.module.less';
+import ThreeDots from '../../../svg/ThreeDots';
 
-const Toolbar = props => {
-  const { onNextClick } = toolbarController();
-  // eslint-disable-next-line
-  const { className } = props;
+const { Text } = Typography;
+
+// *************************************************************************************************
+const SubmitProgress = ({ status }) => {
   return (
-    <Row type="flex" justify="space-between" align="middle" className={className}>
-      <Col offset={0} className={styles.cursor_pointer}>
-        <img src={AppIcon} alt={i18n.t('app_name')} className={styles.login_toolbar_app_icon} />
-        <span className={styles.login_toolbar_button}>{i18n.t('app_name')}</span>
-      </Col>
-      <Col offset={1} className={styles.cursor_pointer} onClick={onNextClick}>
-        <span className={styles.login_toolbar_button}>{i18n.t('login_toolbar_next')}</span>
-        <Icon type="right" className={styles.login_toolbar_next_icon} />
-      </Col>
-    </Row>
+    <>
+      <Text className={styles.login_toolbar_txt}>{status}</Text>
+      <Icon component={ThreeDots} height={30} width={30} />
+    </>
+  );
+};
+const Statusbar = React.memo(SubmitProgress);
+// *************************************************************************************************
+const SubmitButton = () => {
+  return (
+    <>
+      <Text className={styles.login_toolbar_txt}>{i18n.t('login_toolbar_next')}</Text>
+      <Icon type="right" />
+    </>
   );
 };
 
-export default Toolbar;
+const Submit = React.memo(SubmitButton);
+// *************************************************************************************************
+const Stripe = () => {
+  const { data, onNextClick } = toolbarController();
+  const status = data.get('status_msg');
+
+  return (
+    <Button size="large" onClick={onNextClick} className={styles.login_toolbar_btn_next}>
+      {status !== '' ? <Statusbar status={status} /> : <Submit />}
+    </Button>
+  );
+};
+const Bar = React.memo(Stripe);
+// *************************************************************************************************
+const Toolbar = props => {
+  const { className } = props;
+  return (
+    <Row type="flex" align="middle" className={className}>
+      <Button size="large" className={styles.login_toolbar_btn_app}>
+        <AppIcon width={30} height={30} className={styles.login_toolbar_icon} />
+        <Text className={styles.login_toolbar_txt}>{i18n.t('app_name')}</Text>
+      </Button>
+      <Bar />
+    </Row>
+  );
+};
+export default React.memo(Toolbar);

@@ -32,6 +32,8 @@ import CryptoWorker from './crypto';
 import Timeout from './timeout';
 import MtpDcConfigurator from './mtpDcConfigurator';
 import { setZeroTimeout } from './polyfill';
+import httpRequest from './http';
+import getBadResponseError from './mtpNetErr';
 
 class MtpNetworker {
   constructor(dcID, authKey, serverSalt, options) {
@@ -78,7 +80,7 @@ class MtpNetworker {
       // this.offlineConnecting = true;
     }
 
-    if (Config.Mobile) {
+    if (Config.Navigator.mobile) {
       this.setupMobileSleep();
     }
   }
@@ -91,6 +93,7 @@ class MtpNetworker {
   }
 
   setupMobileSleep() {
+    // #todo chnage string with constant
     emitter.addListener('idle.isIDLE', isIDLE => {
       if (isIDLE) {
         this.sleepAfter = tsNow() + 30000;
@@ -383,7 +386,6 @@ class MtpNetworker {
         this.checkConnectionPeriod * 1000,
       );
       this.checkConnectionPeriod = Math.min(30, (1 + this.checkConnectionPeriod) * 1.5);
-      console.log('////***************************///////////', this.checkConnectionPeriod);
       // this.onOnlineCb = this.checkConnection.bind(this);
       // $(document.body).on('online focus', this.onOnlineCb);
       this.onlineFocusEventListener = emitter.addListener('online focus', () =>
@@ -524,7 +526,7 @@ class MtpNetworker {
         container: true,
         inner: innerMessages,
       };
-      message = Object.assign({ body: container.getBytes(true) }, containerSentMessage);
+      message = { body: container.getBytes(true), ...containerSentMessage };
       this.sentMessages[message.msg_id] = containerSentMessage;
       if (Config.Modes.debug) {
         console.log(dT(), 'Container', innerMessages, message.msg_id, message.seq_no);
@@ -587,7 +589,7 @@ class MtpNetworker {
       return this.getAesKeyIv(msgKey, true).then(keyIv => {
         // console.log(dT(), 'after msg key iv')
         return CryptoWorker.aesEncrypt(dataWithPadding, keyIv[0], keyIv[1]).then(encryptedBytes => {
-          // console.log(dT(), 'Finish encrypt***', encryptedBytes);
+          // console.log(dT(), 'Finish encrypt', encryptedBytes);
           return {
             bytes: encryptedBytes,
             msgKey,
@@ -628,7 +630,7 @@ class MtpNetworker {
 
     const dataWithPadding = bufferConcat(dataBuffer, padding);
     return this.getEncryptedMessage(dataWithPadding).then(encryptedResult => {
-      console.log(dT(), 'Got encrypted out message***', encryptedResult);
+      // console.log(dT(), 'Got encrypted out message', encryptedResult);
       const request = new TLSerialization({
         startMaxLength: encryptedResult.bytes.byteLength + 256,
       });
@@ -636,46 +638,65 @@ class MtpNetworker {
       request.storeIntBytes(encryptedResult.msgKey, 128, 'msg_key');
       request.storeRawBytes(encryptedResult.bytes, 'encrypted_data');
       const requestData = this.xhrSendBuffer ? request.getBuffer() : request.getArray();
-      let requestPromise;
+      // let requestPromise;
       const url = MtpDcConfigurator.chooseServer(this.dcID, this.upload);
-      const baseError = { code: 406, type: 'NETWORK_BAD_RESPONSE', url };
-      try {
-        // options = Object.assign(options || {}, {
-        //   responseType: 'arraybuffer',
-        //   transformRequest: null,
-        // });
-        requestPromise = fetch(
-          url,
-          {
-            method: 'POST',
-            body: requestData,
-          } /* , options */,
-        ).then(response => {
-          if (response.ok) {
-            return response.arrayBuffer();
-          }
-          return Promise.reject(response.text());
-        });
-      } catch (e) {
-        requestPromise = Promise.reject(e);
-      }
-      return requestPromise.then(
-        result => {
+      return httpRequest(url, {
+        method: 'POST',
+        body: requestData,
+        /* responseType: 'arraybuffer' */
+      })
+        .then(result => {
           if (!result || !result.byteLength) {
-            return Promise.reject(baseError);
+            return Promise.reject(getBadResponseError(url));
           }
           return result;
-        },
-        error => {
-          if (!error.message && !error.type) {
-            error = Object.assign(baseError, {
-              type: 'NETWORK_BAD_REQUEST',
-              originalError: error,
-            });
-          }
-          return Promise.reject(error);
-        },
-      );
+        })
+        .catch(error => {
+          // if (!error.message && !error.type) {
+          //   error = Object.assign(baseError, {
+          //     type: 'NETWORK_BAD_REQUEST',
+          //     originalError: error,
+          //   });
+          // }
+          return Promise.reject(getBadResponseError(url, error));
+        });
+      // try {
+      //   // options = Object.assign(options || {}, {
+      //   //   responseType: 'arraybuffer',
+      //   //   transformRequest: null,
+      //   // });
+      //   requestPromise = fetch(
+      //     url,
+      //     {
+      //       method: 'POST',
+      //       body: requestData,
+      //     } /* , options */,
+      //   ).then(response => {
+      //     if (response.ok) {
+      //       return response.arrayBuffer();
+      //     }
+      //     return Promise.reject(response.text());
+      //   });
+      // } catch (e) {
+      //   requestPromise = Promise.reject(e);
+      // }
+      // return requestPromise.then(
+      //   result => {
+      //     if (!result || !result.byteLength) {
+      //       return Promise.reject(baseError);
+      //     }
+      //     return result;
+      //   },
+      //   error => {
+      //     if (!error.message && !error.type) {
+      //       error = Object.assign(baseError, {
+      //         type: 'NETWORK_BAD_REQUEST',
+      //         originalError: error,
+      //       });
+      //     }
+      //     return Promise.reject(error);
+      //   },
+      // );
     });
   }
 

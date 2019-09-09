@@ -22,23 +22,29 @@ function usePrevious(value) {
  * @returns {object}
  */
 const withLifecycle = spec => (props = {}) => {
-  if (spec.componentDidMount) {
+  if (spec.onCreate) {
+    // If you only want to run the function given to useEffect after the initial render,
+    // you can give it an empty array as second argument.
     useEffect(() => {
-      spec.componentDidMount.call(props, props);
-    });
-  }
-  // When you return a function in the callback passed to useEffect,
-  // the returned function will be called before the component is removed from the UI
-  if (spec.componentWillUnmount) {
-    useEffect(() => () => {
-      spec.componentWillUnmount.call(props, props);
-    });
+      spec.onCreate.call(props, props);
+    }, []);
   }
 
-  if (spec.componentWillUpdate) {
+  if (spec.onDestroy) {
+    // When you return a function in the callback passed to useEffect,
+    // the returned function will be called before the component is removed from the UI
+    useEffect(
+      () => () => {
+        spec.onDestroy.call(props, props);
+      },
+      [],
+    );
+  }
+
+  if (spec.onUpdate) {
     const previousProps = usePrevious(props);
     useEffect(() => {
-      spec.componentWillUpdate.call(props, previousProps);
+      spec.onUpdate.call(props, previousProps);
     });
   }
 

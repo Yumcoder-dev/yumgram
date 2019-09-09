@@ -20,7 +20,7 @@ import { tsNow, dT } from './helper';
 import WebPushApiManager from './webPushApiManager';
 import Config from './config';
 
-class ApiManager {
+class MtpApiManager {
   constructor() {
     this.cachedNetworkers = {};
     this.cachedUploadNetworkers = {};
@@ -44,7 +44,7 @@ class ApiManager {
   }
 
   mtpSetUserAuth(dcID, userAuth) {
-    const fullUserAuth = Object.assign({ dcID }, userAuth);
+    const fullUserAuth = { dcID, ...userAuth };
     Storage.set({
       dc: dcID,
       user_auth: fullUserAuth,
@@ -90,7 +90,8 @@ class ApiManager {
     });
   }
 
-  static mtpClearStorage() {
+  // eslint-disable-next-line class-methods-use-this
+  mtpClearStorage() {
     const saveKeys = ['user_auth', 't_user_auth', 'dc', 't_dc'];
     for (let dcID = 1; dcID <= 5; dcID += 1) {
       saveKeys.push(`dc${dcID}_auth_key`);
@@ -192,7 +193,7 @@ class ApiManager {
       if (!options.noErrorBox) {
         error.input = method;
         error.stack =
-          this.stack || // todo
+          this.stack || // todo test it
           (error.originalError && error.originalError.stack) ||
           error.stack ||
           new Error().stack;
@@ -208,14 +209,13 @@ class ApiManager {
                   location.href = location.href.replace(/^http:/, 'https:');
                 } else {
                   location.hash = '/login';
-                  // todo reload
                   // AppRuntimeManager.reload();
+                  window.location.reload(false);
                 }
               });
-            } else {
-              // todo show err!
+            } else if (options.showError) {
               // ErrorService.show({ error });
-              console.log(error);
+              options.showError(error);
             }
             error.handled = true;
           }
@@ -354,5 +354,5 @@ class ApiManager {
   //   logOut: mtpLogOut
   // }
 }
-const MtpApiManager = new ApiManager();
-export default MtpApiManager;
+// const MtpApiManager = new ApiManager();
+export default new MtpApiManager();

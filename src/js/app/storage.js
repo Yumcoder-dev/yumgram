@@ -33,6 +33,11 @@ class Storage {
     return this.keyPrefix;
   }
 
+  // eslint-disable-next-line class-methods-use-this
+  syncGet(key) {
+    return localStorage.getItem(key);
+  }
+
   get(keys) {
     return new Promise(resolve => {
       let single = false;

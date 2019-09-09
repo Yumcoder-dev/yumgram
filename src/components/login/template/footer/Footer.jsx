@@ -10,53 +10,67 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/interactive-supports-focus */
 import React from 'react';
-import { Button, Row, Col } from 'antd';
+import { Button, Row, Col, Typography } from 'antd';
 import i18n from 'i18next';
-import PropTypes from 'prop-types';
+import Markdown from 'markdown-to-jsx';
 import styles from './Footer.module.less';
-import FooterController, { VIEW } from './Footer.controller';
+import FooterController, { LEAR_MORE } from './Footer.controller';
 import scrollToOn from '../../../behaviors/scrollToOn';
-import parseMd from '../../../../js/app/md';
 
+const { Title, Paragraph } = Typography;
+
+// *************************************************************************************************
 const LearnMore = props => {
   const { data } = scrollToOn();
   const { onClick } = props;
+  const options = {
+    forceBlock: true,
+    overrides: {
+      p: {
+        component: Paragraph,
+      },
+    },
+  };
   return (
     <div className={styles.login_footer_about_wrap} ref={data.get('elm')}>
-      <h3>
-        <span>{i18n.t('login_about_title')}</span>
-        <a role="link" onClick={onClick} className={styles.login_footer_about_hide}>
-          {i18n.t('login_about_hide')}
-        </a>
-      </h3>
-      <p dangerouslySetInnerHTML={{ __html: parseMd(i18n.t('login_about_desc1_md')) }} />
-      <p dangerouslySetInnerHTML={{ __html: parseMd(i18n.t('login_about_desc2_md')) }} />
-      <p dangerouslySetInnerHTML={{ __html: parseMd(i18n.t('login_about_desc3_md')) }} />
+      <Row gutter={8}>
+        <Col span={12}>
+          <Title level={4}>{i18n.t('login_about_title')}</Title>
+        </Col>
+        <Col span={12}>
+          <Button
+            type="link"
+            onClick={onClick}
+            style={{ float: 'right', paddingLeft: '0px', paddingRight: '0px' }}
+          >
+            {i18n.t('login_about_hide')}
+          </Button>
+        </Col>
+      </Row>
+      <Markdown options={options}>{i18n.t('login_about_desc1_md')}</Markdown>
+      <Markdown options={options}>{i18n.t('login_about_desc2_md')}</Markdown>
+      <Markdown options={options}>{i18n.t('login_about_desc3_md')}</Markdown>
     </div>
   );
 };
-LearnMore.propTypes = {
-  onClick: PropTypes.func.isRequired,
-};
-
+// *************************************************************************************************
 const Intro = props => {
   const { onClick } = props;
   return (
     <>
-      <p className={styles.login_footer_welcome}>{i18n.t('login_about_intro')}</p>
+      <Paragraph style={{ marginBottom: '0px' }} className={styles.login_footer_intro}>
+        {i18n.t('login_about_intro')}
+      </Paragraph>
       <Button type="link" className={styles.login_footer_learn_more} onClick={onClick}>
         {i18n.t('login_about_learn')}
       </Button>
     </>
   );
 };
-Intro.propTypes = {
-  onClick: PropTypes.func.isRequired,
-};
-
+// *************************************************************************************************
 const Footer = () => {
   const { data, onClick } = FooterController();
-  const View = data.get('view') === VIEW.learMore ? LearnMore : Intro;
+  const View = data.get('view') === LEAR_MORE ? LearnMore : Intro;
 
   return (
     <Row type="flex" justify="center">
@@ -67,4 +81,4 @@ const Footer = () => {
   );
 };
 
-export default Footer;
+export default React.memo(Footer);

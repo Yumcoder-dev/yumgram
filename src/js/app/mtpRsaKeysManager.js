@@ -93,7 +93,7 @@ const publisKeysHex = [
   },
 ];
 
-class RsaKeysManager {
+class MtpRsaKeysManager {
   constructor() {
     this.publicKeysParsed = {};
     this.prepared = false;
@@ -130,14 +130,11 @@ class RsaKeysManager {
   select(fingerprints) {
     this.prepare();
 
-    let fingerprintHex;
-    let foundKey;
-    let i;
-    for (i = 0; i < fingerprints.length; i += 1) {
-      fingerprintHex = bigStringInt(fingerprints[i]).toString(16);
-      foundKey = this.publicKeysParsed[fingerprintHex];
+    for (let i = 0; i < fingerprints.length; i += 1) {
+      const fingerprintHex = bigStringInt(fingerprints[i]).toString(16);
+      const foundKey = this.publicKeysParsed[fingerprintHex];
       if (foundKey) {
-        return Object.assign({ fingerprint: fingerprints[i] }, foundKey);
+        return { fingerprint: fingerprints[i], foundKey };
       }
     }
 
@@ -145,5 +142,5 @@ class RsaKeysManager {
   }
 }
 
-const MtpRsaKeysManager = new RsaKeysManager();
-export default MtpRsaKeysManager;
+// const MtpRsaKeysManager = new RsaKeysManager();
+export default new MtpRsaKeysManager();

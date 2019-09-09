@@ -1,0 +1,32 @@
+/*
+ * Copyright (c) 2019-present, The Yumcoder Authors. All rights reserved.
+ * 
+ * This source code is licensed under the license found in the LICENSE file in
+ * the root directory of this source tree.
+ */
+
+@import '../../../../App.module.less';
+
+.cell {
+  &:hover {
+    background-color: color(~`colorPalette('@{primary-color}', 1) `);
+  }
+
+  cursor: pointer;
+  padding-left: 26px;
+  padding-right: 26px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+
+.country_page {
+  padding-bottom: @padding-xs;
+}
+
+.search_country {
+  padding: @padding-sm;
+}
+
+.search_country_list {
+  height: 50vh; // vh: hundredths of the viewport height.
+}

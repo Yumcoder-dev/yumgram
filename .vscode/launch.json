@@ -10,7 +10,8 @@
             "name": "Launch Chrome against localhost",
             "url": "http://localhost:3000",
             "runtimeExecutable":"/snap/bin/chromium", 
-            "webRoot": "${workspaceFolder}"
+            "webRoot": "${workspaceFolder}",
+            "userDataDir": true,
         }
     ]
 }

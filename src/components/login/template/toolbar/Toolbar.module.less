@@ -5,9 +5,9 @@
  * the root directory of this source tree.
  */
 
-@import '../../../../App.module.less';
+@import '../../login.var.less';
 
-.login_toolbar_button {
+.login_toolbar_font() {
   font-weight: bold;
   color: @white;
 }
@@ -16,17 +16,37 @@
   cursor: pointer;
 }
 
-.login_toolbar_app_icon {
-  margin-left: 22px;
-  margin-right: 12px;
-  width: 30px;
-  height: 30px;
-  color: @white;
+.borderless() {
+  background: transparent;
+  border: none !important;
+  .login_toolbar_font();
+  &:hover,
+  &:focus {
+    background: transparent;
+    color: @white;
+  }
 }
 
-.login_toolbar_next_icon {
-  margin-top: 4px;
-  margin-left: 12px;
-  margin-right: 22px;
-  color: @white;
+.login_toolbar_btn_app {
+  .borderless();
+}
+
+.login_toolbar_icon {
+  vertical-align: middle;
+}
+
+.login_toolbar_app_name {
+  margin-left: @small-size * 2;
+  .login_toolbar_font();
+}
+
+.login_toolbar_btn_next {
+  float: right;
+  margin-left: auto;
+  .borderless();
+}
+
+.login_toolbar_txt {
+  .login_toolbar_font();
+  margin-left: @small-size * 2;
 }

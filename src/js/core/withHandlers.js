@@ -22,7 +22,7 @@ import { useMemo } from 'react';
 const withHandlers = handlers => (props = {}) => {
   const realHandlers = useMemo(
     () => (typeof handlers === 'function' ? handlers(props) : handlers),
-    [props],
+    [], // eslint-disable-line
   );
 
   const actionTypes = Object.keys(realHandlers);

@@ -19,17 +19,18 @@ const init = props =>
     elm: React.createRef(),
   });
 
-const addListener = ({ setData, emitter }) => {
+const addListener = ({ data, setData, emitter }) => {
   // size : {width, height}
   const subscription = emitter.addListener('onWindowResize', size => {
-    setData(d => {
-      const percentage = d.get('percentage');
-      let contHeight = d.get('contHeight');
-      const usePadding = d.get('padding') === 'true';
+    const elm = data.get('elm');
 
-      const height = d.get('elm').current.offsetHeight;
-      const { marginTop, paddingTop } = d.get('elm').current.style;
+    if (elm && elm.current && elm.current.style) {
+      const height = elm.current.offsetHeight;
+      const { marginTop, paddingTop } = elm.current.style;
 
+      const percentage = data.get('percentage');
+      let contHeight = data.get('contHeight');
+      const usePadding = data.get('padding') === 'true';
       const fullHeight = height - (height && usePadding ? 2 * parseInt(marginTop || 0, 10) : 0);
       const ratio = (percentage > 0 && percentage) || 0.5;
       contHeight = contHeight || size.height;
@@ -37,9 +38,8 @@ const addListener = ({ setData, emitter }) => {
       const styles = usePadding
         ? { paddingTop: margin, paddingBottom: margin }
         : { marginTop: margin, marginBottom: margin };
-
-      return d.set('styles', styles);
-    });
+      setData(d => d.set('styles', styles));
+    }
   });
 
   return [subscription];

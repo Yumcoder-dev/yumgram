@@ -1,5 +1,7 @@
 # Simple example
 
+## todo update doc
+
 a simple usage scenarios includes:
 
 - a controller: component lifcycle and handlers/funcs

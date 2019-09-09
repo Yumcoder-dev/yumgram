@@ -75,4 +75,4 @@ class SwitchLayout {
   }
 }
 
-export default new SwitchLayout();
+export default SwitchLayout;

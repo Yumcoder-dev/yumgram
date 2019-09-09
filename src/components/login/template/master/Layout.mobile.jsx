@@ -5,23 +5,33 @@
  * the root directory of this source tree.
  */
 
+/* eslint-disable react/prop-types */
+/* eslint-disable react/destructuring-assignment */
 import React from 'react';
 import { Row } from 'antd';
 import Footer from '../footer/Footer';
 import Toolbar from '../toolbar/Toolbar';
-import Login from '../../pages/login/login';
 import styles from './Layout.mobile.module.less';
+import vpBehavior from '../../../behaviors/verticalPosition';
 
-const MobileView = () => {
+const MobileView = props => {
+  const { data: verticalData } = vpBehavior({ percentage: 0.2, padding: 'true' });
+
   return (
-    <Row>
+    <>
       <Toolbar className={styles.login_mobile_toolbar} />
       <Row className={styles.login_mobile_content}>
-        <Login />
+        <Row
+          className={styles.login_page_wrap}
+          ref={verticalData.get('elm')}
+          style={{ ...verticalData.get('styles') }}
+        >
+          {props.children}
+        </Row>
         <Footer />
       </Row>
-    </Row>
+    </>
   );
 };
 
-export default MobileView;
+export default React.memo(MobileView);

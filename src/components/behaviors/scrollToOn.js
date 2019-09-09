@@ -12,25 +12,29 @@ import { pipe, withState, withLifecycle } from '../../js/core/index';
 import Config from '../../js/app/config';
 import RequestAnimationFrame from '../../js/app/animate';
 
+let progress = 0;
 const init = props => Map({ elm: React.createRef(), raf: new RequestAnimationFrame() });
 
-const componentDidMount = ({ data }) => {
+const onCreate = ({ data }) => {
   // Some browsers apply the "overall" scroll to document.documentElement (the <html> element)
   // and others to document.body (the <body> element).
   // For compatibility with both, you have to apply the scrolling to both.
   const top = data.get('elm').current.offsetHeight;
   const duration = 200;
+
   data.get('raf').animate(t => {
-    const v = (top * t) / duration;
-    document.body.scrollTop = v;
-    document.body.parentElement.scrollTop = v;
+    progress = (top * t) / duration;
+    document.body.scrollTop = progress;
+    document.body.parentElement.scrollTop = progress;
   }, duration);
 };
-const componentWillUnmount = ({ data }) => {
+const onDestroy = ({ data }) => {
   data.get('raf').cancle();
+  document.body.scrollTop -= progress;
+  document.body.parentElement.scrollTop -= progress;
 };
 
 export default pipe(
   withState(init),
-  withLifecycle({ componentDidMount, componentWillUnmount }),
+  withLifecycle({ onCreate, onDestroy }),
 );

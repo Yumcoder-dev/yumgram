@@ -17,10 +17,21 @@ const tr = {
   modal_ok: 'OK',
   // modal_done: 'Done',
 
+  badbrowser_desc1_md:
+    "Don't take this personally, but your browser is too old to run **Telegram Web**.",
+  badbrowser_desc2_md:
+    'We require HTML5 support for the MTProto secure messaging protocol to work.',
+  badbrowser_desc3_md: "Unfortunately, your current browser doesn't support HTML5.",
+  badbrowser_desc4_md: 'Please download a modern browser and come back soon!',
+  badbrowser_download_ff: 'Download Mozilla Firefox',
+  badbrowser_download_chrome: 'Download Google Chrome',
+
   login_toolbar_next: 'Next',
   login_sign_in: 'Sign in',
   login_enter_number_description: 'Please choose your country and enter your full phone number.',
-  // login_incorrect_number: 'Incorrect phone number',
+  login_incorrect_number: 'Incorrect phone number',
+  login_incorrect_app_signup_forbidden:
+    "You can't register via Telegram Web. It mentions that you can register via mobile app.",
   login_code_input_placeholder: 'Code',
   login_tel_input_placeholder: 'Phone',
   login_tel_input_label: 'Phone number',
@@ -29,31 +40,33 @@ const tr = {
   login_country: 'Country',
   login_country_input_label: 'Country',
 
-  // login_generating_key: 'Generating keys',
-  // login_generating_keys_info:
-  //   'Keys are only generated once. This can take a few minutes on slower devices, please be patient.',
-  // login_edit_number: 'Edit phone number',
-  // login_enter_code_label_md:
-  //   "We've sent the code to the **Telegram** app on your other device.\nPlease enter the code below.",
-  // login_enter_sms_code_label_md:
-  //   "We've sent an SMS with an activation code to your phone.\nPlease enter the code below.",
-  // login_enter_call_code_label_md:
-  //   'We are calling your phone to dictate a code.\nPlease enter the code below.',
-  // login_code_remaining: 'You will be able to request SMS in {remaining}',
-  // login_call_remaining: 'You will be able to request call in {remaining}',
-  // login_code_not_received: 'Send code via SMS',
-  // login_code_not_received_call: 'Send code via Call',
-  // login_code_requesting: 'Requesting code',
-  // login_incorrect_sms_code: 'Incorrect SMS code',
-  // login_number_input_placeholder: 'Enter your code',
-  // login_checking_code: 'Checking code',
-  // login_your_info: 'Your info',
-  // login_fulll_name_label: 'Please enter your full name to set up a Telegram account.',
-  // login_incorrect_first_name: 'Incorrect first name',
-  // login_first_name: 'First name',
-  // login_incorrect_last_name: 'Incorrect last name',
-  // login_last_name: 'Last name',
-  // login_signing_up: 'Signing up',
+  login_controller_unknown_country: 'Unknown',
+
+  login_generating_key: 'Generating keys',
+  login_generating_keys_info:
+    'Keys are only generated once. This can take a few minutes on slower devices, please be patient.',
+  login_edit_number: 'Edit phone number',
+  login_enter_code_label_md:
+    "We've sent the code to the **Telegram** app on your other device.\nPlease enter the code below.",
+  login_enter_sms_code_label_md:
+    "We've sent an **SMS** with an activation code to your phone.\nPlease enter the code below.",
+  login_enter_call_code_label_md:
+    'We are **calling** your phone to dictate a code.\nPlease enter the code below.',
+  login_code_remaining: 'You will be able to request SMS in ',
+  login_call_remaining: 'You will be able to request call in ',
+  login_code_not_received: 'Send code via SMS',
+  login_code_not_received_call: 'Send code via Call',
+  login_code_requesting: 'Requesting code',
+  login_incorrect_sms_code: 'Incorrect SMS code',
+  login_number_input_placeholder: 'Enter your code',
+  login_checking_code: 'Checking code',
+  login_your_info: 'Your info',
+  login_fulll_name_label: 'Please enter your full name to set up a Telegram account.',
+  login_incorrect_first_name: 'Incorrect first name',
+  login_first_name: 'First name',
+  login_incorrect_last_name: 'Incorrect last name',
+  login_last_name: 'Last name',
+  login_signing_up: 'Signing up',
   // login_sign_up: 'Sign up',
   login_about_title: 'About',
   login_about_hide: 'hide',
@@ -63,21 +76,22 @@ const tr = {
     'It is always synced with the **Telegram app** on your mobile device, which makes it a perfect tool for messaging and file sharing.',
   login_about_desc3_md:
     'Our [source code](https://github.com/YumcoderCom/yumgram) is open, so everyone can make a contribution.',
-  login_about_intro: 'Welcome to the official Telegram web-client.',
+  login_about_intro: 'Welcome to the unofficial Telegram web-client.',
   login_about_learn: 'Learn more',
-  // login_password_title: 'Password',
-  // login_password_label:
-  //   'You have enabled Two-Step Verification, so your account is protected with an additional password.',
-  // login_password_forgot_link: 'Forgot password?',
-  // login_account_reset: 'Reset account',
-  // login_password: 'Your password',
-  // login_incorrect_password: 'Incorrect password',
-  // login_checking_password: 'Checking',
-  // login_recovery_title: 'Forgot password?',
+  login_password_title: 'Password',
+  login_password_label:
+    'You have enabled Two-Step Verification, so your account is protected with an additional password.',
+  login_password_forgot_link: 'Forgot password?',
+  login_account_reset: 'Reset account',
+  login_password: 'Your password',
+  login_incorrect_password: 'Incorrect password',
+  login_checking_password: 'Checking',
+  login_recovery_title: 'Forgot password?',
   // login_code_placeholder: 'Code',
-  // login_code_incorrect: 'Incorrect code',
+  login_code_incorrect: 'Incorrect code',
   // login_recovery_description_md:
   //   'We have sent a recovery code to the e-mail you provided:\n\n{email}\n\nPlease check your e-mail and enter the 6-digit code we have sent here.',
+  confirm_modal_login_phone_correct: 'Is this phone number correct?',
 
   confirm_modal_resize_desktop: 'Would you like to switch to desktop version?',
   confirm_modal_resize_mobile: 'Would you like to switch to mobile version?',

@@ -6,12 +6,24 @@
  */
 
 import React from 'react';
+import './Page404.module.less';
+import noiseController from './Noise.controller';
+
+const NoiseCanvas = () => {
+  const { data } = noiseController();
+
+  return <canvas ref={data.get('elm')} style={{ width: '100%', height: '100%' }} />;
+};
 
 function Page404() {
   return (
-    <div>
-      <h1>Page404</h1>
-    </div>
+    <>
+      <NoiseCanvas />
+      <div id="display">
+        404
+        <div id="title">Not Found</div>
+      </div>
+    </>
   );
 }
 

@@ -16,7 +16,8 @@ const withState = (initialState, stateName = 'data', stateUpdaterName = 'setData
   props = {},
 ) => {
   const [state, update] = useState(
-    typeof initialState === 'function' ? useMemo(() => initialState(props), [props]) : initialState,
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    typeof initialState === 'function' ? useMemo(() => initialState(props), []) : initialState,
   );
 
   return {

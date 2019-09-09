@@ -30,6 +30,8 @@ import MtpRsaKeysManager from './mtpRsaKeysManager';
 import Timeout from './timeout';
 import CryptoWorker from './crypto';
 import Defer from './defer';
+import httpRequest from './http';
+import getBadResponseError from './mtpNetErr';
 
 class MtpAuthorizerManager {
   constructor() {
@@ -63,27 +65,17 @@ class MtpAuthorizerManager {
     resultArray.set(requestArray, headerArray.length);
 
     const requestData = this.xhrSendBuffer ? resultBuffer : resultArray;
-    let requestPromise;
+    // let requestPromise;
     const url = MtpDcConfigurator.chooseServer(dcID);
-    const baseError = { code: 406, type: 'NETWORK_BAD_RESPONSE', url };
-    try {
-      requestPromise = window
-        .fetch(url, {
-          method: 'POST',
-          // responseType: 'arraybuffer',
-          // #todo transformRequest: null,
-          body: requestData,
-        })
-        .then(response => response.arrayBuffer());
-    } catch (e) {
-      requestPromise = Promise.reject(Object.assign(baseError, { originalError: e }));
-    }
-    return requestPromise.then(
-      result => {
+    return httpRequest(url, {
+      method: 'POST',
+      body: requestData,
+      /* responseType: 'arraybuffer' */
+    })
+      .then(result => {
         if (!result || !result.byteLength) {
-          return Promise.reject(baseError);
+          return Promise.reject(getBadResponseError(url));
         }
-
         try {
           const deserializer = new TLDeserialization(result, { mtproto: true });
           deserializer.fetchLong('auth_key_id');
@@ -91,16 +83,49 @@ class MtpAuthorizerManager {
           deserializer.fetchInt('msg_len');
           return deserializer;
         } catch (e) {
-          return Promise.reject(Object.assign(baseError, { originalError: e }));
+          return Promise.reject(getBadResponseError(url, e));
         }
-      },
-      error => {
-        if (!error.message && !error.type) {
-          error = Object.assign(baseError, { originalError: error });
-        }
-        return Promise.reject(error);
-      },
-    );
+      })
+      .catch(error => {
+        return Promise.reject(getBadResponseError(url, error));
+      });
+
+    // const baseError = { code: 406, type: 'NETWORK_BAD_RESPONSE', url };
+    // try {
+    //   requestPromise = window
+    //     .fetch(url, {
+    //       method: 'POST',
+    //       // responseType: 'arraybuffer',
+    //       // #todo transformRequest: null,
+    //       body: requestData,
+    //     })
+    //     .then(response => response.arrayBuffer());
+    // } catch (e) {
+    //   requestPromise = Promise.reject(Object.assign(baseError, { originalError: e }));
+    // }
+    // return requestPromise.then(
+    //   result => {
+    //     if (!result || !result.byteLength) {
+    //       return Promise.reject(baseError);
+    //     }
+
+    //     try {
+    //       const deserializer = new TLDeserialization(result, { mtproto: true });
+    //       deserializer.fetchLong('auth_key_id');
+    //       deserializer.fetchLong('msg_id');
+    //       deserializer.fetchInt('msg_len');
+    //       return deserializer;
+    //     } catch (e) {
+    //       return Promise.reject(Object.assign(baseError, { originalError: e }));
+    //     }
+    //   },
+    //   error => {
+    //     if (!error.message && !error.type) {
+    //       error = Object.assign(baseError, { originalError: error });
+    //     }
+    //     return Promise.reject(error);
+    //   },
+    // );
   }
 
   mtpSendReqPQ(auth) {
@@ -475,7 +500,6 @@ class MtpAuthorizerManager {
 
   auth(dcID) {
     if (this.cached[dcID] !== undefined) {
-      console.log('******allFound1******', dcID); // todo
       return this.cached[dcID];
     }
 
@@ -502,7 +526,6 @@ class MtpAuthorizerManager {
     this.cached[dcID].catch(() => {
       delete this.cached[dcID];
     });
-    console.log('******allFound2******', dcID); // todo
 
     return this.cached[dcID];
   }

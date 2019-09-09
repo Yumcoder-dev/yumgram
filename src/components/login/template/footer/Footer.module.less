@@ -5,51 +5,22 @@
  * the root directory of this source tree.
  */
 
-@import '../../../../App.module.less';
+@import '../../login.var.less';
 
-.login_footer_welcome {
+.login_footer_intro {
   color: color(~`colorPalette('@{primary-color}', 5) `);
-  margin-top: 24px;
-  margin-bottom: 4px;
+  margin-top: @medium-size;
 }
 
 .login_footer_learn_more {
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
+  .mixin-center();
 }
 
 .login_footer_about_wrap {
-  background: #fff;
-  margin-top: 12px;
-  padding: 44px 65px 44px;
-
+  .login-page-padding();
+  margin-top: @medium-size / 2;
   box-shadow: 0px 1px 0 #dfe5ec;
 
   border-radius: 3px;
   border: 1px solid #dfe5ec;
-
-  h3 {
-    margin: 0 0 20px;
-    font-size: 15px;
-    font-weight: bold;
-    text-align: left;
-
-    .login_footer_about_hide {
-      color: #999;
-      font-size: 80%;
-      font-weight: normal;
-      margin-left: 8px;
-    }
-  }
-
-  p {
-    margin: 0 0 20px;
-    font-size: 13px;
-    line-height: 160%;
-
-    &:last-child {
-      margin: 0;
-    }
-  }
 }

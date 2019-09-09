@@ -36,6 +36,8 @@ class Idle {
 
     this.timeout = false;
     this.debouncePromise = false;
+    // in order to add and remove in bind mode
+    this.onEvent = this.onEvent.bind(this);
   }
 
   start() {
@@ -57,7 +59,6 @@ class Idle {
   }
 
   onEvent(e) {
-    // console.log('event', e.type);
     if (e.type === 'mousemove') {
       const originalEvent = e.originalEvent || e;
       if (originalEvent && originalEvent.movementX === 0 && originalEvent.movementY === 0) {
@@ -110,4 +111,4 @@ class Idle {
   }
 }
 
-export default new Idle();
+export default Idle;

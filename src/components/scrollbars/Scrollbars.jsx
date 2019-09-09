@@ -28,4 +28,5 @@ const CustomScrollbars = ({ onScroll, forwardedRef, style, children }) => {
   );
 };
 
+// eslint-disable-next-line react/jsx-props-no-spreading
 export default React.forwardRef((props, ref) => <CustomScrollbars {...props} forwardedRef={ref} />);

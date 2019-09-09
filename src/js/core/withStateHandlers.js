@@ -25,7 +25,8 @@ const withStateHandlers = (initialValue, handlers) => (props = {}) => {
   // see https://reactjs.org/docs/hooks-reference.html#usereducer
   const [state, dispatch] = useReducer(
     reducer,
-    typeof initialValue === 'function' ? useMemo(() => initialValue(props), [props]) : initialValue,
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    typeof initialValue === 'function' ? useMemo(() => initialValue(props), []) : initialValue,
   );
 
   const boundHandlers = actionTypes.reduce(

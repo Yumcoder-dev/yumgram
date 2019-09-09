@@ -11,6 +11,7 @@
     "immutable": "^4.0.0-rc.12",
     "jsbn": "^1.1.0",
     "leemon": "^6.2.0",
+    "markdown-to-jsx": "^6.10.3",
     "ogv": "^1.6.1",
     "prop-types": "^15.7.2",
     "react": "^16.9.0",
@@ -31,7 +32,6 @@
   },
   "scripts": {
     "precommit": "lint-staged",
-    "flow": "flow",
     "start": "react-app-rewired start",
     "build": "react-app-rewired build",
     "test": "react-app-rewired test --env=jsdom",
