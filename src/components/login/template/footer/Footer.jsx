@@ -11,11 +11,11 @@
 /* eslint-disable jsx-a11y/interactive-supports-focus */
 import React from 'react';
 import { Button, Row, Col, Typography } from 'antd';
-import i18n from 'i18next';
 import Markdown from 'markdown-to-jsx';
+import i18n from '@locale';
 import styles from './Footer.module.less';
 import FooterController, { LEAR_MORE } from './Footer.controller';
-import scrollToOn from '../../../behaviors/scrollToOn';
+import { scrollToOn } from '@components';
 
 const { Title, Paragraph } = Typography;
 

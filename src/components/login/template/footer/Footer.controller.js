@@ -6,9 +6,8 @@
  */
 
 import { Map } from 'immutable';
-import { pipe, withHandlers, withState } from '../../../../js/core/index';
+import { pipe, withHandlers, withState } from '@yumjs';
 
-// #todo convert to object
 export const INTRO = 0;
 export const LEAR_MORE = 1;
 

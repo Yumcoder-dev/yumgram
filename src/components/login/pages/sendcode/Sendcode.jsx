@@ -7,16 +7,15 @@
  */
 
 import React from 'react';
-import { Input, Modal, Alert, Typography } from 'antd';
-import i18n from 'i18next';
-import MyInput from '../../../view/MyInput';
+import { Input as AntdInput, Modal, Alert, Typography } from 'antd';
+import i18n from '@locale';
+import { Input } from '@components';
 import loginController from './Sendcode.controller';
-import CountryList from '../country/CountryList';
 import styles from './Sendcode.module.less';
-import Header from '../header/Header';
+import { CountryList, LoginHeader } from '@login-widgets';
 
-const { Search } = Input;
-const InputGroup = Input.Group;
+const { Search } = AntdInput;
+const InputGroup = AntdInput.Group;
 const { Text, Paragraph } = Typography;
 
 // *************************************************************************************************
@@ -62,7 +61,7 @@ const InputTelView = ({ code, phone, onCodeChanged, onTelChanged, Err, focusInde
     <>
       <Text type="secondary">{i18n.t('login_tel_input_label')}</Text>
       <InputGroup compact className={styles.login_input_tel}>
-        <MyInput
+        <Input
           ref={input => input && focusIndex === 0 && input.focus()}
           style={{ width: '30%' }}
           error={hasErr}
@@ -70,7 +69,7 @@ const InputTelView = ({ code, phone, onCodeChanged, onTelChanged, Err, focusInde
           placeholder={i18n.t('login_code_input_placeholder')}
           onChange={e => onCodeChanged(e.target.value)}
         />
-        <MyInput
+        <Input
           ref={input => input && focusIndex === 1 && input.focus()}
           style={{ width: '70%' }}
           value={phone}
@@ -100,7 +99,7 @@ const Sendcode = ({ phoneCountry, phoneNumber, phoneCountryName }) => {
   // - decompose main view to fine-grained view base on changes scenario
   return (
     <>
-      <Header head={i18n.t('login_sign_in')} lead={i18n.t('login_enter_number_description')} />
+      <LoginHeader head={i18n.t('login_sign_in')} lead={i18n.t('login_enter_number_description')} />
       <InputCountry
         name={data.get('phoneCountryName')}
         showSearchCountry={data.get('showSearchCountry')}

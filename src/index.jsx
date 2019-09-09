@@ -9,10 +9,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-import i18n from './locales/i18n';
 import startApplication from './components/application';
 
-i18n.changeLanguage('fa');
 startApplication();
 
 ReactDOM.render(<App />, document.getElementById('root'));

@@ -9,13 +9,12 @@
 /* eslint-disable react/destructuring-assignment */
 import React from 'react';
 import { Row } from 'antd';
-import Footer from '../footer/Footer';
-import Toolbar from '../toolbar/Toolbar';
+import { verticalPosition } from '@components';
+import { Footer, Toolbar } from '@login-components';
 import styles from './Layout.mobile.module.less';
-import vpBehavior from '../../../behaviors/verticalPosition';
 
-const MobileView = props => {
-  const { data: verticalData } = vpBehavior({ percentage: 0.2, padding: 'true' });
+const Mobile = props => {
+  const { data: verticalData } = verticalPosition({ percentage: 0.2, padding: 'true' });
 
   return (
     <>
@@ -34,4 +33,4 @@ const MobileView = props => {
   );
 };
 
-export default React.memo(MobileView);
+export default React.memo(Mobile);

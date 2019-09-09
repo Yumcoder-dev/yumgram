@@ -6,29 +6,29 @@
  */
 
 import React from 'react';
-import i18n from 'i18next';
 import { Button, Typography, Alert } from 'antd';
+import i18n from '@locale';
 import passwordController from './Password.controller';
 import styles from './Password.module.less';
-import Header from '../header/Header';
-import MyInput from '../../../view/MyInput';
+import { Input } from '@components';
+import { LoginHeader } from '@login-widgets';
 
 const { Text } = Typography;
 
 export default ({ accountPassword }) => {
-  const { data, onDataValueChanged } = passwordController({
+  const { data, onInputChanged } = passwordController({
     accountPassword,
   });
   return (
     <>
-      <Header head={i18n.t('login_password_title')} lead={i18n.t('login_password_label')} />
+      <LoginHeader head={i18n.t('login_password_title')} lead={i18n.t('login_password_label')} />
 
       <Text type="secondary">{i18n.t('login_password')}</Text>
-      <MyInput
+      <Input
         ref={input => input && input.focus()}
         className={styles.login_password_input}
         error={data.get('incorrectPassword')}
-        onChange={e => onDataValueChanged('password', e.target.value)}
+        onChange={e => onInputChanged('password', e.target.value)}
       />
       <Text type="secondary">hint</Text>
       {data.get('incorrectPassword') && (

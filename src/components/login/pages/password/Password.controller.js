@@ -6,19 +6,18 @@
  */
 
 import { Map } from 'immutable';
-import { pipe, withState, withEmitter, withHandlers } from '../../../../js/core/index';
+import { pipe, withState, withEmitter, withHandlers } from '@yumjs';
 import {
-  FULLNAME,
+  PAGE_FULLNAME,
   EVENT_SHOW_PAGE,
   EVENT_AUTH_USER,
   EVENT_ON_STATUS_CHANGED,
   EVENT_ON_SUBMIT,
-} from '../../constant';
-import onDataValueChanged from '../onDataValueChanged';
-import i18n from '../../../../locales/i18n';
-import makePasswordHash from '../../../../js/app/passwordManager';
-import MtpApiManager from '../../../../js/app/mtpApiManager';
-import options from '../apiOpt';
+  options,
+} from '@login-shared';
+import { onInputChanged } from '@components';
+import i18n from '@locale';
+import { makePasswordHash, mtpApiManager } from '@appjs';
 
 const init = ({ accountPassword }) =>
   Map({
@@ -29,7 +28,7 @@ const init = ({ accountPassword }) =>
   });
 
 // const forgotPassword = () => () => {
-//   MtpApiManager.invokeApi('auth.requestPasswordRecovery', {}, options)
+//   mtpApiManager.invokeApi('auth.requestPasswordRecovery', {}, options)
 //     .then(emailRecovery => {
 //       // const scope = $rootScope.$new();
 //       // scope.recovery = emailRecovery;
@@ -78,13 +77,14 @@ const onSubmit = (data, setData, emitter) => {
   makePasswordHash(data.get('accountPassword').current_salt, data.get('password')).then(
     passwordHash => {
       // 2.
-      MtpApiManager.invokeApi(
-        'auth.checkPassword',
-        {
-          password_hash: passwordHash,
-        },
-        options,
-      )
+      mtpApiManager
+        .invokeApi(
+          'auth.checkPassword',
+          {
+            password_hash: passwordHash,
+          },
+          options,
+        )
         .then(result => {
           // 3.
           emitter.emit(EVENT_AUTH_USER, options.id, result.user.id);
@@ -106,7 +106,7 @@ const onSubmit = (data, setData, emitter) => {
 
   setTimeout(() => {
     emitter.emit(EVENT_ON_STATUS_CHANGED, '');
-    emitter.emit(EVENT_SHOW_PAGE, FULLNAME);
+    emitter.emit(EVENT_SHOW_PAGE, PAGE_FULLNAME);
   }, 100);
 };
 
@@ -118,6 +118,6 @@ const addListener = ({ data, setData, emitter }) => {
 
 export default pipe(
   withState(init),
-  withHandlers({ onDataValueChanged }),
+  withHandlers({ onInputChanged }),
   withEmitter(addListener),
 );

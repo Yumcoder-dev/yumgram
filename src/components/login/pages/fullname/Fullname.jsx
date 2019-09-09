@@ -7,26 +7,26 @@
 
 /* eslint-disable no-bitwise */
 import React from 'react';
-import i18n from 'i18next';
 import { Alert, Typography, Row } from 'antd';
+import i18n from '@locale';
 import fullnameController from './Fullname.controller';
-import Header from '../header/Header';
 import styles from './Fullname.module.less';
-import MyInput from '../../../view/MyInput';
+import { Input } from '@components';
+import { LoginHeader } from '@login-widgets';
 
 const { Text } = Typography;
 
 export default () => {
-  const { data, onDataValueChanged } = fullnameController();
+  const { data, onInputChanged } = fullnameController();
   return (
     <>
-      <Header head={i18n.t('login_your_info')} lead={i18n.t('login_fulll_name_label')} />
+      <LoginHeader head={i18n.t('login_your_info')} lead={i18n.t('login_fulll_name_label')} />
 
       <Text type="secondary">{i18n.t('login_first_name')}</Text>
       <Row className={styles.login_fname_row}>
-        <MyInput
+        <Input
           error={data.get('incorrect_fname')}
-          onChange={e => onDataValueChanged('fname', e.target.value)}
+          onChange={e => onInputChanged('fname', e.target.value)}
         />
         {data.get('incorrect_fname') && (
           <Alert
@@ -40,10 +40,10 @@ export default () => {
       </Row>
 
       <Text type="secondary">{i18n.t('login_last_name')}</Text>
-      <MyInput
+      <Input
         className={styles.login_lname_input}
         error={data.get('incorrect_lname')}
-        onChange={e => onDataValueChanged('lname', e.target.value)}
+        onChange={e => onInputChanged('lname', e.target.value)}
       />
       {data.get('incorrect_lname') && (
         <Alert

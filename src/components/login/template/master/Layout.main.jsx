@@ -9,11 +9,11 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
 import layoutController from './Layout.controller';
-import Config from '../../../../js/app/config';
-import MobileView from './Layout.mobile';
-import DesktopView from './Layout.desktop';
-import { FullnameView, PasswordView, LoginView, SendCodeView } from '../../pages/index';
-import { LOGIN, PASSWORD, FULLNAME } from '../../constant';
+import { config } from '@appjs';
+import Mobile from './Layout.mobile';
+import Desktop from './Layout.desktop';
+import { PAGE_LOGIN, PAGE_PASSWORD, PAGE_FULLNAME } from '@login-shared';
+import { Fullname, Password, Login, SendCode } from '@login-components';
 import './Layout.module.less';
 
 const MainLayout = () => {
@@ -22,25 +22,25 @@ const MainLayout = () => {
     return <Redirect to="/im" />;
   }
 
-  const View = Config.Mobile ? MobileView : DesktopView;
-  let ChildView;
+  const View = config.Mobile ? Mobile : Desktop;
+  let Child;
   switch (data.get('view')) {
-    case LOGIN:
-      ChildView = LoginView;
+    case PAGE_LOGIN:
+      Child = Login;
       break;
-    case PASSWORD:
-      ChildView = PasswordView;
+    case PAGE_PASSWORD:
+      Child = Password;
       break;
-    case FULLNAME:
-      ChildView = FullnameView;
+    case PAGE_FULLNAME:
+      Child = Fullname;
       break;
     default:
-      ChildView = SendCodeView;
+      Child = SendCode;
       break;
   }
   return (
     <View>
-      <ChildView {...data.get('props')} />
+      <Child {...data.get('props')} />
     </View>
   );
 };

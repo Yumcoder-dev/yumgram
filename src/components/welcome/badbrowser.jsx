@@ -8,7 +8,7 @@
 import React from 'react';
 import { Typography } from 'antd';
 import Markdown from 'markdown-to-jsx';
-import i18n from 'i18next';
+import i18n from '@locale';
 
 const { Title, Paragraph } = Typography;
 const options = {

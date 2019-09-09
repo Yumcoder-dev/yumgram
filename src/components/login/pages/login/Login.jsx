@@ -8,15 +8,13 @@
 
 /* eslint-disable react/jsx-one-expression-per-line */
 import React from 'react';
-import i18n from 'i18next';
 import { Row, Button, Typography, Alert } from 'antd';
 import Markdown from 'markdown-to-jsx';
-import MyInput from '../../../view/MyInput';
+import i18n from '@locale';
+import { Input, countdown, ThreeDots } from '@components';
 import loginController from './Login.controller';
 import styles from './Login.module.less';
-import useCountdown from '../../../behaviors/countdown';
-import milliToHMSFormat from '../../../time/format';
-import ThreeDots from '../../../svg/ThreeDots';
+import { milliToHMSFormat } from '@appjs';
 
 const { Text, Paragraph } = Typography;
 // *************************************************************************************************
@@ -82,7 +80,7 @@ const ResendCode = React.memo(ResendCodeView);
 // *************************************************************************************************
 // NextPendingView -> ResendCodeView
 const NextPendingView = ({ sentCodeType, remaining, nextPendingTimeout }) => {
-  const timeout = useCountdown(() => Date.now() + remaining);
+  const timeout = countdown(() => Date.now() + remaining);
   if (timeout === 0) {
     nextPendingTimeout();
   }
@@ -146,7 +144,7 @@ const SendCodeView = ({ incorrectCode, onDataValueChanged }) => {
       <Text type="secondary" className={styles.login_center}>
         {i18n.t('login_number_input_placeholder')}
       </Text>
-      <MyInput
+      <Input
         ref={input => input && input.focus()}
         className={styles.loging_input_code}
         error={incorrectCode}

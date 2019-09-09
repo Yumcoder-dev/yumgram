@@ -7,12 +7,11 @@
 
 import React from 'react';
 import { Row, Icon, Button, Typography } from 'antd';
-import i18n from 'i18next';
+import i18n from '@locale';
 import toolbarController from './Toolbar.controller';
 // import AppIcon from '../../../../assets/img/icons/icon.svg';
-import AppIcon from '../../../svg/AppIcon';
+import { AppIcon, ThreeDots } from '@components';
 import styles from './Toolbar.module.less';
-import ThreeDots from '../../../svg/ThreeDots';
 
 const { Text } = Typography;
 

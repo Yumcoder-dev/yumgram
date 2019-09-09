@@ -6,8 +6,8 @@
  */
 
 import { Map } from 'immutable';
-import { pipe, withState, withHandlers, withEmitter } from '../../../../js/core/index';
-import { EVENT_ON_STATUS_CHANGED, EVENT_ON_SUBMIT } from '../../constant';
+import { pipe, withState, withHandlers, withEmitter } from '@yumjs';
+import { EVENT_ON_STATUS_CHANGED, EVENT_ON_SUBMIT } from '@login-shared';
 
 const init = () =>
   Map({

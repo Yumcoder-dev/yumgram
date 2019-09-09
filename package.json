@@ -41,7 +41,20 @@
   "jest": {
     "setupFilesAfterEnv": [
       "./src/setupTests.js"
-    ]
+    ],
+    "moduleNameMapper": {
+      "^@": "<rootDir>/src/",
+      "^@components": "<rootDir>/src/components/index/index.public.js",
+      "^@components-shared": "<rootDir>/src/components/index/index.shared.js",
+      "^@login": "<rootDir>/src/components/login/index/internal/public.js",
+      "^@login-shared": "<rootDir>/src/components/login/index/internal/shared.js",
+      "^@login-components": "<rootDir>/src/components/login/index/internal/components.js",
+      "^@login-widgets": "<rootDir>/src/components/login/index/internal/widgets.js",
+      "^@im": "<rootDir>/src/components/im/index.js",
+      "^@yumjs": "<rootDir>/src/scripts/yumjs/index.js",
+      "^@appjs": "<rootDir>/src/scripts/appjs/index.js",
+      "^@locale": "<rootDir>/src/locales/i18n.js"
+    }
   },
   "lint-staged": {
     "src/**/*.{js,jsx,ts,tsx}": [
@@ -85,6 +98,7 @@
     "eslint": "^6.2.1",
     "eslint-config-airbnb": "^18.0.1",
     "eslint-config-prettier": "^6.1.0",
+    "eslint-import-resolver-alias": "^1.1.2",
     "eslint-plugin-flowtype": "^4.2.0",
     "eslint-plugin-import": "^2.18.2",
     "eslint-plugin-jsx-a11y": "^6.2.3",

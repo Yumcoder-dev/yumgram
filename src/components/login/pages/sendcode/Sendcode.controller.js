@@ -7,6 +7,7 @@
  */
 
 import { Map } from 'immutable';
+import { confirmPhone } from '@components';
 import {
   pipe,
   withLifecycle,
@@ -14,15 +15,18 @@ import {
   withHandlers,
   withCacheHandlers,
   withEmitter,
-} from '../../../../js/core/index';
-import Config from '../../../../js/app/config';
-import MtpApiManager from '../../../../js/app/mtpApiManager';
-import { LangCountries, CountryCodes } from '../country/country.data';
-import i18n from '../../../../locales/i18n';
-import { LOGIN, EVENT_SHOW_PAGE, EVENT_ON_STATUS_CHANGED, EVENT_ON_SUBMIT } from '../../constant';
-import { confirmPhone } from '../../../popup/modal';
-import options from '../apiOpt';
-import Timeout from '../../../../js/app/timeout';
+} from '@yumjs';
+import { config, mtpApiManager, Timeout } from '@appjs';
+import {
+  langCountries,
+  countryCodes,
+  options,
+  PAGE_LOGIN,
+  EVENT_SHOW_PAGE,
+  EVENT_ON_STATUS_CHANGED,
+  EVENT_ON_SUBMIT,
+} from '@login-shared';
+import i18n from '@locale';
 
 // Two-way Binding: The recommendation is to explicitly set the value and change handler.
 // see: https://reactjs.org/docs/two-way-binding-helpers.html
@@ -41,8 +45,8 @@ const init = ({ phoneCountry, phoneNumber, phoneCountryName }) =>
 
 const selectPhoneCountryByIso2 = (setData, countryIso2) => {
   if (countryIso2) {
-    for (let i = 0; i < CountryCodes.length; i += 1) {
-      const country = CountryCodes[i];
+    for (let i = 0; i < countryCodes.length; i += 1) {
+      const country = countryCodes[i];
       if (country[0] === countryIso2) {
         const name = i18n.t(country[1]);
         // eslint-disable-next-line no-loop-func
@@ -57,7 +61,7 @@ const selectPhoneCountryByIso2 = (setData, countryIso2) => {
 
 const initPhoneCountry = (data, setData) => {
   const langCode = (navigator.language || '').toLowerCase();
-  const countryIso2 = LangCountries[langCode];
+  const countryIso2 = langCountries[langCode];
 
   if (['en', 'en-us', 'en-uk'].indexOf(langCode) === -1) {
     if (countryIso2 !== undefined) {
@@ -70,12 +74,12 @@ const initPhoneCountry = (data, setData) => {
   } else {
     selectPhoneCountryByIso2(setData, 'US');
   }
-  if (Config.Navigator.mobile) {
+  if (config.Navigator.mobile) {
     return;
   }
 
   // const wasCountry = d.get('phoneCountry');
-  MtpApiManager.invokeApi('help.getNearestDc', {}, options).then(nearestDcResult => {
+  mtpApiManager.invokeApi('help.getNearestDc', {}, options).then(nearestDcResult => {
     if (data.get('setNearestDc') === true) {
       // if user does not change country
       selectPhoneCountryByIso2(setData, nearestDcResult.country);
@@ -83,7 +87,7 @@ const initPhoneCountry = (data, setData) => {
     }
 
     if (nearestDcResult.nearest_dc !== nearestDcResult.this_dc) {
-      MtpApiManager.mtpGetNetworker(nearestDcResult.nearest_dc, { createNetworker: true });
+      mtpApiManager.mtpGetNetworker(nearestDcResult.nearest_dc, { createNetworker: true });
     }
   });
 };
@@ -105,12 +109,12 @@ const updateCountry = phoneNumber => {
   let maxLength = 0;
   let maxName = false;
   if (phoneNumber.length) {
-    for (let i = 0; i < CountryCodes.length; i += 1) {
-      for (let j = 2; j < CountryCodes[i].length; j += 1) {
-        const code = CountryCodes[i][j].replace(/\D+/g, '');
+    for (let i = 0; i < countryCodes.length; i += 1) {
+      for (let j = 2; j < countryCodes[i].length; j += 1) {
+        const code = countryCodes[i][j].replace(/\D+/g, '');
         if (code.length > maxLength && !phoneNumber.indexOf(code)) {
           maxLength = code.length;
-          maxName = i18n.t(`${CountryCodes[i][1]}`);
+          maxName = i18n.t(`${countryCodes[i][1]}`);
         }
       }
     }
@@ -172,17 +176,18 @@ const onSubmit = (data, setData, emitter) => {
     // onOk
     setData(d => d.set('progressEnabled', true)); // show login generating keys info
     emitter.emit(EVENT_ON_STATUS_CHANGED, i18n.t('login_generating_key')); // chnage status bar msg
-    MtpApiManager.invokeApi(
-      'auth.sendCode',
-      {
-        flags: 0,
-        phone_number: data.get('phoneCountry') + data.get('phoneNumber'),
-        api_id: Config.App.id,
-        api_hash: Config.App.hash,
-        lang_code: navigator.language || 'en',
-      },
-      options,
-    )
+    mtpApiManager
+      .invokeApi(
+        'auth.sendCode',
+        {
+          flags: 0,
+          phone_number: data.get('phoneCountry') + data.get('phoneNumber'),
+          api_id: config.App.id,
+          api_hash: config.App.hash,
+          lang_code: navigator.language || 'en',
+        },
+        options,
+      )
       .then(sentCode => {
         // auth.sentCode#38faab5f flags:# phone_registered:flags.0?true type:auth.SentCodeType phone_code_hash:string next_type:flags.1?auth.CodeType timeout:flags.2?int terms_of_service:flags.3?help.TermsOfService = auth.SentCode;
         // ---functions---
@@ -190,7 +195,7 @@ const onSubmit = (data, setData, emitter) => {
         // $scope.credentials.type = sentCode.type;
         // $scope.nextPending.type = sentCode.next_type || false;
         // $scope.nextPending.remaining = sentCode.timeout || false;
-        emitter.emit(EVENT_SHOW_PAGE, LOGIN, {
+        emitter.emit(EVENT_SHOW_PAGE, PAGE_LOGIN, {
           /* props object */
           phoneCountry: data.get('phoneCountry'),
           phoneNumber: data.get('phoneNumber'),

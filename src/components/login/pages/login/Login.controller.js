@@ -7,20 +7,20 @@
  */
 
 import { Map } from 'immutable';
-import { pipe, withState, withEmitter, withCacheHandlers } from '../../../../js/core/index';
+import { pipe, withState, withEmitter, withCacheHandlers } from '@yumjs';
 import {
-  SENDCODE,
-  PASSWORD,
-  FULLNAME,
+  PAGE_SENDCODE,
+  PAGE_PASSWORD,
+  PAGE_FULLNAME,
   EVENT_SHOW_PAGE,
   EVENT_AUTH_USER,
   EVENT_ON_STATUS_CHANGED,
   EVENT_ON_SUBMIT,
-} from '../../constant';
-import onDataValueChanged from '../onDataValueChanged';
-import MtpApiManager from '../../../../js/app/mtpApiManager';
-import options from '../apiOpt';
-import i18n from '../../../../locales/i18n';
+  options,
+} from '@login-shared';
+import { onInputChanged } from '@components';
+import { mtpApiManager } from '@appjs';
+import i18n from '@locale';
 
 const init = ({ phoneCountry, phoneNumber, phoneCountryName, sentCodeResponse }) =>
   Map({
@@ -42,23 +42,25 @@ const onResendCode = ({ data, setData }) => () => {
     return;
   }
   setData(d => d.set('nextPendingProgress', true));
-  MtpApiManager.invokeApi(
-    'auth.resendCode',
-    {
-      phone_number: data.get('phoneCountry') + data.get('phoneNumber'),
-      phone_code_hash: data.get('phone_code_hash'),
-    },
-    options,
-  ).then(sentCodeResponse => {
-    setData(d =>
-      d
-        .set('sentCodeType', sentCodeResponse.type._ || '')
-        .set('nextSentCodeType', sentCodeResponse.next_type._ || '')
-        .set('remaining', sentCodeResponse.timeout || 0)
-        .set('phoneCodeHash', sentCodeResponse.phone_code_hash || '')
-        .set('nextPendingProgress', false),
-    );
-  });
+  mtpApiManager
+    .invokeApi(
+      'auth.resendCode',
+      {
+        phone_number: data.get('phoneCountry') + data.get('phoneNumber'),
+        phone_code_hash: data.get('phone_code_hash'),
+      },
+      options,
+    )
+    .then(sentCodeResponse => {
+      setData(d =>
+        d
+          .set('sentCodeType', sentCodeResponse.type._ || '')
+          .set('nextSentCodeType', sentCodeResponse.next_type._ || '')
+          .set('remaining', sentCodeResponse.timeout || 0)
+          .set('phoneCodeHash', sentCodeResponse.phone_code_hash || '')
+          .set('nextPendingProgress', false),
+      );
+    });
 };
 
 const nextPendingTimeout = ({ setData }) => () => {
@@ -71,7 +73,7 @@ const editPhone = ({ data, emitter }) => () => {
     data.get('phoneNumber') !== '' &&
     data.get('phoneCodeHash') !== ''
   ) {
-    MtpApiManager.invokeApi(
+    mtpApiManager.invokeApi(
       'auth.cancelCode',
       {
         phone_number: data.get('phoneCountry') + data.get('phoneNumber'),
@@ -81,7 +83,7 @@ const editPhone = ({ data, emitter }) => () => {
     );
   }
 
-  emitter.emit(EVENT_SHOW_PAGE, SENDCODE, {
+  emitter.emit(EVENT_SHOW_PAGE, PAGE_SENDCODE, {
     phoneCountry: data.get('phoneCountry'),
     phoneNumber: data.get('phoneNumber'),
     phoneCountryName: data.get('phoneCountryName'),
@@ -95,15 +97,16 @@ const onSubmit = (data, setData, emitter) => {
   }
   emitter.emit(EVENT_ON_STATUS_CHANGED, i18n.t('login_checking_code'));
 
-  MtpApiManager.invokeApi(
-    'auth.signIn',
-    {
-      phone_number: data.get('phoneCountry') + data.get('phoneNumber'),
-      phone_code_hash: data.get('phoneCodeHash'),
-      phone_code: data.get('phoneCode'),
-    },
-    options,
-  )
+  mtpApiManager
+    .invokeApi(
+      'auth.signIn',
+      {
+        phone_number: data.get('phoneCountry') + data.get('phoneNumber'),
+        phone_code_hash: data.get('phoneCodeHash'),
+        phone_code: data.get('phoneCode'),
+      },
+      options,
+    )
     .then(result => {
       emitter.emit(EVENT_AUTH_USER, options.id, result.user.id);
     })
@@ -117,7 +120,7 @@ const onSubmit = (data, setData, emitter) => {
         // $scope.credentials.phone_unoccupied = true;
         // $scope.about = {};
         emitter.emit(EVENT_ON_STATUS_CHANGED, '');
-        emitter.emit(EVENT_SHOW_PAGE, FULLNAME, {
+        emitter.emit(EVENT_SHOW_PAGE, PAGE_FULLNAME, {
           phoneNumber: data.get('phoneCountry') + data.get('phoneNumber'),
           phoneCodeHash: data.get('phoneCodeHash'),
           phoneCode: data.get('phoneCode'),
@@ -127,9 +130,9 @@ const onSubmit = (data, setData, emitter) => {
       if (error.code === 401 && error.type === 'SESSION_PASSWORD_NEEDED') {
         // $scope.progress.enabled = true;
         error.handled = true;
-        MtpApiManager.invokeApi('account.getPassword', {}, options).then(result => {
+        mtpApiManager.invokeApi('account.getPassword', {}, options).then(result => {
           emitter.emit(EVENT_ON_STATUS_CHANGED, '');
-          emitter.emit(EVENT_SHOW_PAGE, PASSWORD, {
+          emitter.emit(EVENT_SHOW_PAGE, PAGE_PASSWORD, {
             // phoneNumber: data.get('phoneCountry') + data.get('phoneNumber'),
             // phoneCodeHash: data.get('phoneCodeHash'),
             // phoneCode: data.get('phoneCode'),
@@ -171,7 +174,7 @@ const addListener = ({ data, setData, emitter }) => {
 export default pipe(
   withState(init),
   withEmitter(addListener),
-  withCacheHandlers({ onDataValueChanged, onResendCode, nextPendingTimeout, editPhone }),
+  withCacheHandlers({ onInputChanged, onResendCode, nextPendingTimeout, editPhone }),
 );
 
 // setTimeout(() => {

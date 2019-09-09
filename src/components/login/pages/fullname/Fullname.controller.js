@@ -6,18 +6,18 @@
  */
 
 import { Map } from 'immutable';
-import { pipe, withState, withEmitter, withHandlers } from '../../../../js/core/index';
+import { pipe, withState, withEmitter, withHandlers } from '@yumjs';
 import {
   // FULLNAME,
   // EVENT_SHOW_PAGE,
   EVENT_AUTH_USER,
   EVENT_ON_STATUS_CHANGED,
   EVENT_ON_SUBMIT,
-} from '../../constant';
-import onDataValueChanged from '../onDataValueChanged';
-import i18n from '../../../../locales/i18n';
-import options from '../apiOpt';
-import MtpApiManager from '../../../../js/app/mtpApiManager';
+  options,
+} from '@login-shared';
+import { onInputChanged } from '@components';
+import i18n from '@locale';
+import { mtpApiManager } from '@appjs';
 
 const init = () =>
   Map({
@@ -28,17 +28,18 @@ const init = () =>
   });
 
 const signUp = ({ data, setData, emitter }) => {
-  MtpApiManager.invokeApi(
-    'auth.signUp',
-    {
-      phone_number: data.get('phoneCountry') + data.get('phoneNumber'),
-      phone_code_hash: data.get('phoneCodeHash'),
-      phone_code: data.get('phone_code'),
-      first_name: data.get('fname') || '',
-      last_name: data.get('lname') || '',
-    },
-    options,
-  )
+  mtpApiManager
+    .invokeApi(
+      'auth.signUp',
+      {
+        phone_number: data.get('phoneCountry') + data.get('phoneNumber'),
+        phone_code_hash: data.get('phoneCodeHash'),
+        phone_code: data.get('phone_code'),
+        first_name: data.get('fname'),
+        last_name: data.get('lname'),
+      },
+      options,
+    )
     .then(result => {
       emitter.emit(EVENT_AUTH_USER, options.id, result.user.id);
     })
@@ -106,6 +107,6 @@ const addListener = ({ data, setData, emitter }) => {
 
 export default pipe(
   withState(init),
-  withHandlers({ onDataValueChanged }),
+  withHandlers({ onInputChanged }),
   withEmitter(addListener),
 );

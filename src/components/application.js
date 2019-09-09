@@ -6,11 +6,8 @@
  */
 
 /* eslint-disable no-param-reassign */
-import SwitchLayout from './layoutSwitch/layoutSwitch';
-import Idle from '../js/app/idle';
-import { polyfills } from '../js/app/polyfill';
-import Config from '../js/app/config';
-import Storage from '../js/app/storage';
+import SwitchLayout from './switchLayout/switchLayout';
+import { polyfills, Idle, config, storage } from '@appjs';
 
 // see https://github.com/zloirock/core-js
 // https://reactjs.org/docs/javascript-environment-requirements.html
@@ -34,11 +31,11 @@ export default () => {
 
   // #todo
   //  var classes = [
-  //   Config.Navigator.osX ? 'osx' : 'non_osx',
-  //   Config.Navigator.msie ? 'msie' : 'non_msie',
-  //   Config.Navigator.retina ? 'is_2x' : 'is_1x'
+  //   config.Navigator.osX ? 'osx' : 'non_osx',
+  //   config.Navigator.msie ? 'msie' : 'non_msie',
+  //   config.Navigator.retina ? 'is_2x' : 'is_1x'
   // ]
-  // if (Config.Modes.ios_standalone) {
+  // if (config.Modes.ios_standalone) {
   //   classes.push('ios_standalone')
   // }
   // $(document.body).addClass(classes.join(' '))
@@ -47,22 +44,22 @@ export default () => {
   // #todo MtpSingleInstanceService
   // #todo push_worker.js
 
-  let layout = Storage.syncGet('layout_selected');
-  if (Config.Modes.force_mobile) {
+  let layout = storage.syncGet('layout_selected');
+  if (config.Modes.force_mobile) {
     layout = 'mobile';
-  } else if (Config.Modes.force_desktop) {
+  } else if (config.Modes.force_desktop) {
     layout = 'desktop';
   }
 
   switch (layout) {
     case '"mobile"':
-      Config.Mobile = true;
+      config.Mobile = true;
       break;
     case 'desktop':
-      Config.Mobile = false;
+      config.Mobile = false;
       break;
     default:
-      Config.Mobile = Config.Navigator.mobile || (window.width > 10 && window.width < 480);
+      config.Mobile = config.Navigator.mobile || (window.width > 10 && window.width < 480);
       break;
   }
 };

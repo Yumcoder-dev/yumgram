@@ -9,7 +9,7 @@
 /* eslint-disable no-plusplus */
 import { Map } from 'immutable';
 import React from 'react';
-import { pipe, withLifecycle, withState } from '../../js/core/index';
+import { pipe, withLifecycle, withState } from '@yumjs';
 
 const init = () =>
   Map({

@@ -8,9 +8,8 @@
 
 import { Map } from 'immutable';
 import React from 'react';
-import { pipe, withState, withLifecycle } from '../../js/core/index';
-import Config from '../../js/app/config';
-import RequestAnimationFrame from '../../js/app/animate';
+import { pipe, withState, withLifecycle } from '@yumjs';
+import { RequestAnimationFrame } from '@appjs';
 
 let progress = 0;
 const init = props => Map({ elm: React.createRef(), raf: new RequestAnimationFrame() });

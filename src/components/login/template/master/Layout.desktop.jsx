@@ -9,11 +9,10 @@
 /* eslint-disable react/destructuring-assignment */
 import React from 'react';
 import { Row } from 'antd';
-import Footer from '../footer/Footer';
-import Toolbar from '../toolbar/Toolbar';
+import { Footer, Toolbar } from '@login-components';
 import styles from './Layout.desktop.module.less';
 
-const DesktopView = props => {
+const Desktop = props => {
   return (
     <>
       <Row className={styles.login_desktop_head_bg} />
@@ -26,4 +25,4 @@ const DesktopView = props => {
   );
 };
 
-export default React.memo(DesktopView);
+export default React.memo(Desktop);

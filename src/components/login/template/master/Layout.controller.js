@@ -6,13 +6,13 @@
  */
 
 import { Map } from 'immutable';
-import { pipe, withState, withEmitter } from '../../../../js/core/index';
-import { SENDCODE, EVENT_SHOW_PAGE, EVENT_AUTH_USER } from '../../constant';
-import MtpApiManager from '../../../../js/app/mtpApiManager';
+import { pipe, withState, withEmitter } from '@yumjs';
+import { PAGE_SENDCODE, EVENT_SHOW_PAGE, EVENT_AUTH_USER } from '@login-shared';
+import { mtpApiManager } from '@appjs';
 
 const init = () =>
   Map({
-    view: SENDCODE, // state for current active view
+    view: PAGE_SENDCODE, // state for current active view
   });
 
 const addListener = ({ setData, emitter }) => {
@@ -21,7 +21,7 @@ const addListener = ({ setData, emitter }) => {
   });
 
   const saveAuthScription = emitter.addListener(EVENT_AUTH_USER, (dcId, id) => {
-    MtpApiManager.mtpSetUserAuth(dcId, { id });
+    mtpApiManager.mtpSetUserAuth(dcId, { id });
     setData(d => d.set('RedirectToIm', true));
   });
 

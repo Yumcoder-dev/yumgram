@@ -10,9 +10,10 @@ const {
   fixBabelImports,
   addLessLoader,
   addWebpackModuleRule,
-  // addWebpackAlias,
+  addWebpackAlias,
   // eslint-disable-next-line import/no-extraneous-dependencies
 } = require('customize-cra');
+const path = require('path');
 
 module.exports = override(
   config => ({
@@ -42,11 +43,21 @@ module.exports = override(
       'font-size-base': '13px',
     },
   }),
-  // addWebpackAlias({
-  //   '@': path.resolve(__dirname, 'src'),
-  //   '@components': path.resolve(__dirname, 'src/components'),
-  //   '@sys': path.resolve(__dirname, 'src/js/sys'),
-  //   '@app': path.resolve(__dirname, 'src/js/app'),
-  //   '@locales': path.resolve(__dirname, 'src/locales'),
-  // }),
+  // also config
+  // -- vscode --> root/jsconfig.json
+  // -- jest --> package.json
+  // -- eslint --> .eslintrc.js
+  addWebpackAlias({
+    '@': path.resolve(__dirname, 'src/'),
+    '@components': path.resolve(__dirname, 'src/components/index/index.public'),
+    '@components-shared': path.resolve(__dirname, 'src/components/index/index.shared'),
+    '@login': path.resolve(__dirname, 'src/components/login/index/public'),
+    '@login-shared': path.resolve(__dirname, 'src/components/login/index/internal/shared'),
+    '@login-components': path.resolve(__dirname, 'src/components/login/index/internal/components'),
+    '@login-widgets': path.resolve(__dirname, 'src/components/login/index/internal/widgets'),
+    '@im': path.resolve(__dirname, 'src/components/im/index'),
+    '@yumjs': path.resolve(__dirname, 'src/scripts/yumjs/index'),
+    '@appjs': path.resolve(__dirname, 'src/scripts/appjs/index'),
+    '@locale': path.resolve(__dirname, 'src/locales/i18n'),
+  }),
 );

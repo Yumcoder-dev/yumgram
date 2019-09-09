@@ -9,7 +9,7 @@ import React from 'react';
 import { Spin } from 'antd';
 import { Redirect } from 'react-router-dom';
 import welcomeController from './Welcome.controller';
-import Pages from '../router/pages';
+import { PAGES } from '@components-shared';
 // import Badbrowser from './badbrowser';
 
 export default () => {
@@ -20,7 +20,7 @@ export default () => {
   const { data } = welcomeController();
   const v = data.get('view');
 
-  if (v === Pages.NONE) {
+  if (v === PAGES.NONE) {
     return <Spin size="large" />;
   }
   return <Redirect to={v} />;

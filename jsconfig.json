@@ -1,0 +1,18 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@": ["src/"],
+      "@components": ["src/components/index/index.public.js"],
+      "@components-shared": ["src/components/index/index.shared.js"],
+      "@login": ["src/components/login/index/public.js"],
+      "@login-shared": ["src/components/login/index/internal/shared.js"],
+      "@login-components": ["src/components/login/index/internal/components.js"],
+      "@login-widgets": ["src/components/login/index/internal/widgets.js"],
+      "@im": ["src/components/im/index.js"],
+      "@yumjs": ["src/scripts/yumjs/index.js"],
+      "@appjs": ["src/scripts/appjs/index.js"],
+      "@locale": ["src/locales/i18n.js"]
+    }
+  }
+}

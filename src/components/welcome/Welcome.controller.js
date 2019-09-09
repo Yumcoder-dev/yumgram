@@ -6,21 +6,21 @@
  */
 
 import { Map } from 'immutable';
-import { pipe, withState, withLifecycle } from '../../js/core/index';
-import MtpApiManager from '../../js/app/mtpApiManager';
-import Pages from '../router/pages';
+import { pipe, withState, withLifecycle } from '@yumjs';
+import { mtpApiManager } from '@appjs';
+import { PAGES } from '@components-shared';
 
 const init = () =>
   Map({
-    view: Pages.NONE,
+    view: PAGES.NONE,
   });
 
 const onCreate = ({ setData }) => {
-  MtpApiManager.mtpGetUserID().then(id => {
+  mtpApiManager.mtpGetUserID().then(id => {
     if (id) {
-      setData(d => d.set('view', Pages.IM));
+      setData(d => d.set('view', PAGES.IM));
     } else {
-      setData(d => d.set('view', Pages.LOGIN));
+      setData(d => d.set('view', PAGES.LOGIN));
     }
     // # todo
     // if (

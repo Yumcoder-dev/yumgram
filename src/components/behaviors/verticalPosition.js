@@ -8,8 +8,7 @@
 
 import { Map } from 'immutable';
 import React from 'react';
-import { pipe, withState, withEmitter } from '../../js/core/index';
-import Config from '../../js/app/config';
+import { pipe, withState, withEmitter } from '@yumjs';
 
 const init = props =>
   Map({
