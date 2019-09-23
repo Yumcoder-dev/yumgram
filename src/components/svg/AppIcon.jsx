@@ -35,7 +35,7 @@ const AppIconComponent = svg => (
     </linearGradient>
     <circle
       fill="url(#SVGAPPID_1_)"
-      stroke="#FFFFFF"
+      stroke="#A9C6D8"
       strokeWidth="28"
       strokeMiterlimit="10"
       cx="311.167"

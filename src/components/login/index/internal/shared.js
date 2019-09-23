@@ -20,4 +20,4 @@ export const EVENT_SHOW_PAGE = 'evl.showPage';
 export const EVENT_ON_SUBMIT = 'evl.onSubmit';
 export const EVENT_AUTH_USER = 'evl.authUser';
 
-export { countryCodes, langCountries } from '../../pages/widgets/country/country.data';
+export * from '../../pages/widgets/country/country.data';

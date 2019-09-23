@@ -5,12 +5,5 @@
  * the root directory of this source tree.
  */
 
-/* eslint-disable react/prop-types */
-/* eslint-disable react/destructuring-assignment */
-import React from 'react';
-
-const MobileView = () => {
-  return <></>;
-};
-
-export default React.memo(MobileView);
+// eslint-disable-next-line import/prefer-default-export
+export { default as ImMainLayout } from '../template/master/Layout.main';

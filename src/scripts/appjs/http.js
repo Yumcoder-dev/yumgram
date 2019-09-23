@@ -51,6 +51,8 @@ export default function(url, options) {
 
     request.withCredentials = options.credentials === 'include';
 
+    // request.setRequestHeader('Connection', 'keep-alive');
+
     // eslint-disable-next-line
     for (const i in options.headers) {
       request.setRequestHeader(i, options.headers[i]);

@@ -6,7 +6,7 @@
  */
 
 import React from 'react';
-import { Row, Icon, Button, Typography } from 'antd';
+import { Row, Icon, Button, Typography, Avatar } from 'antd';
 import i18n from '@locale';
 import toolbarController from './Toolbar.controller';
 // import AppIcon from '../../../../assets/img/icons/icon.svg';
@@ -30,7 +30,7 @@ const SubmitButton = () => {
   return (
     <>
       <Text className={styles.login_toolbar_txt}>{i18n.t('login_toolbar_next')}</Text>
-      <Icon type="right" />
+      <Avatar size="small" icon="right" style={{ background: 'transparent' }} />
     </>
   );
 };
@@ -42,7 +42,12 @@ const Stripe = () => {
   const status = data.get('status_msg');
 
   return (
-    <Button size="large" onClick={onNextClick} className={styles.login_toolbar_btn_next}>
+    <Button
+      style={{ height: '100%' }}
+      size="large"
+      onClick={onNextClick}
+      className={styles.login_toolbar_btn_next}
+    >
       {status !== '' ? <Statusbar status={status} /> : <Submit />}
     </Button>
   );
@@ -53,7 +58,7 @@ const Toolbar = props => {
   const { className } = props;
   return (
     <Row type="flex" align="middle" className={className}>
-      <Button size="large" className={styles.login_toolbar_btn_app}>
+      <Button style={{ height: '100%' }} size="large" className={styles.login_toolbar_btn_app}>
         <AppIcon width={30} height={30} className={styles.login_toolbar_icon} />
         <Text className={styles.login_toolbar_txt}>{i18n.t('app_name')}</Text>
       </Button>

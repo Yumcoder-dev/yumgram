@@ -5,8 +5,6 @@
  * the root directory of this source tree.
  */
 
-const onInputChanged = ({ setData }) => (key, newVal) => {
-  setData(s => s.set(key, newVal || ''));
-};
-
-export default onInputChanged;
+// index shared internal widgets
+// export { default as LoginHeader } from '../../pages/widgets/header/LoginHeader';
+// export { default as CountryList } from '../../pages/widgets/country/CountryList';

@@ -57,14 +57,12 @@ const LearnMore = props => {
 const Intro = props => {
   const { onClick } = props;
   return (
-    <>
-      <Paragraph style={{ marginBottom: '0px' }} className={styles.login_footer_intro}>
-        {i18n.t('login_about_intro')}
-      </Paragraph>
+    <div className={styles.login_footer_intro_wrap}>
+      <Paragraph className={styles.login_footer_intro}>{i18n.t('login_about_intro')}</Paragraph>
       <Button type="link" className={styles.login_footer_learn_more} onClick={onClick}>
         {i18n.t('login_about_learn')}
       </Button>
-    </>
+    </div>
   );
 };
 // *************************************************************************************************
@@ -73,11 +71,12 @@ const Footer = () => {
   const View = data.get('view') === LEAR_MORE ? LearnMore : Intro;
 
   return (
-    <Row type="flex" justify="center">
-      <Col>
-        <View onClick={onClick} />
-      </Col>
-    </Row>
+    // <Row>
+    //   <Col>
+    //     <View onClick={onClick} />
+    //   </Col>
+    // </Row>
+    <View onClick={onClick} />
   );
 };
 

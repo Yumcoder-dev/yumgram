@@ -138,7 +138,8 @@ const EditPhoneNumberView = ({ phoneCountry, phoneNumber, editPhone }) => {
 };
 const EditPhoneNumber = React.memo(EditPhoneNumberView);
 // *************************************************************************************************
-const SendCodeView = ({ incorrectCode, onDataValueChanged }) => {
+const SendCodeView = ({ incorrectCode, onInputChanged }) => {
+  console.log('onInputChanged', onInputChanged);
   return (
     <>
       <Text type="secondary" className={styles.login_center}>
@@ -148,7 +149,7 @@ const SendCodeView = ({ incorrectCode, onDataValueChanged }) => {
         ref={input => input && input.focus()}
         className={styles.loging_input_code}
         error={incorrectCode}
-        onChange={e => onDataValueChanged('phoneCode', e.target.value)}
+        onChange={e => onInputChanged('phoneCode', e.target.value)}
       />
       {incorrectCode && (
         <Alert
@@ -165,14 +166,12 @@ const SendCodeView = ({ incorrectCode, onDataValueChanged }) => {
 const SendCode = React.memo(SendCodeView);
 // *************************************************************************************************
 const Login = ({ phoneCountry, phoneNumber, phoneCountryName, sentCodeResponse }) => {
-  const { data, onResendCode, nextPendingTimeout, onDataValueChanged, editPhone } = loginController(
-    {
-      phoneCountry,
-      phoneNumber,
-      phoneCountryName,
-      sentCodeResponse,
-    },
-  );
+  const { data, onResendCode, nextPendingTimeout, onInputChanged, editPhone } = loginController({
+    phoneCountry,
+    phoneNumber,
+    phoneCountryName,
+    sentCodeResponse,
+  });
 
   return (
     <>
@@ -190,7 +189,7 @@ const Login = ({ phoneCountry, phoneNumber, phoneCountryName, sentCodeResponse }
         nextPendingProgress={data.get('nextPendingProgress')}
         onResendCode={onResendCode}
       />
-      <SendCode incorrectCode={data.get('incorrectCode')} onDataValueChanged={onDataValueChanged} />
+      <SendCode incorrectCode={data.get('incorrectCode')} onInputChanged={onInputChanged} />
     </>
   );
 };

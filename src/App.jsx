@@ -7,13 +7,67 @@
 
 import React, { useEffect } from 'react';
 import './App.module.less';
-import { windowResizeEmitter } from '@appjs';
-import { Rotues } from '@components';
+import { windowResizeEmitter, polyfills, Idle, config, storage } from '@appjs';
+import { Rotues, SwitchLayout } from '@components';
 
-function App() {
+// App
+export default () => {
   useEffect(windowResizeEmitter, []);
 
   return <Rotues />;
-}
+};
+// *************************************************************************************************
+// see https://github.com/zloirock/core-js
+// https://reactjs.org/docs/javascript-environment-requirements.html
+export const startApplication = () => {
+  // Prevent click-jacking
+  try {
+    // eslint-disable-next-line no-undef
+    if (window === window.top || (window.chrome && chrome.app && chrome.app.window)) {
+      document.documentElement.style.display = 'block';
+    } else {
+      window.top.location = window.location;
+    }
+  } catch (e) {
+    // eslint-disable-next-line no-console
+    console.error('CJ protection', e);
+  }
 
-export default App;
+  polyfills();
+  new SwitchLayout().start();
+  new Idle().start();
+
+  // #todo
+  //  var classes = [
+  //   config.Navigator.osX ? 'osx' : 'non_osx',
+  //   config.Navigator.msie ? 'msie' : 'non_msie',
+  //   config.Navigator.retina ? 'is_2x' : 'is_1x'
+  // ]
+  // if (config.Modes.ios_standalone) {
+  //   classes.push('ios_standalone')
+  // }
+  // $(document.body).addClass(classes.join(' '))
+
+  // #todo ChangelogNotifyService.checkUpdate()
+  // #todo MtpSingleInstanceService
+  // #todo push_worker.js
+
+  let layout = storage.syncGet('layout_selected');
+  if (config.Modes.force_mobile) {
+    layout = 'mobile';
+  } else if (config.Modes.force_desktop) {
+    layout = 'desktop';
+  }
+
+  switch (layout) {
+    case '"mobile"':
+      config.Mobile = true;
+      break;
+    case 'desktop':
+      config.Mobile = false;
+      break;
+    default:
+      config.Mobile = config.Navigator.mobile || (window.width > 10 && window.width < 480);
+      break;
+  }
+};

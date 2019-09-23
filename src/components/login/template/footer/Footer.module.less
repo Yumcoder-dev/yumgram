@@ -7,13 +7,22 @@
 
 @import '../../login.var.less';
 
+.login_footer_intro_wrap {
+  margin: 0 auto;
+  margin-top: @medium-size;
+  text-align: center;
+  display: table;
+}
+
 .login_footer_intro {
   color: color(~`colorPalette('@{primary-color}', 5) `);
-  margin-top: @medium-size;
+  margin-bottom: 0px;
+  display: table-row;
 }
 
 .login_footer_learn_more {
-  .mixin-center();
+  // .mixin-center();
+  display: table-row;
 }
 
 .login_footer_about_wrap {

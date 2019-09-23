@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "antd": "^3.22.0",
+    "core-js": "^3.2.1",
     "fbemitter": "^2.1.1",
     "i18next": "^17.0.11",
     "i18next-browser-languagedetector": "^3.0.3",
@@ -19,9 +20,11 @@
     "react-dom": "^16.9.0",
     "react-i18next": "^10.12.2",
     "react-router-dom": "^5.0.1",
+    "react-virtualized": "^9.21.1",
     "react-virtualized-auto-sizer": "^1.0.2",
     "react-window": "^1.8.5",
     "react-window-infinite-loader": "^1.0.3",
+    "resize-observer-polyfill": "^1.5.1",
     "rusha": "^0.8.13",
     "zlibjs": "^0.3.1"
   },
@@ -44,13 +47,16 @@
     ],
     "moduleNameMapper": {
       "^@": "<rootDir>/src/",
-      "^@components": "<rootDir>/src/components/index/index.public.js",
-      "^@components-shared": "<rootDir>/src/components/index/index.shared.js",
+      "^@components": "<rootDir>/src/components/index/public.js",
+      "^@components-shared": "<rootDir>/src/components/index/internal/shared.js",
       "^@login": "<rootDir>/src/components/login/index/internal/public.js",
       "^@login-shared": "<rootDir>/src/components/login/index/internal/shared.js",
       "^@login-components": "<rootDir>/src/components/login/index/internal/components.js",
       "^@login-widgets": "<rootDir>/src/components/login/index/internal/widgets.js",
-      "^@im": "<rootDir>/src/components/im/index.js",
+      "^@im": "<rootDir>/src/components/im/index/internal/public.js",
+      "^@im-shared": "<rootDir>/src/components/im/index/internal/shared.js",
+      "^@im-components": "<rootDir>/src/components/im/index/internal/components.js",
+      "^@im-widgets": "<rootDir>/src/components/im/index/internal/widgets.js",
       "^@yumjs": "<rootDir>/src/scripts/yumjs/index.js",
       "^@appjs": "<rootDir>/src/scripts/appjs/index.js",
       "^@locale": "<rootDir>/src/locales/i18n.js"
@@ -72,9 +78,10 @@
   },
   "browserslist": {
     "production": [
-      ">0.2%",
+      ">0.001%",
       "not dead",
-      "not op_mini all"
+      "not op_mini all",
+      "ie >= 9"
     ],
     "development": [
       "last 1 chrome version",

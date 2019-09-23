@@ -18,7 +18,7 @@ import {
   EVENT_ON_SUBMIT,
   options,
 } from '@login-shared';
-import { onInputChanged } from '@components';
+// import { onInputChanged } from '@components';
 import { mtpApiManager } from '@appjs';
 import i18n from '@locale';
 
@@ -169,6 +169,10 @@ const addListener = ({ data, setData, emitter }) => {
   const subscription = emitter.addListener(EVENT_ON_SUBMIT, () => onSubmit(data, setData, emitter));
 
   return [subscription];
+};
+
+const onInputChanged = ({ setData }) => (key, newVal) => {
+  setData(s => s.set(key, newVal || ''));
 };
 
 export default pipe(

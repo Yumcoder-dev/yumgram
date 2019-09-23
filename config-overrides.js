@@ -33,6 +33,7 @@ module.exports = override(
   // }),
   fixBabelImports('import', {
     libraryName: 'antd',
+
     libraryDirectory: 'es',
     style: true,
   }),
@@ -41,6 +42,11 @@ module.exports = override(
     modifyVars: {
       'primary-color': '#5682a3',
       'font-size-base': '13px',
+      'layout-header-height': '48px',
+      'layout-sider-background': '#f0f2f5',
+      // 'layout-body-background': '#5682a3',
+      'layout-header-background': '#5682a3',
+      'layout-header-padding': '0',
     },
   }),
   // also config
@@ -49,8 +55,8 @@ module.exports = override(
   // -- eslint --> .eslintrc.js
   addWebpackAlias({
     '@': path.resolve(__dirname, './src/'),
-    '@components': path.resolve(__dirname, './src/components/index/index.public'),
-    '@components-shared': path.resolve(__dirname, './src/components/index/index.shared'),
+    '@components': path.resolve(__dirname, './src/components/index/public'),
+    '@components-shared': path.resolve(__dirname, './src/components/index/internal/shared'),
     '@login': path.resolve(__dirname, './src/components/login/index/public'),
     '@login-shared': path.resolve(__dirname, './src/components/login/index/internal/shared'),
     '@login-components': path.resolve(
@@ -58,7 +64,10 @@ module.exports = override(
       './src/components/login/index/internal/components',
     ),
     '@login-widgets': path.resolve(__dirname, './src/components/login/index/internal/widgets'),
-    '@im': path.resolve(__dirname, './src/components/im/index'),
+    '@im': path.resolve(__dirname, './src/components/im/index/public'),
+    '@im-shared': path.resolve(__dirname, './src/components/im/index/internal/shared'),
+    '@im-components': path.resolve(__dirname, './src/components/im/index/internal/components'),
+    '@im-widgets': path.resolve(__dirname, './src/components/im/index/internal/widgets'),
     '@yumjs': path.resolve(__dirname, './src/scripts/yumjs/index'),
     '@appjs': path.resolve(__dirname, './src/scripts/appjs/index'),
     '@locale': path.resolve(__dirname, './src/locales/i18n'),

@@ -9,6 +9,7 @@ import React from 'react';
 import './Page404.module.less';
 import noiseController from './Noise.controller';
 
+// see https://ant.design/components/result/
 const NoiseCanvas = () => {
   const { data } = noiseController();
 

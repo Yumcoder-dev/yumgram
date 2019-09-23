@@ -7,7 +7,7 @@
 
 import React from 'react';
 import { FixedSizeList } from 'react-window';
-import AutoSizer from 'react-virtualized-auto-sizer';
+// import AutoSizer from 'react-virtualized-auto-sizer';
 import { Row, List, Input } from 'antd';
 import i18n from '@locale';
 import countryController from './CountryList.controller';
@@ -16,6 +16,7 @@ import styles from './CountryList.module.less';
 
 const { Search } = Input;
 
+// todo remove div
 const CountryList = ({ onItemSelected }) => {
   const { data, onSearch } = countryController();
   return (
@@ -29,35 +30,35 @@ const CountryList = ({ onItemSelected }) => {
         />
       </div>
       <Row className={styles.search_country_list}>
-        <AutoSizer>
-          {({ width, height }) => (
-            <FixedSizeList
-              height={height}
-              itemCount={data.get('count')}
-              itemSize={32}
-              width={width}
-              outerElementType={CustomScrollbars}
-            >
-              {({ index, style }) => {
-                const item = data.get('countries').get(index);
-                if (item) {
-                  return (
-                    <List.Item
-                      onClick={() => onItemSelected(item)}
-                      key={index}
-                      style={style}
-                      className={styles.cell}
-                    >
-                      <List.Item.Meta title={item.name} />
-                      <span>{item.code}</span>
-                    </List.Item>
-                  );
-                }
-                return <div key={index}>{i18n.t('modal_more')}</div>;
-              }}
-            </FixedSizeList>
-          )}
-        </AutoSizer>
+        {/* <AutoSizer>
+          {({ width, height }) => ( */}
+        <FixedSizeList
+          height={200}
+          itemCount={data.get('count')}
+          itemSize={32}
+          width={300}
+          outerElementType={CustomScrollbars}
+        >
+          {({ index, style }) => {
+            const item = data.get('countries').get(index);
+            if (item) {
+              return (
+                <List.Item
+                  onClick={() => onItemSelected(item)}
+                  key={index}
+                  style={style}
+                  className={styles.cell}
+                >
+                  <List.Item.Meta title={item.name} />
+                  <span>{item.code}</span>
+                </List.Item>
+              );
+            }
+            return <div key={index}>{i18n.t('modal_more')}</div>;
+          }}
+        </FixedSizeList>
+        {/* )}
+        </AutoSizer> */}
       </Row>
     </Row>
   );

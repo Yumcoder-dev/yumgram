@@ -11,7 +11,7 @@ import { LoginMainLayout } from '@login';
 import Welcome from '../welcome/Welcome';
 import Page404 from '../page404/Page404';
 import { ImMainLayout } from '@im';
-import PAGES from './master.pages';
+import PAGES from './master';
 
 export default () => {
   return (

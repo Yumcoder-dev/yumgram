@@ -101,7 +101,7 @@ if (!window.cancelAnimationFrame)
     clearTimeout(id);
   };
 
-// #todo  Object.assign() Date.now() Object.keys forEach
+// #todo  Object.assign() Date.now() Object.keys
 
 export const polyfills = () => {
   console.log('polyfills...');

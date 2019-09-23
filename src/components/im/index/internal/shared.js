@@ -5,5 +5,4 @@
  * the root directory of this source tree.
  */
 
-// eslint-disable-next-line import/prefer-default-export
-export { default as ImMainLayout } from './Im';
+// index shared conts and objects

@@ -652,6 +652,8 @@ export class TLDeserialization {
       }
 
       if (!constructorData && this.mtproto) {
+        console.log('constructorCmp fallback-->', typeof constructorCmp, constructorCmp);
+
         const schemaFallback = Config.Schema.API;
         for (let i = 0; i < schemaFallback.constructors.length; i++) {
           if (+schemaFallback.constructors[i].id === constructorCmp) {

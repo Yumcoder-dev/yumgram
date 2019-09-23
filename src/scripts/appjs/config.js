@@ -887,6 +887,20 @@ const Config = {
           type: 'auth.SentCode',
         },
         {
+          id: '955951967',
+          params: [
+            { name: 'flags', type: '#' },
+            { name: 'phone_registered', type: 'flags.0?true' },
+            { name: 'type', type: 'auth.SentCodeType' },
+            { name: 'phone_code_hash', type: 'string' },
+            { name: 'next_type', type: 'flags.1?auth.CodeType' },
+            { name: 'timeout', type: 'flags.2?int' },
+            { name: 'terms_of_service', type: 'flags.3?help.TermsOfService' },
+          ],
+          type: 'auth.SentCode',
+          predicate: 'auth.sentCode',
+        },
+        {
           id: '-855308010',
           predicate: 'auth.authorization',
           params: [
@@ -7060,11 +7074,11 @@ const Config = {
     ffos: navigator.userAgent.search(/mobi.+Gecko/i) !== -1,
     ffos2p: navigator.userAgent.search(/mobi.+Gecko\/[34567]/i) !== -1,
     touch:
-      (Window.screen && Window.screen.width <= 768) ||
+      (window.screen && window.screen.width <= 768) ||
       'ontouchstart' in window ||
-      (window.DocumentTouch && document instanceof Window.DocumentTouch),
+      (window.DocumentTouch && document instanceof window.DocumentTouch),
     mobile:
-      (Window.screen && Window.screen.width && Window.screen.width < 480) ||
+      (window.screen && window.screen.width && window.screen.width < 480) ||
       navigator.userAgent.search(
         /iOS|iPhone OS|Android|BlackBerry|BB10|Series ?[64]0|J2ME|MIDP|opera mini|opera mobi|mobi.+Gecko|Windows Phone/i,
       ) !== -1,

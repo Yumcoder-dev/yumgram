@@ -5,12 +5,5 @@
  * the root directory of this source tree.
  */
 
-/* eslint-disable react/prop-types */
-/* eslint-disable react/destructuring-assignment */
-import React from 'react';
-
-const DesktopView = () => {
-  return <></>;
-};
-
-export default React.memo(DesktopView);
+// eslint-disable-next-line import/prefer-default-export
+export { default as PAGES } from '../../route/master';

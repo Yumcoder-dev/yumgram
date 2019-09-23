@@ -35,7 +35,6 @@ const InputCountryView = ({
         readOnly="readonly"
         placeholder={i18n.t('login_country_input_placeholder')}
         onSearch={openContryList}
-        enterButton
         value={name}
       />
       <Modal

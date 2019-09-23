@@ -6,7 +6,7 @@
  */
 
 import { Map } from 'immutable';
-import { pipe, withState, withEmitter, withHandlers } from '@yumjs';
+import { pipe, withState, withEmitter, withCacheHandlers } from '@yumjs';
 import {
   PAGE_FULLNAME,
   EVENT_SHOW_PAGE,
@@ -118,6 +118,6 @@ const addListener = ({ data, setData, emitter }) => {
 
 export default pipe(
   withState(init),
-  withHandlers({ onInputChanged }),
   withEmitter(addListener),
+  withCacheHandlers({ onInputChanged }),
 );

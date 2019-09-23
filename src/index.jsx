@@ -5,11 +5,14 @@
  * the root directory of this source tree.
  */
 
+// https://reactjs.org/docs/javascript-environment-requirements.html
+import 'core-js/es/map';
+import 'core-js/es/set';
+
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './App';
+import App, { startApplication } from './App';
 import * as serviceWorker from './serviceWorker';
-import startApplication from './components/application';
 
 startApplication();
 

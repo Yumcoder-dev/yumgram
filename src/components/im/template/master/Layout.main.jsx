@@ -7,13 +7,28 @@
 
 /* eslint-disable react/jsx-props-no-spreading */
 import React from 'react';
+import { Layout } from 'antd';
 import { config } from '@appjs';
-import MobileView from './Layout.mobile';
-import DesktopView from './Layout.desktop';
+import { Dialogs, History } from '@im-components';
+import './Layout.module.less';
+
+const { Sider } = Layout;
 
 const MainLayout = () => {
-  const View = config.Mobile ? MobileView : DesktopView;
-  return <View />;
+  return (
+    <>
+      {config.Mobile ? (
+        <Dialogs />
+      ) : (
+        <Layout style={{ height: '100vh' }}>
+          <Sider width={256}>
+            <Dialogs />
+          </Sider>
+          <History />
+        </Layout>
+      )}
+    </>
+  );
 };
 
 export default MainLayout;
