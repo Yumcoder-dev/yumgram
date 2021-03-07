@@ -15,6 +15,7 @@ In the project directory, you can run the app:
 ```(shell)
 > git clone https://github.com/YumcoderCom/yumgram
 > cd yumgram
+> npm install
 > npm start
 ```
 
