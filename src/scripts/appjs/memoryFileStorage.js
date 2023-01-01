@@ -9,30 +9,31 @@
 import FileManager from './fileManager';
 
 export default class MemoryFileStorage {
-  constructor() {
-    this.storage = {};
-  }
+  storage = {};
 
-  // eslint-disable-next-line class-methods-use-this
   isAvailable() {
     return true;
   }
 
-  getFile(fileName) {
+  async getFile(fileName) {
     if (this.storage[fileName]) {
-      return Promise.resolve(this.storage[fileName]);
+      return this.storage[fileName];
     }
-    return Promise.reject(new Error('FILE_NOT_FOUND'));
+    throw new Error('FILE_NOT_FOUND');
   }
 
-  saveFile(fileName, blob) {
-    return Promise.resolve((this.storage[fileName] = blob));
+  async saveFile(fileName, blob) {
+    return (this.storage[fileName] = blob);
   }
 
-  getFileWriter(fileName, mimeType) {
-    const fakeWriter = FileManager.getFakeFileWriter(mimeType, blob => {
+  async getFileWriter(fileName, mimeType) {
+    const save = blob => {
       this.saveFile(fileName, blob);
-    });
-    return Promise.resolve(fakeWriter);
+    };
+    const fakeWriter = FileManager.getFakeFileWriter(mimeType, save);
+    return fakeWriter;
   }
 }
+
+
+
