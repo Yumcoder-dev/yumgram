@@ -5,36 +5,30 @@
  * the root directory of this source tree.
  */
 
-import { useReducer, useMemo } from 'react';
+import { useReducer} from 'react';
 
-const withStateHandlers = (initialValue, handlers) => (props = {}) => {
+const withStateHandlers = (initialValue, handlers) => {
   const actionTypes = Object.keys(handlers);
 
-  // note: action.type is function name, action.payload are function parameters
-  // handler = function [action.type](action.payload)
   const reducer = (state, action) => ({
     ...state,
-    ...handlers[action.type](state, props)(...action.payload),
+    ...handlers[action.type](state, action.payload),
   });
 
-  // see https://reactjs.org/docs/hooks-reference.html#usereducer
-  const [state, dispatch] = useReducer(
-    reducer,
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    typeof initialValue === 'function' ? useMemo(() => initialValue(props), []) : initialValue,
-  );
+  const initialState =
+    typeof initialValue === 'function' ? initialValue() : initialValue;
 
-  const boundHandlers = actionTypes.reduce(
-    (obj, type) =>
-      Object.assign(obj, {
-        [type]: (...payload) => {
-          if (payload !== undefined) dispatch({ type, payload });
-        },
-      }),
-    {},
-  );
+  const [state, dispatch] = useReducer(reducer, initialState);
 
-  return { ...props, ...state, ...boundHandlers };
+  const boundHandlers = actionTypes.reduce((obj, type) => {
+    obj[type] = (...payload) => {
+      if (payload !== undefined) dispatch({ type, payload });
+    };
+
+    return obj;
+  }, {});
+
+  return { ...state, ...boundHandlers };
 };
 
 export default withStateHandlers;
